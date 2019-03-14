@@ -75,15 +75,22 @@
 							<h2>Tire Debeading Project</h2>
 							This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design. 
 							<h2> Step 1: Tire Meshing </h2>
-								The model used consisted of a 
+								The model used consisted of the following components:
 								<ul>
-									<li>Outer Rim: afdfadsf</li>
-									<li>Inner Rim:  fadfadsf</li>
-									<li>Shaft: </li>
-									<li>Tread:</li>
-									<li>Sidewall: adfdasfasdf</li>
-									<li>Curb:</li>
+									<li>Outer Rim: Modeled with Shell elements and element Belytscho-Tsay formulation</li>
+									<li>Inner Rim: Modeled with Shell elements and same element formulation, constrained to the outer rim with a failure mode to produce debeading upon impact. </li>
+									<li>Shaft: Modeled with Shell elements and Belytscho-Tsay element formulation, this part is fully constrained to the inner rim. </li>
+									<li>Tread: Shell elements with Bathe-Dvorkin formulations were used. Given the tread had the highest deformation, a more accurate element formulation was used. High element thickness was used to avoid instabilities caused on the rubber during lateral impact. </li>
+									<li>Sidewall: Same parameters as the tread. Special consideration was made on the sidewall meshing given that to simulate air in the tire, the sidewall has to form an enclosed volume.</li>
+									<li>Curb: To save time on modeling the curve, automatic meshing was used. Material was defined rigid, and was fixed to the ground. Special considerations included avoiding sharp edges.</li>
 								</ul>
+								Overall, the picture below summarizes the model components. Standard dimensions of tire were P215/55R17 taken from a Nissan Altima model. 
+
+							<div class="col-8 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							</div> 
+
+							
 							<h3> Suspension Considerations</h3>
 							<p> One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account and are modeled as follows:
 							<ul> 
