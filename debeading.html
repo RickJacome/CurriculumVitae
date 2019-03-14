@@ -43,12 +43,41 @@
 							<p> Welcome, here you will find a project I worked on for a class known as Impact Engineering, this class focused on using a Finite Element Analysis software called <strong>LS-Dyna</strong>.
 							This page has all the information I used on my last project which was formally called <strong>Simplified Tire Debeading on Curb Impact Model</strong>. 
 							If you have no idea of what Finite Element Analysis (or FEA) is, then this project might not make much sense, but I will try my best to explain eveything to the simplest form.
-							</p>		
+							</p>
+
+						<h2>Introduction</h2>			
 						<h3>What is FEA? and What is it used for in this project?</h3>
-							<p>Engineers always try to come up with mathematical models that let you analyze and predict the future of a physical system from some differential equations. 
+							<p>Engineers always try to come up with mathematical models that let you analyze and predict the future of a physical system from some differential equations. However, these equations can become <strong> too many </strong>to solve the problem by hand. So FEA was created to solve this issue.
 							In a nutshell, FEA is a numerical method that lets you break down a physical situation into many algebraic equations.
-							This method is performed in computers because the number of equations that come out of this are usually too many to do by hand (even in many years).
-							<br>For this project, FEA was used to model a tire debeading. Which for those of you who do not know (I didn't when I first started this project), debeading is the action of separating the tire from the rim of the vehicle. An example of this is shown in the image below. 
+							This method is typically performed in computers because the number of equations that come out of this are usually too many to do by hand (even in many years).
+							<br>For this project, FEA was used to model a tire debeading. Which for those of you who do not know (I didn't when I first started this project), debeading is the action of separating the tire from the rim of the vehicle. An example of this is shown in the image below.</p>
+
+							<h3>Technical Knowledge For FEA</h3>
+							<p>The FEA method can be performed by many computer softwares, but for this one, the software at hand will be <strong>LS-Dyna</strong>. Some interesting characteristics for LS-Dyna is the fact that it uses Fortran compilers to work. Thus you have to manually code any features you add to your model. This is rare in many actual softwares but the accuracy that LS-Dyna has is still remarkable for costly computational models. 
+							<h4>Steps for FEA</h4>
+							In general this is the steps I think for modeling in FEA: <br>
+							<dl>
+							<dt><strong>Step 0: Create A Model</strong></dt>
+							<dd>-Usually this can be a step that you do not necessarily do because in many jobs, the models are provided to you. However, if you are starting from scratch a model, you should be free to create it from any modeling software that does 3D drawing (such as SolidWords or Autocad).</dd>
+							<dt><strong>Step 1:Create a Mesh</strong></dt>
+							<dd>-Now, here is where it becomes harder. Meshing is the technique of creating small "elements" together as shown below. These elements is where the calculations take place. Imagine that you want to calculate the velocity of a rod as it vibrates. If you represent that rod with 4 points connected, then you will have a somewhat "model" of the rod. You will be able to perform math on each of those 4 points, but you will realize that using more points provides more accuracy and takes longer. Now if we make more points, lets say 8 in total, and connect them together, we will have many "square" elements together representing the rod. This again, will increase accuracy (because the more points you have, the more it resembles a "real" rod) and take longer to compute. There exists many ways in which the points can be connected to form "elements", and the accumulation of all these elements is known as a Mesh. Meshing is probably the hardest part in FEA given that depending how the mesh is created, the model could take many hours, days or weeks to run! In industry time equals money, so a long simulation will probably be a reduction in salary. But it is not only about time, but accuracy as well! </dd> 
+							<dt><strong>Step 2:Define Material Properties</strong></dt>
+							<dd>-If meshing is performed correctly, choosing material properties is usually a simpler task. Depending on the model you are making (in my case it was a tire), you would need to select materials such as steel for the rims or rubber for the treadwall, to make your model realistic. The importance of this comes from empirical data. Material models need to be accurate, but you are the ones giving many of the properties. Some examples include Young's Modulus, Poisson's Ratio, Ultimate Tensile Strength, and more.</dd> 
+							<dt><strong> Step 3: Define Initial or Boundary Conditions</strong></dt>
+							<dd>-Now that we have everything else, the mission is to program some initial conditions. For example, if you want to see a tire rotate, you would add a rotational velocity along with a forward velocity to the center of mass of the tire. This way you will see the movement of the tire, and everything else that happens after, is what you need to analyze as an engineer.</dd>
+							<dt><strong> Step 4: Simulation Analysis</strong></dt>
+							<dd>-Often this step is overlooked, but many people believe that just because a simulation runs, it means that it is correct. <strong>WRONG</strong>. Never assume that simulations are correct until you throughly analyze data and draw conclusions that have logical arguments behind them. If you do a simulation of a car crashing into a wall, and you see the that "it crashes" as expected, but then look into the data files to find that the energy stored in many elements exceded 1 trillion Joules of energy. Then it means your simulation looks pretty, but it also means that a car crash has more energy than many nuclear weapons out there.</dd>  
+
+							</dl>
+
+
+
+
+
+
+
+
+
 						</div>
 						<!---
 						<div class="col-8 col-4-large col-12-medium">   
