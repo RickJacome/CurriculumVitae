@@ -60,18 +60,21 @@
 							<dt><strong>Step 0: Create A Model</strong></dt>
 							<dd>-Usually this can be a step that you do not necessarily do because in many jobs, the models are provided to you. However, if you are starting from scratch a model, you should be free to create it from any modeling software that does 3D drawing (such as SolidWords or Autocad).</dd>
 							<dt><strong>Step 1:Create a Mesh</strong></dt>
-							<dd>-Now, here is where it becomes harder. Meshing is the technique of creating small "elements" together as shown below. These elements is where the calculations take place. Imagine that you want to calculate the velocity of a rod as it vibrates. If you represent that rod with 4 points connected, then you will have a somewhat "model" of the rod. You will be able to perform math on each of those 4 points, but you will realize that using more points provides more accuracy and takes longer. Now if we make more points, lets say 8 in total, and connect them together, we will have many "square" elements together representing the rod. This again, will increase accuracy (because the more points you have, the more it resembles a "real" rod) and take longer to compute. There exists many ways in which the points can be connected to form "elements", and the accumulation of all these elements is known as a Mesh. Some examples of element types are shown in the Figure below. Meshing is probably the hardest part in FEA given that depending how the mesh is created, the model could take many hours, days or weeks to run! In industry time equals money, so a long simulation will probably be a reduction in salary. But it is not only about time, but accuracy as well! </dd> 
+							<dd>-Now, here is where it becomes harder. Meshing is the technique of creating small "elements" together as shown below. These elements is where the calculations take place. Imagine that you want to calculate the velocity of a rod as it vibrates. If you represent that rod with 4 points connected, then you will have a somewhat "model" of the rod. You will be able to perform math on each of those 4 points, but you will realize that using more points provides more accuracy and takes longer. Now if we make more points, lets say 8 in total, and connect them together, we will have many "square" elements together representing the rod. This again, will increase accuracy (because the more points you have, the more it resembles a "real" rod) and take longer to compute. There exists many ways in which the points can be connected to form "elements", and the accumulation of all these elements is known as a Mesh. Some examples of element types are shown in the Figure below. Meshing is probably the hardest part in FEA given that depending how the mesh is created, the model could take many hours, days or weeks to run! In industry time equals money, so a long simulation will probably be a reduction in salary. But it is not only about time, but accuracy as well! </dd>
+							<div class="col-8 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							</div> 
 							<dt><strong>Step 2:Define Material Properties</strong></dt>
 							<dd>-If meshing is performed correctly, choosing material properties is usually a simpler task. Depending on the model you are making (in my case it was a tire), you would need to select materials such as steel for the rims or rubber for the treadwall, to make your model realistic. The importance of this comes from empirical data. Material models need to be accurate, but you are the ones giving many of the properties. Some examples include Young's Modulus, Poisson's Ratio, Ultimate Tensile Strength, and more.</dd> 
-							<dt><strong> Step 3: Define Initial or Boundary Conditions</strong></dt>
-							<dd>-Now that we have everything else, the mission is to program some initial conditions. For example, if you want to see a tire rotate, you would add a rotational velocity along with a forward velocity to the center of mass of the tire. This way you will see the movement of the tire, and everything else that happens after, is what you need to analyze as an engineer.</dd>
+							<dt><strong> Step 3: Define Initial Conditions/Constraints</strong></dt>
+							<dd>-Now that we have everything else, the mission is to program some initial conditions or constraints that the physical system has. For example, if you want to see a tire rotate, you would add a rotational velocity along with a forward velocity to the center of mass of the tire. This way you will see the movement of the tire, and everything else that happens after, is what you need to analyze as an engineer.</dd>
 							<dt><strong> Step 4: Simulation Analysis</strong></dt>
 							<dd>-Often this step is overlooked, but many people believe that just because a simulation runs, it means that it is correct. <strong>WRONG</strong>. Never assume that simulations are correct until you throughly analyze data and draw conclusions that have logical arguments behind them. If you do a simulation of a car crashing into a wall, and you see the that "it crashes" as expected, but then look into the data files to find that the energy stored in many elements exceded 1 trillion Joules of energy. Then it means your simulation looks pretty, but it also means that a car crash has more energy than many nuclear weapons out there. This step usually involves answering the questions: "Is my data correct?", "How is it correct?", and if it is "What does this help me to know?" Example: If your simulation of a car crash is correct, you have an idea of how much energy can a vehicle absorb. This means that you can design a vehicle to resist many types of impact scenarios. </dd>  
 							</dl>
 
 							<h2>Tire Debeading Project</h2>
 							This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design. 
-							<h2> Step 0: Tire Model </h2>
+							<h2> Step 1: Tire Meshing </h2>
 								The model used consisted of a 
 								<ul>
 									<li>Outer Rim: afdfadsf</li>
@@ -93,9 +96,9 @@
 
 								
 
-							<h2>Materials Overview</h2>
-							<h2>Model Components</h2>
-							<h2>Modeling Techniques</h2>
+							<h2>Step 2: Materials Overview for Tire Components</h2>
+							<h2>Step 3: Modeling Initial Conditions and Constraints</h2>
+							<h2>Step 4: Simulation Analysis</h2>
 
 
 
