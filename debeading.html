@@ -68,7 +68,7 @@
 							</dl>
 
 							<h2>Tire Debeading Project</h2>
-							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p> 
+							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties and FEA detailed aspects is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p> 
 							<h2> Step 1: Tire Meshing </h2>
 								<p align = "justify">The model used consisted of the following components: </p>
 								<ul>
@@ -85,20 +85,16 @@
 								</ul>
 								<p align = "justify">Overall, the picture below summarizes the model components. Standard dimensions of tire were P215/55R17 taken from a Nissan Altima model.</p>
 
-							<div class="col-8 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/pic10.jpg" alt="" /></span>
+							<div class="col-12 col-12-large col-12-medium">   
+							<span class="image fit"><img src="images/pic07.jpg" alt="" /></span>
 							</div> 
 
 
 							<h3> Suspension Considerations</h3>
-							<p> One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account and are modeled as follows:</p>
-							<ul> 
-							<li><strong>Control Arm:</strong></li>
-							<li><strong>Spring/Strut:</strong></li>
-							</ul>
-
-							<p>To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
-
+							<p> One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid properties, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
+							<div class="col-8 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic01.jpg" alt="" /></span>
+							</div> 
 
 								
 
