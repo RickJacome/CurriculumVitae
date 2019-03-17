@@ -57,7 +57,7 @@
 							<dt><strong>Step 1:Create a Mesh</strong></dt>
 							<dd align = "justify">-Now, here is where it becomes harder. Meshing is the technique of creating small "elements" together as shown below. These elements is where the calculations take place. Imagine that you want to calculate the velocity of a rod as it vibrates. If you represent that rod with 4 points connected, then you will have a somewhat "model" of the rod. You will be able to perform math on each of those 4 points, but you will realize that using more points provides more accuracy and takes longer. Now if we make more points, lets say 8 in total, and connect them together, we will have many "square" elements together representing the rod. This again, will increase accuracy (because the more points you have, the more it resembles a "real" rod) and take longer to compute. There exists many ways in which the points can be connected to form "elements", and the accumulation of all these elements is known as a Mesh. Some examples of element types are shown in the Figure below. Meshing is probably the hardest part in FEA given that depending how the mesh is created, the model could take many hours, days or weeks to run! In industry time equals money, so a long simulation will probably be a reduction in salary. But it is not only about time, but accuracy as well! </dd>
 							<div class="col-8 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							<span class="image fit"><img src="images/image5.jpeg" alt="" /></span>
 							</div> 
 							<dt><strong>Step 2:Define Material Properties</strong></dt>
 							<dd align = "justify">-If meshing is performed correctly, choosing material properties is usually a simpler task. Depending on the model you are making (in my case it was a tire), you would need to select materials such as steel for the rims or rubber for the treadwall, to make your model realistic. The importance of this comes from empirical data. Material models need to be accurate, but you are the ones giving many of the properties. Some examples include Young's Modulus, Poisson's Ratio, Ultimate Tensile Strength, and more.</dd> 
@@ -85,9 +85,10 @@
 
 
 							<h3> Suspension Considerations</h3>
-							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid properties, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
+							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid propertie
+							s, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
 							<div class="col-8 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							<span class="image fit"><img src="images/pic11.jpg" alt="" /></span>
 							</div> 
 
 								
