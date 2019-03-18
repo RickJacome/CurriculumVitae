@@ -37,13 +37,16 @@
 								<h1>Vibration Analysis on Steering Wheel</h1>
 							</header>
 							<h3>Introduction</h3>
-							<p align="justify"> Welcome, in this site you will find my final project for a Mechanical Vibrations class. This project involves the use of wireless sensors that measure steering wheel angles. The software I used to analyze the data is called FlexPro, usually I would use MATLAB (and highly recommend it) but in this analysis I wanted to learn how to use it. The analysis itself is fast, but understanding it is a little harder. So I will try to explain some background knowledge about frequency analysis, filtering,  and Fast Fourier Transforms. If you are pretty acquintance of those two topics. Then feel free to skip the background information. 
+							<p align="justify"> Welcome, in this site you will find my final project for a Mechanical Vibrations class. This project involves the use of wireless sensors that measure steering wheel angles. The software I used to analyze the data is called FlexPro, usually I would use MATLAB (highly recommended, and actually used it for the Background Section), but I wanted to learn a new signal processing software. The analysis itself is fast, but understanding it is a little harder. So I will try to explain some background knowledge about frequency analysis, filtering,  and Fast Fourier Transforms. If you are pretty acquintance of those two topics. Then feel free to skip the background information. 
 							</p>
 							<h3>Motivation for the project, why vibrations on a steering wheel?</h3>
 							<p align="justify"> Currently I work at a Car Crash Worthiness Facility where we investigate the severity of crashes and how to minimize damages to the driver. When this experiments are performed (yes, you guess it right), crash vehicles. For that reason, data from sensors can become really difficult to perform. Usually, most sensors (such as accelerometers) are placed in the center of the vehicle to avoid damage to them. This limits the range of what can you actually measure. A good question for research is, how does the steering system of the vehicle behave strictly during the crash event? This question can get really messy because the sensors get broken before getting enough data. Without digging too much into the details. New technologies emerge and finally found a wireless gyroscope/accelerometer that hopefully will lead to research on the steering behavior. In my project, I did not go further on testing an actual car crash. So all the data I did was performed for normal driving operations. However, the objective was to measure the effectiveness of the sensor and the analysis. Now that's done, let us get some background! If you are familiar with all the background go ahead and skip to the setup.
 							</p>
-							<h3>Background: Frequency Domain Analysis</h3>
-							<p align="justify">
+							<h3>Background:</h3>
+							<h3> Frequency Domain Analysis</h3>
+							<p align="justify">Data is recorded from sensors in the time domain. However, sometimes it is useful to analyze data in the frequency domain. There exists many applications on the area of Control Systems and Vibrations, where it is useful to think in terms of frequency rather than time. To illustrate how to go from time to frequency, let us think about of a sine wave as shown below.
+							</p>
+							<p align="justify">This sine wave can be characterized by how often it repeats itself. This is known as the Period of the signal. This signal can represent 
 							</p>
 							<h3>Fourier Transform</h3>
 							<p align="justify">
