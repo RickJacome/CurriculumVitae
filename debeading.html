@@ -21,41 +21,26 @@
 		<!-- Project -->
 			<article id="debeading" class="wrapper style1">
 				<div class="container">
-					<div class="row">						
+					<div class="row">
+						<!--
+				 		<div class="col-4 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+						</div>
+						-->
+						<div class="col-12 col-12-large col-12-medium">    
+							<span class="image fit"><img src="images/pic07.jpg" alt="" /></span>
+						</div>
+						
 						<div class="col-9 col-10-large col-15-medium">
-							<span class="image fit"><img src="images/pic08.jpeg" alt="Title Picture" style="width:500px;height:600px;"></span>
-							<!---<div class="col-8 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/image5.jpeg" alt="" /></span>
-							</div> --->
-
 							<header>
 								<h1>Finite Element Analysis</h1>
 								<h1>Tire Debeading Project</h1>
 							</header>
 							<p align="justify"> Welcome, here you will find a project I worked on for a class known as Impact Engineering, this class focused on using a Finite Element Analysis software called <strong>LS-Dyna</strong>.
 							This page has all the information I used on my last project which was formally called <strong>Simplified Tire Debeading on Curb Impact Model</strong>. 
-							If you have no idea of what Finite Element Analysis (or FEA) is, then this project might not make much sense, but I will try my best to explain eveything to the simplest form. If you know a lot of FEA, then skip to the <a href="#project">Tire Debeading Project Section</a>.
+							If you have no idea of what Finite Element Analysis (or FEA) is, then this project might not make much sense, but I will try my best to explain eveything to the simplest form. If you know a lot of FEA, then skip the introduction section. 
 							</p>
-				<h2 align = "justify">Table of Contents</h2>
-				<ul class="container">
-						<li align = "justify"><a href="#introduction">Introduction</a></li>
-						<li align = "justify"><a href="#basic">Basic Steps for FEA</a></li>
-						<li align = "justify"><a href="#project">Tire Debeading Project</a></li>
-						<li align = "justify"><a href="#step1">Tire Meshing</a></li>
-						<li align = "justify"><a href="#step2">Materials Overview for Tire Components</a></li>
-						<li align = "justify"><a href="#step3">Modeling Initial Conditions and Constraints</a></li>
-						<li align = "justify"><a href="#step4">Simulation Analysis</a></li>
-				</ul>
 
-
-						</div>
-					</div>
-				</div>
-			</article>	
-			<article id="introduction" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">
 						<h2>Introduction</h2>			
 						<h3>What is FEA? and What is it used for in this project?</h3>
 							<p align = "justify">Engineers always try to come up with mathematical models that let you analyze and predict the future of a physical system from some differential equations. However, these equations can become <strong> too many </strong>to solve the problem by hand. So FEA was created to solve this issue.
@@ -65,22 +50,15 @@
 
 							<h3>Technical Knowledge For FEA</h3>
 							<p align = "justify">The FEA method can be performed by many computer softwares, but for this one, the software at hand will be <strong>LS-Dyna</strong>. Some interesting characteristics for LS-Dyna is the fact that it uses Fortran compilers to work. Thus you have to manually code any features you add to your model. This is rare in many actual softwares but the accuracy that LS-Dyna has is still remarkable for costly computational models. </p>
-						</div>
-					</div>
-				</div>
-			</article>
-			<article id="basic" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">			
-
 							<h3>Basic Steps for Modeling in FEA</h3>
 							<dl>
 							<dt><strong>Step 0: Create A Model</strong></dt>
 							<dd align = "justify">-Usually this can be a step that you do not necessarily do because in many jobs, the models are provided to you. However, if you are starting from scratch a model, you should be free to create it from any modeling software that does 3D drawing (such as SolidWords or Autocad).</dd>
 							<dt><strong>Step 1:Create a Mesh</strong></dt>
 							<dd align = "justify">-Now, here is where it becomes harder. Meshing is the technique of creating small "elements" together as shown below. These elements is where the calculations take place. Imagine that you want to calculate the velocity of a rod as it vibrates. If you represent that rod with 4 points connected, then you will have a somewhat "model" of the rod. You will be able to perform math on each of those 4 points, but you will realize that using more points provides more accuracy and takes longer. Now if we make more points, lets say 8 in total, and connect them together, we will have many "square" elements together representing the rod. This again, will increase accuracy (because the more points you have, the more it resembles a "real" rod) and take longer to compute. There exists many ways in which the points can be connected to form "elements", and the accumulation of all these elements is known as a Mesh. Some examples of element types are shown in the Figure below. Meshing is probably the hardest part in FEA given that depending how the mesh is created, the model could take many hours, days or weeks to run! In industry time equals money, so a long simulation will probably be a reduction in salary. But it is not only about time, but accuracy as well! </dd>
-
+							<div class="col-8 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							</div> 
 							<dt><strong>Step 2:Define Material Properties</strong></dt>
 							<dd align = "justify">-If meshing is performed correctly, choosing material properties is usually a simpler task. Depending on the model you are making (in my case it was a tire), you would need to select materials such as steel for the rims or rubber for the treadwall, to make your model realistic. The importance of this comes from empirical data. Material models need to be accurate, but you are the ones giving many of the properties. Some examples include Young's Modulus, Poisson's Ratio, Ultimate Tensile Strength, and more.</dd> 
 							<dt><strong> Step 3: Define Initial Conditions/Constraints</strong></dt>
@@ -89,25 +67,8 @@
 							<dd align = "justify">-Often this step is overlooked, but many people believe that just because a simulation runs, it means that it is correct. <strong>WRONG</strong>. Never assume that simulations are correct until you throughly analyze data and draw conclusions that have logical arguments behind them. If you do a simulation of a car crashing into a wall, and you see the that "it crashes" as expected, but then look into the data files to find that the energy stored in many elements exceded 1 trillion Joules of energy. Then it means your simulation looks pretty, but it also means that a car crash has more energy than many nuclear weapons out there. This step usually involves answering the questions: "Is my data correct?", "How is it correct?", and if it is "What does this help me to know?" Example: If your simulation of a car crash is correct, you have an idea of how much energy can a vehicle absorb. This means that you can design a vehicle to resist many types of impact scenarios. </dd>  
 							</dl>
 
-						</div>
-					</div>
-				</div>
-			</article>
-			<article id="project" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">
-
 							<h2>Tire Debeading Project</h2>
-							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties and FEA detailed aspects is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p>
-						</div>
-					</div>
-				</div>
-			</article>				 
-			<article id="step1" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">					
+							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties and FEA detailed aspects is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p> 
 							<h2> Step 1: Tire Meshing </h2>
 								<p align = "justify">The model used consisted of the following components: </p>
 								<ul>
@@ -117,46 +78,32 @@
 									<li align = "justify"><strong>Tread:</strong> Shell elements with Bathe-Dvorkin formulations were used. Given the tread had the highest deformation, a more accurate element formulation was used. High element thickness was used to avoid instabilities caused on the rubber during lateral impact. </li>
 									<li align = "justify"><strong>Sidewall:</strong> Same parameters as the tread. Special consideration was made on the sidewall meshing given that to simulate air in the tire, the sidewall has to form an enclosed volume.</li>
 									<li align = "justify"><strong>Curb:</strong> To save time on modeling the curve, automatic meshing was used. Material was defined rigid, and was fixed to the ground. Special considerations included avoiding sharp edges.</li>
+
+
 								</ul>
 							<p align = "justify">Overall, the picture below summarizes the model components. Standard dimensions of tire were P215/55R17 taken from a Nissan Altima model.</p>
-							<span class="image fit"><img src="images/image12.jpeg" alt="" /></span>
 
 
 							<h3> Suspension Considerations</h3>
-							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid propertie
-							s, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
+							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid properties, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
 							<div class="col-8 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/pic11.jpg" alt="" /></span>
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
 							</div> 
 
-						</div>
-					</div>
-				</div>
-			</article>				
-			<article id="step2" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">
 							<h2>Step 2: Materials Overview for Tire Components</h2>
-						</div>
-					</div>
-				</div>
-			</article>				
-			<article id="step3" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">	
 							<h2>Step 3: Modeling Initial Conditions and Constraints</h2>
-						</div>
-					</div>
-				</div>
-			</article>
-			<article id="step4" class="wrapper style1">
-				<div class="container">
-					<div class="row">						
-						<div class="col-9 col-10-large col-15-medium">
 							<h2>Step 4: Simulation Analysis</h2>
+
+
+
+
+						
 						</div>
+						<!---
+						<div class="col-8 col-4-large col-12-medium">   
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+						</div>   -->
+
 					</div>
 				</div>
 			</article>
@@ -179,7 +126,7 @@
 					</div>
 					<footer>
 						<ul id="copyright">
-							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							<li>&copy; RickJacome. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 						</ul>
 					</footer>
 				</div>
