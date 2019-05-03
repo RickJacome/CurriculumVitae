@@ -32,7 +32,7 @@
 								<h1>Vibration Analysis on Steering Wheel</h1>
 							</header>
 							<h3>Introduction</h3>
-							<p align="justify"> Welcome, in this section you will find my final project for my Mechanical Vibrations class. This project involves the use of wireless sensors that measure steering wheel angles. The software I used to analyze the data is called FlexPro, usually I would use MATLAB (highly recommended, and actually used it for the Background Section), but I wanted to learn a new signal processing software. The analysis itself is fast, but understanding it is a little harder. So I will try to explain some background knowledge about frequency analysis, filtering,  and Fast Fourier Transforms. If you are pretty acquintance of those two topics. Then feel free to skip the background information. 
+							<p align="justify"> Welcome, in this section you will find my final project for my Mechanical Vibrations class. This project involves the use of wireless sensors that measure steering wheel angles. The software I used was MATLAB. The analysis itself is fast, but understanding it is a little harder. So I will try to explain some background knowledge about frequency analysis, filtering,  and Fast Fourier Transforms. If you are pretty acquintance of those two topics. Then feel free to skip the background information. 
 							</p>
 					
 							<h3>Motivation for the project, why vibrations on a steering wheel?</h3>
@@ -52,11 +52,22 @@
 						</div>
 							<p align="justify">
 							<h3>Fourier Transform</h3>
-							<p align="justify">
+							<p align="justify">What we previously looked at on this example, was going from the time domain to the frequency domain. In general this procedure can become difficult to do by hand. One of the most used techniques for doing this change of domain is known as the Fourier Transform, which I won't describe in detail. However it serves for the same type of purpose I previously shown. When used in computers, the need for this transform was essential which led to the creation of an algorithm known as a Fast Fourier Transform (or FFT for short). The key factor of the FFT is that it will allow us to look at the frequency content of any time signals regardless of how they look. This will lead us to the next step.
 							</p>
 							<h3>Filtering Data</h3>	
 							<p align="justify">
-								∫θ 
+							If we have a time signal that looks disgusting like this:
+						<div class="col-4 col-4-large col-12-medium">   
+						<span class="image fit"><img src="images/TimeSignalNoisySample.jpg" alt="" /></span>
+						</div>
+							We will find useful to perform an FFT to filter out all of the frequencies out of the signal. By employing the FFT, the resultant graph would look something like this:
+						<div class="col-4 col-4-large col-12-medium">   
+						<span class="image fit"><img src="images/FrequencySignalNoisySample.jpg" alt="" /></span>
+						</div>
+
+							For this graph we notice that all of the frequency content is shown and mostly all of it has small values with the exception of one peak. This peak denotes the time of signal we have. And you can guess it is the same frequency of 
+
+
 							</p>	
 				
 						</div>
