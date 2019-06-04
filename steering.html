@@ -36,7 +36,7 @@
 							</p>
 					
 							<h3>Motivation for the project, why vibrations on a steering wheel?</h3>
-							<p align="justify"> Currently I work at a Car Crash Worthiness Facility where we investigate the severity of crashes and how to minimize damages to the driver. When this experiments are performed (yes, you guess it right), crash vehicles. For that reason, data from sensors can become really difficult to perform. Usually, most sensors (such as accelerometers) are placed in the center of the vehicle to avoid damage to them. This limits the range of what can you actually measure. A good question for research is, how does the steering system of the vehicle behave strictly during the crash event? This question can get really messy because the sensors get broken before getting enough data. Without digging too much into the details. New technologies emerge and finally found a wireless gyroscope/accelerometer that hopefully will lead to research on the steering behavior. In my project, I did not go further on testing an actual car crash. So all the data I did was performed for normal driving operations. However, the objective was to measure the effectiveness of the sensor and the analysis. Now that's done, let us get some background! If you are familiar with all the background go ahead and skip to the setup.
+							<p align="justify"> Currently I work at a Car Crash Worthiness Facility where we investigate the severity of crashes and how to minimize damages to the driver. When this experiments are performed (yes, you guessed it right), crash vehicles. For that reason, data from sensors can become really difficult to perform. Usually, most sensors (such as accelerometers) are placed in the center of the vehicle to avoid damage to them. This limits the range of what can you actually measure. A good question for research is, how does the steering system of the vehicle behave strictly during the crash event? This question can get really messy because the sensors get broken before getting enough data. Without digging too much into the details. New technologies emerge and finally found a wireless gyroscope/accelerometer that hopefully will lead to research on the steering behavior. In my project, I did not go further on testing an actual car crash. So all the data I did was performed for normal driving operations. However, the objective was to measure the effectiveness of the sensor and the analysis. Now that's done, let us get some background! If you are familiar with all the background go ahead and skip to the setup.
 							</p>
 							<h3>Background:</h3>
 							<h3> Frequency Domain Analysis</h3>
@@ -57,15 +57,20 @@
 							<h3>Filtering Data</h3>	
 							<p align="justify">
 							If we have a time signal that looks disgusting like this:
+							</p>
 						<div class="col-4 col-4-large col-12-medium">   
 						<span class="image fit"><img src="images/TimeSignalNoisySample.jpg" alt="" /></span>
 						</div>
+							<p align="justify">
 							This signal has been infected with what its known as Noise. This noise has a frequency content that is irrelevant to for our purposes of understanding the true time signal. We will find useful to perform an FFT to filter out all of the frequencies out of the signal. By employing the FFT, the resultant graph would look something like this:
+							</p>
 						<div class="col-4 col-4-large col-12-medium">   
 						<span class="image fit"><img src="images/FrequencySignalNoisySample.jpg" alt="" /></span>
 						</div>
-							For this graph we notice that all of the frequency content is shown and mostly all of it has small values with the exception of one peak. This peak denotes the time of signal we have. And you can guess it is the same frequency of 2 Hz  
+						<p align="justify">
+							For this graph we notice that all of the frequency content is shown and mostly all of it has small values with the exception of one peak. This peak denotes the time of signal we have, which is the same frequency of 2 Hz we determined on our noise-free signal. Through this method, it is possible to obtain different measurements that have noise induced in them, and decompose it into one or many frequencies it has. This method of obtaining multile frequencies from a signal is known as fourier analysis decomposition.  
 						</p>	
+						
 				
 						</div>
 					</div>
