@@ -121,16 +121,20 @@
 									<li align = "justify"><strong>Curb:</strong> To save time on modeling the curve, automatic meshing was used. Material was defined rigid, and was fixed to the ground. Special considerations included avoiding sharp edges.</li>
 								</ul>
 							<p align = "justify">Overall, the picture below summarizes the model components. Standard dimensions of tire were P215/55R17 taken from a Nissan Altima model.</p>
+							
+							
 							<span class="image fit">
-							<img src="images/pic10.jpg" alt="" />
+							<img src="images/pic10.jpeg" alt="" />
 							</span>
 
 
 							<h3> Suspension Considerations</h3>
 							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid propertie
 							s, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
+							
+							
 							<span class="image fit">
-							<img src="images/pic11.jpg" alt="" />
+							<img src="images/pic11.jpeg" alt="" />
 							</span>
 
 						</div>
@@ -237,7 +241,12 @@
 										<td>A = 0.606, B = 0.404</td>
 								</tr>
 							</table>
-							
+							<p align = "justify"> I will not go in details for the rest of material analysis (it would be too long),
+							but I will provide a little pictorial with some examples on how different material types and different coefficients change the behavior of the tire.
+						    </p>
+							<span class="image fit">
+							<img src="images/rubbertypes.jpeg" alt="" />
+							</span>							
 						</div>
 					</div>
 				</div>
@@ -248,8 +257,14 @@
 						<div class="col-9 col-10-large col-15-medium">	
 							<h2>Step 3: Modeling Initial Conditions and Constraints</h2>
 							<p align = "justify">
-							Now that the model has been establish, we need to focus on how to make it move. To do this we need to question: How does it move physically? 
-							Well, to explain it, I will use a direct quoting from my own engineering report. The language might be more technical but I found that reading in technical terms is useful for 
+							Now that the model has been establish, we need to focus on how to make it move. To do this we need to question: How does it move physically?
+							First all parts described in previous sections were given an initial translational velocity of 100 km/h (27.78 mm/ms) and a rotational velocity of 0.083 rad/sec.
+							The tire is assumed to not steer away from the curb, and to provide an impact straight at an angle of about 70 degrees into the curb.
+							After impacting, the wheel and sidewall experience a high shear force that separates them.
+							Simple enough? But how do we make sure that the tire will physically represent what we desire? We need boundary conditions. 
+							These conditions will let us make an "ideal model" of how the tire should be moving and how it shouldn't. A simple example: Tires have heavy vehicle they are carrying, thus aside from the suspension displacement, it would be safe to assume that the control arm that attaches to the suspension is not going to move upward.
+							In other words, there will be a constraint on the vertical displacement of the control arm. 
+							To explain the rest of it, I will use a direct quoting from my own engineering report. The language might be more technical but I found that reading in technical terms is useful for 
 							engineering applications. So I also provided an image of all the oncstraints I will be mentioning. </p>
 							<p align = "justify">
 							For the purpose of modeling a tire debeading, the following boundary conditions were applied and illustrated in the figure below.
@@ -268,6 +283,8 @@
 							To do this, a concentrated mass of 375 kg was given to the node being constrained. 
 							This mass is representative of a quarter of the weight of a standard vehicle. 
 							Since, the motion on the vertical axis was constrained, no problems arise of the weight causing a lever effect on the tire. </p>											
+							
+							
 							<span class="image fit">
 							<img src="images/pic02.jpg" alt="" />
 							</span>
