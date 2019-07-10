@@ -162,7 +162,7 @@
 							border: 1px solid black;
 										}
 							</style>				
-							<table style="width:100%">
+							<table style="width:80%">
 								<tr>
 										<th>Property</th>
 										<th>Steel</th> 
@@ -192,8 +192,8 @@
 							
 							<p align = "justify">As we said before, modeling the rigid parts is easy, but the deformable ones are not. Even more complicated, we have a rubber deformable material.
 							Rubber is known to be one of the most impredictable materials in existance, and predicting its behavior mathematically has been one of the highest challenges I have seen in 
-							FEA modeling. For this reason I was not able to just simply "choose" any rubber parameters. I had to investigate which rubber model would be useful to my simulation. Why?
-							
+							FEA modeling. For this reason I was not able to just simply "choose" any rubber parameters. I had to investigate which rubber model would be useful to my simulation. Why?</p>
+							<p align = "justify">
 							Well, there are types of material that are isotropic or anisotropic. Isotropic are material that exhibit the same behavior regardless of where you apply your forces.
 							And, anisotropic materials are those that behave differently depending on where you apply the forces. 
 							Usually, rubber is believed to be isotropic, but research has developed other types of rubber that tend to be anisotropic. So guess what, a different behavior means 
@@ -201,11 +201,42 @@
 							Rubber is a hyperelasatic material, what does that even mean? Well, in Materials Science, there is what is called the Strain-Stress Curve which is able to describe the
 							deforming behavior of many materials. Hyperelastic Materials have this Strain-Stress Curve dervied from a Strain Energy Density Function. What does that mean again? It means
 							that the behavior of this material can be totally modified depending on how this Function is defined. This is bad news because Rubber is a Hyperelastic Material. So there are
-							a lot (and I mean a lot) of mathematical models to describe many behaviors of rubber. 
-							
+							a lot (and I mean a lot) of mathematical models to describe many behaviors of rubber. </p>
+							<p align = "justify">
 							One of the easiest ways to choose the behavior you want is to physically test the rubber piece you want to use and see its properties. But that is not the case with me because I do
 							not have any rubber nor testing equipment at this moment. So what did I do? I chose different Hyperelastic Models and simulate them to see which one has the more realistic behavior. 
+							</p>
 							
+							<p align = "justify"> I will not go into details on how I tested each rubber model, but I will summarize the property values and type of model I used in the table below </p>
+							
+							<style>
+							table, th, td {
+							border: 1px solid black;
+										}
+							</style>				
+							<table style="width:100%">
+								<tr>
+										<th>Material Model </th>
+										<th>Parameters and Values</th> 
+								</tr>
+								<tr>
+										<td>Visco-Elastic</td>
+										<td>K = 0.345 GPa</td>
+										<td>G0 = 0.69e-3 GPa </td>
+										<td>G1 = 0.45e-3 GPa</td>
+										<td>Decay Constant = 0.0108</td>
+								</tr>
+								<tr>
+										<td>Mooney-Rivlin Load Curve (MRCL)</td>
+										<td>A = 0.2205e-3</td>
+										<td>B = 0.2075e-2</td>
+								</tr>
+								<tr>
+										<td>Mooney-Rivlin Lit Review (MRLR)</td>
+										<td>A = 0.606</td>
+										<td>B = 0.404</td>
+								</tr>
+							</table>
 							
 							
 						</div>
