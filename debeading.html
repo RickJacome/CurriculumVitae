@@ -129,11 +129,9 @@
 							<h3> Suspension Considerations</h3>
 							<p align = "justify">One of the most important parts for modeling tire behavior is the suspension model. For our purposes, just the main parts of the suspension are taken into account. These are the Control Arm, Tie Rod, and the Spring/Strut assembly. Mathematically, a mass-spring-damper systems offer simplifications for the suspension. To model this, a control arm was modeled with rigid propertie
 							s, and a discrete element was used to represent the total effect of the spring and the strut on the suspension as shown in the Figure below. To obtain a more realistic model, suspension design needs to be implemented. As of now, this would serve as an idealized suspension model.</p>
-							<div class="col-8 col-4-large col-12-medium">   
 							<span class="image fit">
-							<img src="images/pic11.jpg" alt="" />
+							<img src="images/image1.jpeg" alt="" />
 							</span>
-							</div> 
 
 						</div>
 					</div>
@@ -249,9 +247,30 @@
 					<div class="row">						
 						<div class="col-9 col-10-large col-15-medium">	
 							<h2>Step 3: Modeling Initial Conditions and Constraints</h2>
-							
-							
-							
+							<p align = "justify">
+							Now that the model has been establish, we need to focus on how to make it move. To do this we need to question: How does it move physically? 
+							Well, to explain it, I will use a direct quoting from my own engineering report. The language might be more technical but I found that reading in technical terms is useful for 
+							engineering applications. So I also provided an image of all the oncstraints I will be mentioning. </p>
+							<p align = "justify">
+							For the purpose of modeling a tire debeading, the following boundary conditions were applied and illustrated in the figure below.
+							A single node  <strong>(black dot in the figure below) </strong> acting on the middle of the shaft part was constrained on the transverse  <strong>(red arrow direction)</strong> direction to account for the stability the control arm provides. 
+							So the tire is not capable of being detached or contracted inside of the vehicle. 
+							The control arm, being attached to the sway bar, provide a counter balance that prevents rotation on the rolling direction. 
+							This behavior is presented by a constraint on the rotation of the y-axis. <strong>(shown as the Counter Clockwise Arrow on the Green Y Axis) </strong>
+							To control the tire yaw angle, a vehicle has the steering knuckle connected to the tie rod which is part of the steering system of the vehicle.
+							This simulation assumes that the vehicle maintains a firm steer causing no rotation on the vertical axis of tire during impact.
+							So that a constraint on the vertical axis rotation is sufficient for representing the steering system.  <strong>(shown in the Clockwise Arrow on the Blue Z Axis)</strong> 
+							In impact cases, the time frame in which events occur is in the order of milliseconds. 
+							From this, it can be assumed that a high speed curb impact would not give enough time for the suspension to absorb most of the shock. 
+							By constraining the vertical direction of the wheel, it is possible to model this scenario where all damage occurs to the tire only.  <strong>(shown as the blue arrow) </strong>
+							Furthermore, during curb impact, the vehicle’s weight is considerably high compared to that of the tire, so that constraining vertical motion going up was needed as well. 
+							The last condition is to account the longitudinal momentum given from the mass of the vehicle and the speed of the wheels. 
+							To do this, a concentrated mass of 375 kg was given to the node being constrained. 
+							This mass is representative of a quarter of the weight of a standard vehicle. 
+							Since, the motion on the vertical axis was constrained, no problems arise of the weight causing a lever effect on the tire. </p>											
+							<span class="image fit">
+							<img src="images/image1.jpeg" alt="" />
+							</span>
 							
 							
 							
