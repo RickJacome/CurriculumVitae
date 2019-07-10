@@ -158,6 +158,34 @@
 							<p align = "justify">When defining a material in FEA, it is important to always include the must fundamental properties of any material. 
 							These properties are the Modulus of Elasticity, Mass Density, and the Poisson's Ratio</p>
 							
+							<table style="width:100%">
+								<tr>
+										<th>Property</th>
+										<th>Steel</th> 
+										<th>Rubber</th>
+										<th>Concrete</th>
+								</tr>
+								<tr>
+										<td>Modulus of Elasticity (GPa)</td>
+										<td>210</td>
+										<td>---------</td>
+										<td> 85 </td>
+								</tr>
+								<tr>
+										<td>Mass Density (kg/mm^3)</td>
+										<td>5.05e-6</td>
+										<td>1.12e-6</td>
+										<td>2.4e-10</td>
+								</tr>
+								<tr>
+										<td>Poisson's Ratio</td>
+										<td>0.30</td>
+										<td>0.49</td>
+										<td>0.15</td>
+								</tr>
+							</table>
+							
+							
 							<p align = "justify">As we said before, modeling the rigid parts is easy, but the deformable ones are not. Even more complicated, we have a rubber deformable material.
 							Rubber is known to be one of the most impredictable materials in existance, and predicting its behavior mathematically has been one of the highest challenges I have seen in 
 							FEA modeling. For this reason I was not able to just simply "choose" any rubber parameters. I had to investigate which rubber model would be useful to my simulation. Why?
@@ -172,7 +200,7 @@
 							a lot (and I mean a lot) of mathematical models to describe many behaviors of rubber. 
 							
 							One of the easiest ways to choose the behavior you want is to physically test the rubber piece you want to use and see its properties. But that is not the case with me because I do
-							not have any rubber nor testing equipment at this moment. So what did I do? I choose different Hyperelastic Models and simulate them to see which one has the more realistic behavior. 
+							not have any rubber nor testing equipment at this moment. So what did I do? I chose different Hyperelastic Models and simulate them to see which one has the more realistic behavior. 
 							
 							
 							
