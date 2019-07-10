@@ -99,7 +99,7 @@
 						<div class="col-9 col-10-large col-15-medium">
 
 							<h2>Tire Debeading Project</h2>
-							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties and FEA detailed aspects is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p>
+							<p align = "justify">This project will be presented in the same format as the steps I showed in the introduction to offer a "consistent" flow of thought. However, some knowledge about mechanical properties and FEA detailed aspects is assumed from the reader. One of the main reasons for choosing a tire debading is because there is not a lot of research about tire behavior when vehicles hit the curb at high speeds. Curb impact provides lateral forces in the tires which are something not usually taken into account when designing the tire. Therefore this project can serve as a guide to understanding the resistance of tires to lateral impact for future design.</p>
 						</div>
 					</div>
 				</div>
@@ -138,6 +138,44 @@
 					<div class="row">						
 						<div class="col-9 col-10-large col-15-medium">
 							<h2>Step 2: Materials Overview for Tire Components</h2>
+							
+							<p align = "justify"> When choosing materials for an FEA model, there is a question that needs to be always asked:
+							Is the part going to deform or not? If the answer is not, the modeling your part as a solid part will incredibly reduce the amount of work you will have to do.
+							This occurs because solid parts often do not require much computation time (since they are rigid) and will be easy to mesh as well.
+							If the parts are indeed a deformable part, then a lot of time needs to be devoted to create a fine mesh and making sure that material properties are selected carefully. 
+							We will follow a similar format as in the meshing for the materials:		
+							</p>
+							
+							<ul>
+									<li align = "justify"><strong>Outer Rim:</strong> This part was modeled with steel properties and as a rigid material.</li>
+									<li align = "justify"><strong>Inner Rim:</strong> This part was modeled with steel properties and as a rigid material. </li>
+									<li align = "justify"><strong>Shaft:</strong> This part was modeled with steel properties and as a rigid material.  </li>
+									<li align = "justify"><strong>Tread:</strong> This part was modeled with rubber properties and as a deformable material. </li>
+									<li align = "justify"><strong>Sidewall:</strong> This part was modeled with rubber properties and as a deformable material .</li>
+									<li align = "justify"><strong>Curb: This part was modeled with concrete properties and as a rigid material</strong> </li>
+							</ul>
+							
+							<p align = "justify">When defining a material in FEA, it is important to always include the must fundamental properties of any material. 
+							These properties are the Modulus of Elasticity, Mass Density, and the Poisson's Ratio</p>
+							
+							<p align = "justify">As we said before, modeling the rigid parts is easy, but the deformable ones are not. Even more complicated, we have a rubber deformable material.
+							Rubber is known to be one of the most impredictable materials in existance, and predicting its behavior mathematically has been one of the highest challenges I have seen in 
+							FEA modeling. For this reason I was not able to just simply "choose" any rubber parameters. I had to investigate which rubber model would be useful to my simulation. Why?
+							
+							Well, there are types of material that are isotropic or anisotropic. Isotropic are material that exhibit the same behavior regardless of where you apply your forces.
+							And, anisotropic materials are those that behave differently depending on where you apply the forces. 
+							Usually, rubber is believed to be isotropic, but research has developed other types of rubber that tend to be anisotropic. So guess what, a different behavior means 
+							a different type of model. Is the rubber of my tire isotropic or anistropic? We'll see. For now let's bring another point.
+							Rubber is a hyperelasatic material, what does that even mean? Well, in Materials Science, there is what is called the Strain-Stress Curve which is able to describe the
+							deforming behavior of many materials. Hyperelastic Materials have this Strain-Stress Curve dervied from a Strain Energy Density Function. What does that mean again? It means
+							that the behavior of this material can be totally modified depending on how this Function is defined. This is bad news because Rubber is a Hyperelastic Material. So there are
+							a lot (and I mean a lot) of mathematical models to describe many behaviors of rubber. 
+							
+							One of the easiest ways to choose the behavior you want is to physically test the rubber piece you want to use and see its properties. But that is not the case with me because I do
+							not have any rubber nor testing equipment at this moment. So what did I do? I choose different Hyperelastic Models and simulate them to see which one has the more realistic behavior. 
+							
+							
+							
 						</div>
 					</div>
 				</div>
