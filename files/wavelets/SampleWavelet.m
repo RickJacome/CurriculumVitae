@@ -9,9 +9,7 @@ legend('MATLAB Morlet Wavelet','Analytical Wavelet')
 xlim([-4 4])
 
 figure
-lb = -5;
-ub = 5;
-N = 1000;
+lb = -5; ub = 5; N = 1000;
 [psi,xval] = mexihat(lb,ub,N);
 plot(xval,psi); hold on
 title('Mexican Hat Wavelet');
