@@ -1,7 +1,8 @@
+%% FFT Trial from Mathworks Code
 clear all; clc; close all
 load('SGAHalf.mat'); load('SGT.mat');
 Time = SplitGravelTime(1:numel(SplitGravelTime)/2);
-SGA = SGAHalf;
+SGAHalf = SGAHalf*-1;
 fftf(Time, SGAHalf, [], 20);
 function [X, f, y, y2] = fftf(t, x, varargin)
 %% Definitions
