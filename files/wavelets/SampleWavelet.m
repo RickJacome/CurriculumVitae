@@ -1,3 +1,4 @@
+%% Sample Wavelets
 clear all; close all; clc
 [psi,xval] = wavefun('morl',10);
 plot(xval,psi); title('Morlet Wavelet');
