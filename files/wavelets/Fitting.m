@@ -1,3 +1,4 @@
+%% Fitting Code
 clear all;clc; close all
 load('ApproxCoif2L6.mat'); 
 load('SGT.mat');
