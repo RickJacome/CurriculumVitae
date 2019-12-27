@@ -13,8 +13,8 @@ Constant2 = [41.52, 45.62];
 LinearDown = [45.62 47.85];
 Stopped = [47.85 55.06];
 
-idx1 =find(Time > 22.57 & Time <40.26);
-idx2 =find(Time > 40.26 & Time <42);
+idx1 =find(Time > 22.57 & Time <40.04);
+idx2 =find(Time > 40.04 & Time <42);
 idx3 =find(Time > 42 & Time <46);
 idx4 =find(Time > 45.6 & Time <46.1);
 idx5 =find(Time > 46.1 & Time <55.06);
