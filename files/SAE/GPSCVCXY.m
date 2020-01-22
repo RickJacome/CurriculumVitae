@@ -56,36 +56,38 @@ grid on;
 % ----------------
 figure(1000)
 x = L2; y = O2;
-yy1 = smooth(x,y,0.1,'loess');  %Span of 10%
-yy2 = smooth(x,y,0.1,'rloess');
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
 
 %subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-')
 legend('Original data','Smoothed data using ''loess''',...
-       'Location','southoutside')
+       'Location','SE')
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 %subplot(2,1,2)
 figure(1001)
 plot(x,y,'b.',x,yy2,'r-'); grid on
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 legend('Original data','Smoothed Data',...
-       'Location','eastoutside')
+       'Location','SE')
 
 % --------
 e1 = cosd(O2); e2 = sind(O2);
 figure(23)
+subplot(1,2,1)
 h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x2',y2',e1,e2); hold off
 %title('Road with Velocity Vectors')
-%xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
 
 % ---- smoothed data quiver
-
+subplot(1,2,2)
 e1 = cosd(yy2); e2 = sind(yy2);
-figure(1002)
+%figure(1002)
 h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x2',y2',e1,e2); hold off
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
 
 
