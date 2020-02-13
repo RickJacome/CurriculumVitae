@@ -1,9 +1,15 @@
+clc; clear all; close all
 %Sample Optimization Tools
-
+% LINEAR CONSTRAINED OPTIMIZATION 
 vars = {'P1','P2','I1','I2','C','LE1','LE2','HE1','HE2',...
     'HPS','MPS','LPS','BF1','BF2','EP','PP'};
+%Variables to be optimized on "vars" are created in a single x vector
+% The optimvar lets you set up a common upper or lower bound to all 
+% variables at the same time, in this case, it was a lowerbound of 0.
+% but this can be later modified for each x term such as the first one 
+% was changed to 2500. 
 x = optimvar('x',vars,'LowerBound',0);
-
+% Set the bounds for each parameter in x
 x('P1').LowerBound = 2500;
 x('P2').LowerBound = 3000;
 x('MPS').LowerBound = 271536;
@@ -31,3 +37,4 @@ linprob.Constraints.econs7 = 1267.8*x('HE1') + 1251.4*x('LE1') + 192*x('C') + 34
 linprob.Constraints.econs8 = 1267.8*x('HE2') + 1251.4*x('LE2') + 3413*x('P2') == 1359.8*x('I2');
 
 [linsol,fval] = solve(linprob);
+tbl = table(vars',linsol.x')
