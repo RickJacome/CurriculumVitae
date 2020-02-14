@@ -26,10 +26,60 @@ quiver(x2',y2',K2(:,1),K2(:,2)); hold off
 % plot(y2,sqrt(K2(:,2).^2+K2(:,1).^2))
 % xlabel('Y-Coordinate'); ylabel('Curvature \kappa'); grid on;
 % title('Curvature \kappa vs Y Coordinate')
-figure(5); plot(L2,(sqrt(K2(:,2).^2+K2(:,1).^2))); grid on
+
+KK = sqrt(K2(:,2).^2+K2(:,1).^2);
+figure(5); scatter(L2,KK); grid on
 xlabel('Lenght of Road'); ylabel('Curvature \kappa')
 title('Curvature \kappa vs. Cumulative curve length')
 
+%  Smoothing Technique on Curvature----------------
+figure(1050)
+x = L2; y = KK;
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
+
+%subplot(2,1,1)
+plot(x,y,'b.',x,yy1,'r-'); ylim([0,.3]); grid on
+legend('Original data','Smoothed data using ''loess''',...
+       'Location','best')
+xlabel('Segment S (m)'); ylabel('Curvature K')
+%subplot(2,1,2)
+figure(1051)
+plot(x,y,'b.',x,yy2,'r-'); grid on;  ylim([0,.3])
+xlabel('Segment S (m)'); ylabel('Curvature K')
+legend('Original data','Smoothed Data',...
+       'Location','best')
+
+   
+A = optimvar('A',3);  %  
+x(1) = []; x(end) = [];
+
+%fun = @(A) A(1)+A(2).*x;
+%fun =  @(A) A(1)+A(2).*x + A(3).*x.^2 + A(4).*x.^3;
+fun = @(A) A(1).*x.^4 + A(2).*x.^2 + A(3);
+%fun = @(A) A(1).*x.^5 + A(2).*x.^3 + A(3).*x;
+
+response = fcn2optimexpr(fun,A,'OutputSize',...
+    [218,1],'ReuseEvaluation',true);
+yy2(1) = []; yy2(end) = [];
+x0.A = [0.25,1,.25];%,3.2];
+
+obj = sum( (response - yy2).^2 );
+lsqproblem = optimproblem("Objective",obj);
+[sol,fval] = solve(lsqproblem,x0);
+
+figure(1052)
+responsedata = evaluate(response,sol);
+plot(x,yy2,'r*',x,responsedata,'b-')
+legend('Original Data','Fitted Curve')
+xlabel 'Segment S'
+ylabel 'Curvature Kappa'
+title("Fitted Response")
+
+
+   
+   
+%-------
 [Th,n] = DiscInteg(K2,L2);
 figure(20)
 plot(L2(1:n),Th*180/pi); grid on
@@ -53,7 +103,7 @@ figure(22); scatter(L2,O2)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 title('Angle of Velocity Direction'); 
 grid on;
-% ----------------
+%  Smoothing Technique on Angles----------------
 figure(1000)
 x = L2; y = O2;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
@@ -89,29 +139,7 @@ h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x2',y2',e1,e2); hold off
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
-
-
-
-% figure(333)
-% scatter(x2,e1)
-% scatter(y2,e2)
-% 
-% t = x2;
-% y = e1;
-% n = 100;
-% D = 5;
-% [t_LS,p] = LeastSquares(t,y,D,n);
-% figure(3333)
-% plot(t_LS,p,'Linewidth',3); hold on;
-% xlabel('t values'); ylabel('y label')
-% grid on; legend show; legend('location','best')
-% plot(t,y,'o', 'MarkerSize', 10, 'LineWidth', 2); 
-
-
-
-
-
-
+%
 figure(30)
 subplot(2,2,1)
 plot(L2,R2); grid on;
@@ -133,47 +161,3 @@ title('Integrated Heading \theta')
 xlabel S; ylabel('\theta')
 
 
-
-
-
-% figure(333)
-% scatter(x2,e1)
-% scatter(y2,e2)
-
-% 
-% KKK = sqrt(K2(:,2).^2+K2(:,1).^2);
-% KKK(1) = []; KKK(end) = [];
-% L2(1) = []; L2(end) = [];
-% t = L2;
-% y = e1;
-% n = 100;
-% D = 5;
-% [t_LS,p] = LeastSquares(t,y,D,n);
-% figure(3333)
-% plot(t_LS,p,'Linewidth',3); hold on;
-% xlabel('t values'); ylabel('y label')
-% grid on; legend show; legend('location','best')
-% plot(t,y,'o', 'MarkerSize', 10, 'LineWidth', 2); 
-% 
-% function [t_LS,p] = LeastSquares(t,y,D,n)
-% N = numel(t); 
-% A = zeros(N,D+1);  %Prelocation Matrix
-% for i=1:length(t)
-%     for j=1:D+1
-%        A(i,j) = t(i)^(D+1-j); %Vandermonde Matrix Definition 
-%     end
-% end
-% A = fliplr(A); %Flip the Matrix to fit LS method
-% M = A'*A;  
-% b = A'*y; %Create a Minimization Problem for Normal Equations
-% x = M\b;  %Solve them through Matlab function
-% 
-% x = A\y;
-% 
-% t_LS = linspace( t(1) , t(length(t)), n); %Create a t vector for n values
-% p  = polyval(flip(x),t_LS);
-% Fit the polynomial found in x, to the values of t 
-% end
-% 
-% 
-% 
