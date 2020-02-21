@@ -1,11 +1,12 @@
 clear all; clc; close all
-s = 0:.01:4*pi;
+ s = 0:.01:4*pi;
 k = sin(s);
+k = s.*2
 % s = [1 3 5 7 9 11 13 15 18 21];
 % k = [23 27 28 33 37 40 42 44 48 53];
 %scatter(s,k);
 hold on
-dt = 0.0001; n = numel(k);
+dt = 0.01; n = numel(k);
 A = spliny(s,k,n,dt)
 hold on; grid on
 % xx = s(1):dt:s(end);
