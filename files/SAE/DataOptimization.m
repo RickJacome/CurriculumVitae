@@ -18,6 +18,7 @@ xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Curvature Vectors')
 hold on
 quiver(x2',y2',K2(:,1),K2(:,2)); hold off
+% --- Not Used
 % figure(3); hold on;
 % plot(x2,sqrt(K2(:,2).^2+K2(:,1).^2))
 % xlabel('X-Coordinate'); ylabel('Curvature \kappa'); grid on;
@@ -36,7 +37,7 @@ title('Curvature \kappa vs. Cumulative curve length')
 figure(1050)
 x = L2; y = KK;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
-yy2 = smooth(x,y,0.15,'rloess');
+yy2 = smooth(x,y,0.20,'rloess');
 
 %subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-'); ylim([0,.3]); grid on
@@ -49,28 +50,54 @@ plot(x,y,'b.',x,yy2,'r-'); grid on;  ylim([0,.3])
 xlabel('Segment S (m)'); ylabel('Curvature K')
 legend('Original data','Smoothed Data',...
        'Location','best')
-% Optimization -----------------
-A = optimvar('A',3);  %  
-x(1) = []; x(end) = [];
+   
+% Adding Spline for Smoothed Function
+figure(1055)
 
-%fun = @(A) A(1)+A(2).*x;
-%fun =  @(A) A(1)+A(2).*x + A(3).*x.^2 + A(4).*x.^3;
-fun = @(A) A(1).*x.^4 + A(2).*x.^2 + A(3);
-%fun = @(A) A(1).*x.^5 + A(2).*x.^3 + A(3).*x;
+s = L2; k = KK; dt = 0.01;
+n = numel(s);
+[A1] = spliny(s,k,n,dt);
+% This is the curvature, without being smoothed, and 
+% a spline interpolation has been performed to obtain all of its 
+% constituent coefficients. 
 
-response = fcn2optimexpr(fun,A,'OutputSize',...
-    [218,1],'ReuseEvaluation',true);
-yy2(1) = []; yy2(end) = [];
-x0.A = [0.25,1,.25];%,3.2];
 
-obj = sum( (response - yy2).^2 );
-lsqproblem = optimproblem("Objective",obj);
-[sol,fval] = solve(lsqproblem,x0);
+% From data Figure 1051 rloess 20%
+figure(1056)
 
-figure(1052)
-responsedata = evaluate(response,sol);
-plot(x,yy2,'r*',x,responsedata,'b-')
-legend('Original Data','Fitted Curve')
-xlabel 'Segment S'
-ylabel 'Curvature Kappa'
-title("Fitted Response")
+s = x; k = yy2; dt = 0.01;
+n = numel(s);
+[A2] = spliny(s,k,n,dt);
+% This is the curvature, after being smoothed, and 
+% a spline interpolation has been performed to obtain all of its 
+% constituent coefficients. 
+
+% NOTE: Matrix is close to singular/badly scaled.
+
+
+
+% % Optimization -----------------
+% A = optimvar('A',3);  %  
+% x(1) = []; x(end) = [];
+% 
+% %fun = @(A) A(1)+A(2).*x;
+% %fun =  @(A) A(1)+A(2).*x + A(3).*x.^2 + A(4).*x.^3;
+% fun = @(A) A(1).*x.^4 + A(2).*x.^2 + A(3);
+% %fun = @(A) A(1).*x.^5 + A(2).*x.^3 + A(3).*x;
+% 
+% response = fcn2optimexpr(fun,A,'OutputSize',...
+%     [218,1],'ReuseEvaluation',true);
+% yy2(1) = []; yy2(end) = [];
+% x0.A = [0.25,1,.25];%,3.2];
+% 
+% obj = sum( (response - yy2).^2 );
+% lsqproblem = optimproblem("Objective",obj);
+% [sol,fval] = solve(lsqproblem,x0);
+% 
+% figure(1052)
+% responsedata = evaluate(response,sol);
+% plot(x,yy2,'r*',x,responsedata,'b-')
+% legend('Original Data','Fitted Curve')
+% xlabel 'Segment S'
+% ylabel 'Curvature Kappa'
+% title("Fitted Response")
