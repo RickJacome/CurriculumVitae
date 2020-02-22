@@ -34,6 +34,7 @@ xlabel('Lenght of Road'); ylabel('Curvature \kappa')
 title('Curvature \kappa vs. Cumulative curve length')
 
 %  Smoothing Technique on Curvature----------------
+close all
 figure(1050)
 x = L2; y = KK;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
@@ -79,14 +80,12 @@ n = numel(s);
 % Optimization -----------------
 
 
-t = randn(1,4); % Data for the example
-
 % Coefficients To be Optimized
 vars = {'A1','A2','A3','A4'};
 
 x = optimvar('x',vars,'LowerBound',0);
 
-obj = sum((x - t).^2); % Explicit sum of squares
+obj = sum((x - k).^2); % Explicit sum of squares
 
 prob = optimproblem("Objective",obj);
 
