@@ -1,5 +1,4 @@
 function [A] = spliny(s,k,n,dt)
-    
     A = zeros(n-1,4);
     s_strt = [1 s(1) s(1)^2;
              1 s(2) s(2)^2;

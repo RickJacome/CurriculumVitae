@@ -1,10 +1,10 @@
 clear all;clc; close all
-load('ApproxCoif2L6.mat'); 
+load('ApproxCoif2L6CompleteSignal.mat'); 
 load('SGT.mat');
 Time = SplitGravelTime;
-Time = Time(1:numel(Time)/2);
-Signal =  ApproxCoif2L6(6,:)*-1;
-Signal = Signal(1:numel(Signal)/2);
+%Time = Time(1:numel(Time)/2);
+Signal =  DecomCoif2L6Complete(6,:)*-1;
+%Signal = Signal(1:numel(Signal)/2);
 plot(Time,Signal); hold on
 
 windowSize = 100; % Relate this to frequency
