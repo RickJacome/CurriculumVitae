@@ -9,15 +9,14 @@ Thrs = 0.1; WdwSize = 100;
 load('ApproxCoif2L6CompleteSignal.mat'); 
 load('SGT.mat'); load('SGA.mat')
 t = SplitGravelTime; sig = DecomCoif2L6Complete;
-a = SplitGravelAccel;
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
 % ---------------------------------------
 % Split Sand Testing SSA et SST
 load('ApproxCoif2L6CompleteSignalSSA.mat');
-load('SST.mat');
+load('SST.mat'); load('SSA.mat')
 t = SplitSandTime;  sig = DecomCoif2L6CompSSA;
-CoifPlotter(t,sig);
+CoifPlotter(t,sig); 
 FilterSwitch(Thrs,WdwSize,sig,t)
 % ---------------------------------------
 % Baseline Full Concrete Testing FCA et FCT
