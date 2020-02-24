@@ -11,6 +11,10 @@ subplot(212)
 plot(t,Approx)
 xlabel('Time (sec)'); ylabel('Acceleration (Gs)'); grid on;
 title('Coiflet Filtered Longitudinal Vehicle Acceleration')
+figure
+plot(t,Signal); hold on; plot(t,Approx,'r','Linewidth',2)
+xlabel('Time (sec)'); ylabel('Acceleration (Gs)'); grid on;
+title('Pure Signal and Wavelet Transform Signal')
 end
 
 
