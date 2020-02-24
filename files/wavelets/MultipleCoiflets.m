@@ -7,9 +7,9 @@ Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Split Gravel Testing SGA et SGT
 load('ApproxCoif2L6CompleteSignal.mat'); 
-load('SGT.mat');
+load('SGT.mat'); load('SGA.mat')
 t = SplitGravelTime; sig = DecomCoif2L6Complete;
-
+a = SplitGravelAccel;
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
 % ---------------------------------------
@@ -17,7 +17,6 @@ FilterSwitch(Thrs,WdwSize,sig,t)
 load('ApproxCoif2L6CompleteSignalSSA.mat');
 load('SST.mat');
 t = SplitSandTime;  sig = DecomCoif2L6CompSSA;
-
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
 % ---------------------------------------
@@ -25,16 +24,13 @@ FilterSwitch(Thrs,WdwSize,sig,t)
 load('ApproxCoif2L6CompleteSignalFCA.mat');
 load('FCT.mat');
 t = FullConcreteTime;  sig = DecomCoif2L6CompFCA;
-
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
-
 % ---------------------------------------
 % Full Gravel Testing FGA et FGT
 load('ApproxCoif2L6CompleteSignalFGA.mat');
 load('FGT.mat');
 t = FullGravelTime;  sig = DecomCoif2L6CompFGA;
-
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
 % ---------------------------------------
@@ -42,7 +38,5 @@ FilterSwitch(Thrs,WdwSize,sig,t)
 load('ApproxCoif2L6CompleteSignalFSA.mat');
 load('FST.mat');
 t = FullSandTime;  sig = DecomCoif2L6CompFSA;
-
 CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
-
