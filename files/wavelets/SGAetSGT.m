@@ -10,13 +10,13 @@ CoifPlotter(t,sig);
 FilterSwitch(Thrs,WdwSize,sig,t)
 
 figure
-xq1 = t(1):.01:t(end);
-yy1 = spline(t,a,xq1);
-plot(xq1,yy1); hold on;
-[v,d,n] = DiscInteg(xq1,yy1*9.81);
+xq = t(1):.01:t(end);
+yy = spline(t,a,xq);
+plot(xq,yy); hold on;
+[v,d,n] = DiscIntegSims(xq,yy*9.81);
 
-figure; plot(xq1,v); grid on;
+figure; plot(xq,v); grid on;
 xlabel('Time (sec)'); ylabel('Velocity m/s');
-figure; plot(xq1,d); grid on;
+figure; plot(xq,d); grid on;
 xlabel('Time (sec)'); ylabel('Distance m')
 % ---------------------------------------
