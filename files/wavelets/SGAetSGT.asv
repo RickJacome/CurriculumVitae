@@ -1,0 +1,27 @@
+clc; clear all; close all
+Thrs = 0.1; WdwSize = 100;
+warning
+warning('off','all')
+
+% ---------------------------------------
+% Split Gravel Testing SGA et SGT
+load('ApproxCoif2L6CompleteSignal.mat'); 
+load('SGT.mat'); load('SGA.mat')
+a = SpliGravelAccel;
+t = SplitGravelTime; sig = DecomCoif2L6Complete;
+CoifPlotter(t,sig);
+FilterSwitch(Thrs,WdwSize,sig,t)
+N = numel(t)/2;;
+figure
+xq1 = t(1):.01:t(N);
+yy1 = spline(t(1:N),a(1:N)*-1,xq1);
+xq2 = t(N):.01:t(end);
+yy2 = spline(t(N:end),a(N:end)*-1,xq2);
+plot(xq1,yy1); hold on; plot(xq2,yy2)
+figure; plot(t(1:N),v); grid on;
+hold on; plot(t(N:end),ve); grid on;
+xlabel('Time (sec)'); ylabel('Velocity m/s');
+figure; plot(t(1:N),d); grid on;
+hold on; plot(t(N:end),de); grid on;
+xlabel('Time (sec)'); ylabel('Distance m')
+% ---------------------------------------
