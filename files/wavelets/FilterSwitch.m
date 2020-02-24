@@ -8,7 +8,7 @@ out = filter(kernel, 1, Signal);
 % Plot 1-D Filter with a Window Size of 100
 figure
 subplot(211)
-plot(t,out); hold on
+plot(t,out); grid on; hold on
 
 % Detect When the Average Changes Drastically
 n = numel(Signal);  o = zeros(n,1);
@@ -28,4 +28,4 @@ plot(t,o)
 legend('Moving Window Filtered','Average Switch')
 legend('location','SE')
 subplot(212)
-plot(t,Sig1); hold on; plot(t,Sig2)
+plot(t,Sig1); hold on; plot(t,Sig2); grid on;
