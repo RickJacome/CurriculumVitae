@@ -16,7 +16,7 @@ figure; plot(t,d); grid on;
 xlabel('Time (sec)'); ylabel('Distance m')
 % ---------------------------------------
 % From Literature, 
-% Concrete Coeff Friction Sliding Value = 0.55
+% Concrete Coeff Friction Sliding Value =~ 1.00
 % Select Appropiate Ranges for Braking Incident
 % First Event
 idx1 = find(t ==38); idx2 = find(t ==42);
