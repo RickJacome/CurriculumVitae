@@ -1,4 +1,4 @@
-function [] = FilterSwitch(Thrs,WdwSize,Signal,t)
+function [Sig2] = FilterSwitch(Thrs,WdwSize,Signal,t)
 Signal =  Signal(6,:)*-1;
 windowSize = WdwSize; % Relate this to frequency
 kernel = (1/windowSize)*ones(1,windowSize);
@@ -9,7 +9,8 @@ out = filter(kernel, 1, Signal);
 figure
 subplot(211)
 plot(t,out); grid on; hold on
-
+xlabel('Time (sec)'); ylabel('Acceleration (Gs)');
+title('Acceleration Profile Coiflet + Moving Average Filter')
 % Detect When the Average Changes Drastically
 n = numel(Signal);  o = zeros(n,1);
 threshold = Thrs;
@@ -29,3 +30,5 @@ legend('Moving Window Filtered','Average Switch')
 legend('location','SE')
 subplot(212)
 plot(t,Sig1); hold on; plot(t,Sig2); grid on;
+xlabel('Time (sec)'); ylabel('Acceleration (Gs)');
+title('Detection of Coefficient of Friction Profiles')
