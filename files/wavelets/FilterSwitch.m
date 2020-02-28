@@ -8,9 +8,15 @@ out = filter(kernel, 1, Signal);
 % Plot 1-D Filter with a Window Size of 100
 figure
 subplot(211)
+%-------------------- Here you can ommit this filter and just plot 
+% Signal
 plot(t,out); grid on; hold on
+
+
 xlabel('Time (sec)'); ylabel('Acceleration (Gs)');
 title('Acceleration Profile Coiflet + Moving Average Filter')
+
+
 % Detect When the Average Changes Drastically
 n = numel(Signal);  o = zeros(n,1);
 threshold = Thrs;
