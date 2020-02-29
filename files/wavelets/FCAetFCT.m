@@ -1,4 +1,4 @@
-clc; clear all; close all
+clc; clear all; close all; format compact
 Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Baseline Full Concrete Testing FCA et FCT
@@ -6,6 +6,7 @@ load('ApproxCoif2L6CompleteSignalFCA.mat');
 load('FCT.mat'); load('FCA.mat')
 t = FullConcreteTime;  sig = DecomCoif2L6CompFCA;
 a = FullConcreteAccel; 
+figure; plot(t,a*-1); xlabel('Time (sec)'); ylabel('Acceleration (Gs)')
 CoifPlotter(t,sig); 
 [FricCoeff] = FilterSwitch(Thrs,WdwSize,sig,t);
 % ---------------------------------------
