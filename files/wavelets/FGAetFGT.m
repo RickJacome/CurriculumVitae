@@ -18,7 +18,7 @@ fc = 0.5;
 % Splined Signal from Either Coiflet + 
 % Butterworth filter or original Coiflet Signal
 % To Activate Spline, Uncomment Section Below
-yy = a; tq = t;
+ yy = a; tq = t;
 % tq = 0:.1:t(end);
 % % Choose to Spline True Signal or Butterworth Filtered Signal
 % % yy = spline(t,sig(1,:),tq);
