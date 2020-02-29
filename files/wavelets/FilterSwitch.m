@@ -7,7 +7,7 @@ kernel = (1/windowSize)*ones(1,windowSize);
 out = filter(kernel, 1, Signal);
 % Plot 1-D Filter with a Window Size of 100
 figure
-subplot(211)
+%subplot(211)
 %-------------------- Here you can ommit this filter and just plot 
 % Signal
 plot(t,out); grid on; hold on
@@ -34,7 +34,11 @@ end
 plot(t,o)
 legend('Moving Window Filtered','Average Switch')
 legend('location','SE')
-subplot(212)
+%subplot(212)
+figure
 plot(t,Sig1); hold on; plot(t,Sig2); grid on;
 xlabel('Time (sec)'); ylabel('Acceleration (Gs)');
 title('Detection of Coefficient of Friction Profiles')
+title(' ');
+legend('Filtered Signal','Extracted Signal')
+end
