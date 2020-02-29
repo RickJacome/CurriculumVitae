@@ -15,6 +15,12 @@ figure; plot(t,v); grid on;
 xlabel('Time (sec)'); ylabel('Velocity m/s');
 figure; plot(t,d); grid on;
 xlabel('Time (sec)'); ylabel('Distance m')
+
+
+
+
+
+
 % ---------------------------------------
 % From Literature, 
 % Concrete Coeff Friction Sliding Value =~ 1.00
