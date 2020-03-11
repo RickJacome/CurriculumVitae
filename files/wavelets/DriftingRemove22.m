@@ -17,20 +17,17 @@ legend('Original Signal','Coiflet Signal')
 % Add Section RJ34.4 Here
 % % --------------------------------------
 figure(100);
-sig1x = sig1(1:end);
-sigcoif1x = sigcoif1(1:end);
-t1x = t1(1:end);
+sig1x = sig1(1050:end); sigcoif1x = sigcoif1(1050:end);
+t1x = t1(1050:end);
 plot(t1x,sig1x*-1); hold on;
 plot(t1x,sigcoif1x*-1,'--','Linewidth',1.5); 
-sig2x = sig2(470:end);
-sigcoif2x = sigcoif2(470:end);
-t2x = t2(470:end) - 136;
-plot(t2x,sig2x*-1); 
-plot(t2x,sigcoif2x*-1,'--','Linewidth',1.5)
+t2x = t2 - 119;
+plot(t2x,sig2*-1);
+plot(t2x,sigcoif2*-1,'--','Linewidth',1.5)
 xlabel('Time (sec)'); ylabel('Acceleration Gs')
-legend('SG1','SG1 Approx','SG2','SG2 Approx')
+legend('FC1','FC1 Approx','FC2','FC2 Approx')
+xlim([10 60]);
 legend('location','NW')
-xlim([10 60])
 % % --------------------------------------
 % End of Section RJ34.4
 
