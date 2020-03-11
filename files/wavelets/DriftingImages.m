@@ -1,11 +1,11 @@
 clc; clear all; close all
-% load('ApproxCoif2L6CompleteSignalFCA.mat');
-% load('FCT.mat'); load('FCA.mat')
-% FCt = FullConcreteTime;  FCsigcoif = DecomCoif2L6CompFCA(6,:);
-% FCsignal = FullConcreteAccel; 
-% idx1 = find(FCt ==0); idx2 = find(FCt ==60);
-% idx3 = find(FCt ==130); idx4 = find(FCt ==180);
-% DriftingRemove22(FCt,FCsigcoif,FCsignal,idx1,idx2,idx3,idx4);
+load('ApproxCoif2L6CompleteSignalFCA.mat');
+load('FCT.mat'); load('FCA.mat')
+FCt = FullConcreteTime;  FCsigcoif = DecomCoif2L6CompFCA(6,:);
+FCsignal = FullConcreteAccel; 
+idx1 = find(FCt ==0); idx2 = find(FCt ==60);
+idx3 = find(FCt ==130); idx4 = find(FCt ==180);
+DriftingRemove22(FCt,FCsigcoif,FCsignal,idx1,idx2,idx3,idx4);
 % % --------------------------------------
 % % For this Test  you need Section RJ34.4
 % figure(100);
@@ -63,13 +63,13 @@ clc; clear all; close all
 % legend('FS1','FS1 Approx','FS2','FS2 Approx')
 % legend('location','NW')
 % % %---------------------------------------
-load('ApproxCoif2L6CompleteSignal.mat'); 
-load('SGT.mat'); load('SGA.mat')
-SGt = SplitGravelTime; SGsigcoif = DecomCoif2L6Complete(6,:);
-SGsignal = SpliGravelAccel;
-idx1 = find(SGt == 10); idx2 = find(SGt == 60);
-idx3 = find(SGt ==140); idx4 = find(SGt ==190);
-DriftingRemove22(SGt,SGsigcoif,SGsignal,idx1,idx2,idx3,idx4);
+% load('ApproxCoif2L6CompleteSignal.mat'); 
+% load('SGT.mat'); load('SGA.mat')
+% SGt = SplitGravelTime; SGsigcoif = DecomCoif2L6Complete(6,:);
+% SGsignal = SpliGravelAccel;
+% idx1 = find(SGt == 10); idx2 = find(SGt == 60);
+% idx3 = find(SGt ==140); idx4 = find(SGt ==190);
+% DriftingRemove22(SGt,SGsigcoif,SGsignal,idx1,idx2,idx3,idx4);
 % %---------------------------------------
 % % For this Test  you need Section RJ34.4
 % figure(100);
