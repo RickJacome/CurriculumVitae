@@ -27,6 +27,7 @@ idx3 = find(t ==157); idx4 = find(t ==163);
 % The following inputs, the Range of Braking Incident
 % The Integrated Velocity, and the FricCoeff from Filter Switch
 [FGmu1,FGmu2] = FrictionEst(FricCoeff,v,idx1,idx2,idx3,idx4)
-LitValue = 1;
+%http://hpwizard.com/tire-friction-coefficient.html
+LitValue = 0.90;
 Relative_Error1 = abs((FGmu1 - LitValue))/LitValue*100
 Relative_Error2 = abs((FGmu2 - LitValue))/LitValue*100
