@@ -12,7 +12,7 @@ CoifPlotter(t,sig);
 % Butterworth Filter
 % Attempt to Remove Noise to Avoid
 % Drifting of Speed Integrated Signal
-fc = 0.5;
+fc = 3;
 [ba] = FFTButter(t,a,fc);
 % ---------------------------------------
 % Splined Signal from Either Coiflet + 
@@ -51,7 +51,7 @@ idx1 = find(t ==61); idx2 = find(t ==70);
 idx3 = find(t ==160); idx4 = find(t ==176);
 % The following inputs, the Range of Braking Incident
 % The Integrated Velocity, and the FricCoeff from Filter Switch
-[FGmu1,FGmu2] = FrictionEst(FricCoeff,v,idx1,idx2,idx3,idx4)
+[FGmu1,FGmu2] = FrictionEst(FricCoeff,v',idx1,idx2,idx3,idx4)
 LitValue = 0.55;
 Relative_Error1 = abs((FGmu1 - LitValue))/LitValue*100
 Relative_Error2 = abs((FGmu2 - LitValue))/LitValue*100
