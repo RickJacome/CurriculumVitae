@@ -10,8 +10,8 @@ title('FFT to Select Cutoff Frequency')
 % Use FFT to select a Cutoff Freq
 [B,A] = butter(1,fc/(fs/2),'low');
 Output = filter(B,A,signal);
-figure;hold on; plot(t,signal);
-plot(t,Output,'r','Linewidth',2)
-xlabel('Time (sec)'); ylabel('Acceleration Gs');
+figure;hold on; plot(t,signal*-1);
+plot(t,Output*-1,'r','Linewidth',2)
+xlabel('Time (sec)'); ylabel('Acceleration (Gs)');
 title('Pure and Butterworth Filtered Signal')
 end
