@@ -31,7 +31,7 @@ xlabel('Time (sec)'); ylabel('Acceleration (Gs)'); grid on;
 title('Filtered Longitudinal Vehicle Acceleration')
 ylim([-.5 1]); xlim([15 100])
 
- [C,L] = wavedec(Signal,6,'coif2')
+ [C,L] = wavedec(Signal,6,'coif2');
 approx = appcoef(C,L,'coif2');
 [cd1,cd2,cd3,cd4,cd5,cd6] = detcoef(C,L,[1 2 3 4 5 6]);
 
