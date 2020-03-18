@@ -3,7 +3,7 @@ clc; close all; clear all
 load('FCA.mat')
 format compact
 Signal = FullConcreteAccel;
-s = 1e2; wv = 'db2';
+s = 1e3; wv = 'coif2';
 MaxDecompLevel = wmaxlev(s,wv)
 
 for k = 1:MaxDecompLevel
