@@ -2,8 +2,8 @@ clc; clear all; close all
 Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Full Sand Testing FSA et FST
-load('ApproxCoif2L6CompleteSignalFSA.mat');
-load('FST.mat'); load('FSA.mat')
+load('matlabData\ApproxCoif2L6CompleteSignalFSA.mat');
+load('matlabData\FST.mat'); load('matlabData\FSA.mat')
 t = FullSandTime;  sig = DecomCoif2L6CompFSA;
 a  = FullSandAccel; 
 CoifPlotter(t,sig);
