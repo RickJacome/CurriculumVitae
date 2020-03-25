@@ -1,7 +1,7 @@
 %% Fitting Code
 clear all;clc; close all
-load('ApproxCoif2L6.mat'); 
-load('SGT.mat');
+load('matlabData\ApproxCoif2L6.mat'); 
+load('matlabData\SGT.mat');
 Time = SplitGravelTime;
 Time = Time(1:numel(Time)/2);
 Signal =  ApproxCoif2L6(6,:)*-1;
