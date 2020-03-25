@@ -1,6 +1,6 @@
 %% FFT Trial from Mathworks Code
 clear all; clc; close all
-load('SGAHalf.mat'); load('SGT.mat');
+load('matlabData\SGAHalf.mat'); load('matlabData\SGT.mat');
 Time = SplitGravelTime(1:numel(SplitGravelTime)/2);
 SGAHalf = SGAHalf*-1;
 fftf(Time, SGAHalf, [], 20);
