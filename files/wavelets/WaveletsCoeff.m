@@ -1,5 +1,5 @@
 close all; clc; clear all
-load('SGT.mat'); load('SGA.mat')
+load('matlabData\SGT.mat'); load('matlabData\SGA.mat')
 SGA = SpliGravelAccel; SGT = SplitGravelTime;
 ts = abs(SGT(1) - SGT(2));
 fr = 1/ts;
