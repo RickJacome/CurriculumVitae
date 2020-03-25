@@ -14,7 +14,7 @@ plot(coifwavf('coif5')); xlim([0 20])
 title('Coiflet 2 Scaling Coefficients')
 ylabel('Amplitude'); xlabel('Section Series')
 
-load('ApproxCoif2L6.mat'); load('SGT.mat');
+load('matlabData\ApproxCoif2L6.mat'); load('matlabData\SGT.mat');
 Time = SplitGravelTime;
 figure; subplot(211)
 Signal = ApproxCoif2L6(1,:)*-1; Approx = ApproxCoif2L6(6,:)*-1;
