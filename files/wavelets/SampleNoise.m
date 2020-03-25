@@ -1,6 +1,6 @@
 clc; clear all; close all
-load('Sample_Approx.mat')
-load('SampleCoeff.mat')
+load('matlabData\Sample_Approx.mat')
+load('matlabData\SampleCoeff.mat')
 t = (0:0.1:12)'; n = numel(t);
 x = sawtooth(t); 
 y = awgn(x,1,'measured');
