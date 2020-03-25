@@ -1,6 +1,6 @@
 clear all;clc; close all
-load('ApproxCoif2L6CompleteSignal.mat'); 
-load('SGT.mat');
+load('matlabData\ApproxCoif2L6CompleteSignal.mat'); 
+load('matlabData\SGT.mat');
 Time = SplitGravelTime;
 %Time = Time(1:numel(Time)/2);
 Signal =  DecomCoif2L6Complete(6,:)*-1;
