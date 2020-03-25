@@ -4,9 +4,9 @@ load('FCA.mat')
 format compact
 Signal = FullConcreteAccel;
 s = 1e3; wv = 'coif2';
-MaxDecompLevel = wmaxlev(s,wv)
-
-for k = 1:MaxDecompLevel
+MaxDecompLevel1000 = wmaxlev(1000,wv)
+MaxDecompLevel100 = wmaxlev(100,wv)
+for k = 1:MaxDecompLevel1000
         ha(k) = EnergyShanonRatio(Signal,k,'haar');
         coi(k) = EnergyShanonRatio(Signal,k,'coif2');
         db(k) = EnergyShanonRatio(Signal,k,'db2');
