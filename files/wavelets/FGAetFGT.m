@@ -2,8 +2,8 @@ clc; clear all; close all
 Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Full Gravel Testing FGA et FGT
-load('ApproxCoif2L6CompleteSignalFGA.mat');
-load('FGT.mat'); load('FGA.mat')
+load('matlabData\ApproxCoif2L6CompleteSignalFGA.mat');
+load('matlabData\FGT.mat'); load('matlabData\FGA.mat')
 t = FullGravelTime;  sig = DecomCoif2L6CompFGA;
 a  = FullGravelAccel; 
 CoifPlotter(t,sig); 
