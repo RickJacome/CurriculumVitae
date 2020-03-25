@@ -2,8 +2,8 @@ clc; clear all; close all
 Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Split Gravel Testing SGA et SGT
-load('ApproxCoif2L6CompleteSignal.mat'); 
-load('SGT.mat'); load('SGA.mat')
+load('matlabData\ApproxCoif2L6CompleteSignal.mat'); 
+load('matlabData\SGT.mat'); load('matlabData\SGA.mat')
 a = SpliGravelAccel;
 t = SplitGravelTime; sig = DecomCoif2L6Complete;
 CoifPlotter(t,sig);
