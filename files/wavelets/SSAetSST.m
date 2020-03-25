@@ -2,8 +2,8 @@ clc; clear all; close all
 Thrs = 0.1; WdwSize = 100;
 % ---------------------------------------
 % Split Sand Testing SSA et SST
-load('ApproxCoif2L6CompleteSignalSSA.mat');
-load('SST.mat'); load('SSA.mat')
+load('matlabData\ApproxCoif2L6CompleteSignalSSA.mat');
+load('matlabData\SST.mat'); load('matlabData\SSA.mat')
 a = SplitSandAccel;
 t = SplitSandTime;  sig = DecomCoif2L6CompSSA;
 CoifPlotter(t,sig);
