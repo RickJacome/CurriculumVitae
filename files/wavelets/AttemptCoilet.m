@@ -1,7 +1,7 @@
 close all
 % load('ApproxCoif2L6.mat'); 
-load('ApproxCoif2L6COmpleteSignal.mat')
-load('SGT.mat');
+load('matlabData\ApproxCoif2L6COmpleteSignal.mat')
+load('matlabData\SGT.mat');
 
 Time = SplitGravelTime;
 figure(2); subplot(211)
