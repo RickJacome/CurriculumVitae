@@ -1,30 +1,49 @@
 %%Coilet Analysis 
 clc; close all; clear all
-load('FCA.mat')
+load('FCA1Accelx.mat')
 format compact
-Signal = FullConcreteAccel;
-wv = 'coif2';
-s1 = 1e3; 
-MaxDecompLevel1 = wmaxlev(s1,wv);
-s2 = 1e2; 
-MaxDecompLevel2 = wmaxlev(s2,wv);
-for k = 1:MaxDecompLevel1
+Signal = FCA1Accelx; Signal(isnan(Signal))=[];
+wv1 = 'coif1'; wv2 = 'haar';
+s1 = 100; s2 = 1000; 
+MaxDecompLevelCoif1 = wmaxlev(s1,wv1);
+MaxDecompLevelCoif2 = wmaxlev(s2,wv1);
+MaxDecompLevelHaar1 = wmaxlev(s1,wv2);
+MaxDecompLevelHaar2 = wmaxlev(s2,wv2);
+
+for k = 1:6
         ha(k) = EnergyShanonRatio(Signal,k,'haar');
-        coi(k) = EnergyShanonRatio(Signal,k,'coif2');
+        coi(k) = EnergyShanonRatio(Signal,k,'coif1');
         db(k) = EnergyShanonRatio(Signal,k,'db2');
         dm(k) = EnergyShanonRatio(Signal,k,'dmey');
         sy(k) = EnergyShanonRatio(Signal,k,'sym2');        
 end
-    R = [ha; coi; db; dm; sy]
+R1 = [ha; coi; db; dm; sy]
 T = table(abs(ha'), abs(coi'), abs(db'), abs(dm'), abs(sy'));
 filename = 'DecompLevelEnergy.xlsx';
 writetable(T,filename,'Sheet',1,'Range','B1')
-% The highest Level of Energy Ratio is Coiflet
-
-% [ERatio1] = RelativeEnergy(Signal,'coif1')
-% [ERatio2] = RelativeEnergy(Signal,'coif2')
-% [ERatio3] = RelativeEnergy(Signal,'coif3')
-% [ERatio4] = RelativeEnergy(Signal,'coif4')
-% [ERatio5] = RelativeEnergy(Signal,'coif5')
+%  
+% R1 =
+%    1.0e+04 *
+%     0.6245    1.3037    1.6972
+%     0.4748    1.2165    1.6281
+%     0.5731    1.3092    1.7161
+%     0.4172    1.2628    1.6796
+%     0.5731    1.3092    1.7161
+% 
+% R1 = 
+%    1.0e+04 *
+%     0.6245    1.3037    1.6972    2.0811    2.4112    2.7420
+%     0.4748    1.2165    1.6281    1.9868    2.2978    2.5958
+%     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369
+%     0.4172    1.2628    1.6796    2.0039    2.2647    2.4513
+%     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369
+%   
+%R1 =
+%    1.0e+04 *
+%     0.6245    1.3037    1.6972    2.0811    2.4112    2.7420    3.0760    3.4026    4.3199
+%     0.4748    1.2165    1.6281    1.9868    2.2978    2.5958    2.8756    3.1480    3.3394
+%     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369    3.0572    3.4062    3.7171
+%     0.4172    1.2628    1.6796    2.0039    2.2647    2.4513    2.5008    2.3636    2.0522
+%     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369    3.0572    3.4062    3.7171
 
 
