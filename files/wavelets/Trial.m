@@ -1,7 +1,26 @@
-%Navigation Notes:
-% To extract data, I used the Slice data in Excel for Data analysis
-% Name Convention for different Accelerations
-% Column in Excel = Name in Matlab Folder
-%Column V = FCA1CFC180avec10msAvgAccelx
-%Column H = FCA1ZeroCFC180Accelx
-%Column C = FCA1Accelx
+clc; close all; clear all
+load('matlabData\Slice\FCA1Accelx.mat'); 
+%Slice Signal 1000 Hz
+Signal = FCA1Accelx; Signal(isnan(Signal))=[];
+[C,L] = wavedec(Signal,6,'coif2');
+approx = appcoef(C,L,'coif2');
+plot(approx); title('Coiflet2 Approximation Slice')
+figure
+[C,L] = wavedec(Signal,9,'haar');
+approx = appcoef(C,L,'haar');
+plot(approx); title('Haar Approximation Slice')
+
+
+%VC4000 Signal 100 Hz
+load('matlabData\FCA.mat'); 
+Signal = FullConcreteAccel;
+figure
+[C,L] = wavedec(Signal,3,'coif2');
+approx = appcoef(C,L,'coif2');
+plot(approx); title('Coiflet2 Approximation VC4000')
+
+figure
+[C,L] = wavedec(Signal,6,'haar');
+approx = appcoef(C,L,'haar');
+plot(approx); title('Haar Approximation VC4000')
+
