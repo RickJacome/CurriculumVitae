@@ -1,5 +1,5 @@
 %%Coilet Analysis 
-clc; close all; clear all
+clc; clear all
 load('FCA1Accelx.mat')
 format compact
 Signal = FCA1Accelx; Signal(isnan(Signal))=[];
@@ -10,7 +10,7 @@ MaxDecompLevelCoif2 = wmaxlev(s2,wv1);
 MaxDecompLevelHaar1 = wmaxlev(s1,wv2);
 MaxDecompLevelHaar2 = wmaxlev(s2,wv2);
 
-for k = 1:9
+for k = 1:6
         ha(k) = EnergyShanonRatio(Signal,k,'haar');
         coi(k) = EnergyShanonRatio(Signal,k,'coif1');
         coi2(k) = EnergyShanonRatio(Signal,k,'coif2');
@@ -30,3 +30,7 @@ writetable(T,filename,'Sheet',1,'Range','B1')
 %     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369    3.0572    3.4062    3.7171
 %     0.4172    1.2628    1.6796    2.0039    2.2647    2.4513    2.5008    2.3636    2.0522
 %     0.5731    1.3092    1.7161    2.0820    2.4123    2.7369    3.0572    3.4062    3.7171
+
+
+
+output = relative_energy1(Signal,512,6)
