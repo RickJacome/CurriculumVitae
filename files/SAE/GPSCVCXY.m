@@ -49,35 +49,6 @@ plot(x,y,'b.',x,yy2,'r-'); grid on;  ylim([0,.3])
 xlabel('Segment S (m)'); ylabel('Curvature K')
 legend('Original data','Smoothed Data',...
        'Location','best')
-
-   
-A = optimvar('A',3);  %  
-x(1) = []; x(end) = [];
-
-%fun = @(A) A(1)+A(2).*x;
-%fun =  @(A) A(1)+A(2).*x + A(3).*x.^2 + A(4).*x.^3;
-fun = @(A) A(1).*x.^4 + A(2).*x.^2 + A(3);
-%fun = @(A) A(1).*x.^5 + A(2).*x.^3 + A(3).*x;
-
-response = fcn2optimexpr(fun,A,'OutputSize',...
-    [218,1],'ReuseEvaluation',true);
-yy2(1) = []; yy2(end) = [];
-x0.A = [0.25,1,.25];%,3.2];
-
-obj = sum( (response - yy2).^2 );
-lsqproblem = optimproblem("Objective",obj);
-[sol,fval] = solve(lsqproblem,x0);
-
-figure(1052)
-responsedata = evaluate(response,sol);
-plot(x,yy2,'r*',x,responsedata,'b-')
-legend('Original Data','Fitted Curve')
-xlabel 'Segment S'
-ylabel 'Curvature Kappa'
-title("Fitted Response")
-
-% 
-%    
    
 %-------
 [Th,n] = DiscInteg(K2,L2);
