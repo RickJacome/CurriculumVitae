@@ -16,26 +16,27 @@ r_k = @(x,s,y) ((x(5)./(x(2)-x(1))).*s - x(1).*x(5)./(x(2)-x(1))).*(heaviside(s-
 %g_r=@(x,t) [exp(x(2).*t);...
 %            x(1)*t.*exp(x(2).*t)];
 
-g_r = @(x,s) [(heaviside(s - x(1)) - heaviside(s - x(2))).*(x(5)./(x(1) - x(2)) + (s.*x(5))./(x(1) - x(2)).^2 - (x(1).*x(5))./(x(1) - x(2)).^2) + dirac(s - x(2)).*((s.*x(5))./(x(1) - x(2)) - (x(1).*x(5))./(x(1) - x(2)));...
- - ((s.*x(5))./(x(1) - x(2)).^2 - (x(1).*x(5))./(x(1) - x(2)).^2).*(heaviside(s - x(1)) - heaviside(s - x(2))) - dirac(s - x(2)).*((s.*x(5))./(x(1) - x(2)) - (x(1).*x(5))./(x(1) - x(2))) - x(5).*dirac(s - x(2));...
- x(5).*dirac(s - x(3)) - (heaviside(s - x(3)) - heaviside(s - x(4))).*(x(5)./(x(3) - x(4)) + (s.*x(5))./(x(3) - x(4)).^2 - (x(3).*x(5))./(x(3) - x(4)).^2) - dirac(s - x(3)).*(x(5) + (s.*x(5))./(x(3) - x(4)) - (x(3).*x(5))./(x(3) - x(4)));...
-                                          ((s.*x(5))./(x(3) - x(4)).^2 - (x(3).*x(5))./(x(3) - x(4)).^2).*(heaviside(s - x(3)) - heaviside(s - x(4))) + dirac(s - x(4)).*(x(5) + (s.*x(5))./(x(3) - x(4)) - (x(3).*x(5))./(x(3) - x(4)));...
- heaviside(s - x(2)) - heaviside(s - x(3)) - (s./(x(1) - x(2)) - x(1)./(x(1) - x(2))).*(heaviside(s - x(1)) - heaviside(s - x(2))) + (heaviside(s - x(3)) - heaviside(s - x(4))).*(s./(x(3) - x(4)) - x(3)./(x(3) - x(4)) + 1)];
+g_r = @(x,s) [((heaviside(s - x(1))-heaviside(s - x(2))).*(x(5)./(x(1) - x(2))+(s.*x(5))./(x(1) - x(2)).^2-(x(1).*x(5))./(x(1)-x(2)).^2)+dirac(s - x(2)).*((s.*x(5))./(x(1)-x(2))-(x(1).*x(5))./(x(1) - x(2))));...
+ (-((s.*x(5))./(x(1)-x(2)).^2-(x(1).*x(5))./(x(1) - x(2)).^2).*(heaviside(s - x(1))-heaviside(s - x(2)))-dirac(s - x(2)).*((s.*x(5))./(x(1) - x(2))-(x(1).*x(5))./(x(1)-x(2)))-x(5).*dirac(s - x(2)));...
+ (x(5).*dirac(s - x(3))-(heaviside(s - x(3))-heaviside(s - x(4))).*(x(5)./(x(3)-x(4))+(s.*x(5))./(x(3)-x(4)).^2-(x(3).*x(5))./(x(3) - x(4)).^2) - dirac(s - x(3)).*(x(5) + (s.*x(5))./(x(3) - x(4)) - (x(3).*x(5))./(x(3) - x(4))));...
+ (((s.*x(5))./(x(3)-x(4)).^2-(x(3).*x(5))./(x(3) - x(4)).^2).*(heaviside(s - x(3))-heaviside(s - x(4)))+dirac(s - x(4)).*(x(5)+(s.*x(5))./(x(3)-x(4))-(x(3).*x(5))./(x(3)-x(4))));...
+ (heaviside(s - x(2))-heaviside(s - x(3))-(s./(x(1)-x(2))-x(1)./(x(1) - x(2))).*(heaviside(s - x(1))-heaviside(s - x(2)))+(heaviside(s - x(3))-heaviside(s - x(4))).*(s./(x(3)-x(4))-x(3)./(x(3)-x(4))+1))];
          
 %Data without outlier
 s=[1 3 5 8 12]; y=[0 5 5 5 0];
 %Starting point
-x=[1 2 2.5 4.8 4.7]; %<--- Make sure you don't repeat values, or it will 
+x=[1 3 5 4.8 10]; %<--- Make sure you don't repeat values, or it will 
 % be NaN
 % IC In vector form
 x_k(1,:) = x;
 % From Equation 10.27 (right), J'*r can be calculated as:
 b = r_k(x_k(1,:),s,y)*g_r(x_k(1,:),s)';
-% QR Factorization for  J'J from Equation 10.27 (left)
-[Q R]=qr(g_r(x_k(1,:),s)*g_r(x_k(1,:),s)');
-p_k=-1*(R\Q'*b'); % Gaussian - Newton step
-cond(Q)
-cond(R)
+% J'J from Equation 10.27 (left)
+c = g_r(x_k(1,:),s)*g_r(x_k(1,:),s)';
+% Now Equation c*p_k = b, need to solve for p_k
+ % Gaussian - Newton step
+cond(b)
+cond(c)
 i = 1;
 % %Backtracking parameters
 % alpha(i) = 1; c = 10e-6; rho = 0.7;
