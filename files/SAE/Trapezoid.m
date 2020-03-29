@@ -17,3 +17,5 @@ f3 = eq2*(heaviside(s-x3) - heaviside(s-x4));
 fplot(f1 + f2 + f3 ,[0 x4+2])
 ylim([0 x5+2])
 
+
+
