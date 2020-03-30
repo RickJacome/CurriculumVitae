@@ -23,9 +23,10 @@ g_r = @(x,s) [((heaviside(s - x(1))-heaviside(s - x(2))).*(x(5)./(x(1) - x(2))+(
  (heaviside(s - x(2))-heaviside(s - x(3))-(s./(x(1)-x(2))-x(1)./(x(1) - x(2))).*(heaviside(s - x(1))-heaviside(s - x(2)))+(heaviside(s - x(3))-heaviside(s - x(4))).*(s./(x(3)-x(4))-x(3)./(x(3)-x(4))+1))];
          
 %Data without outlier
-s=[1 3 5 8 12]; y=[0 5 5 5 0];
+s =[1 3 5 7 8 12];
+y=[0 5.4 4.8 5 5.6 0];
 %Starting point
-x=[1 3 5 4.8 10]; %<--- Make sure you don't repeat values, or it will 
+x = [0.9 2.9 4.89 7.85 11.56]; %<--- Make sure you don't repeat values, or it will 
 % be NaN
 % IC In vector form
 x_k(1,:) = x;
@@ -37,59 +38,61 @@ c = g_r(x_k(1,:),s)*g_r(x_k(1,:),s)';
  % Gaussian - Newton step
 cond(b)
 cond(c)
+[Q R]=qr(c);
+p_k=-1*(R\Q'*b'); % Gaussian - Newton step
 i = 1;
-% %Backtracking parameters
-% alpha(i) = 1; c = 10e-6; rho = 0.7;
-% % Stopping Criteria, norm of gradient
-% % which is J'*r
-% error(i)=norm(g_r(x,s)*r_k(x_k(i,:),s,y)',2);
-% % Stop Parameters
-% tol=1e-10;  maxi = 1e9;
-% while error(i) > tol && i < maxi
-%      xx=x_k(i,:);
-%      b=r_k(xx,s,y)*g_r(xx,s)';
-%      [Q R]=qr(g_r(xx,s)*g_r(xx,s)');
-%      p_k=-1*(R\Q'*b'); % Gaussian - Newton step
-%      alpha(i)=BackTracking(xx,s,y,c,rho,p_k,r_k,g_r);
-%      x_k(i+1,:)=x_k(i,:)+(alpha(i)*p_k)';
-%      i=i+1; % Update Step;
-%     %Update Error
-%      error(i)=norm(g_r(x_k(i,:),s)*r_k(x_k(i,:),s,y)',2);
-% end
-% x_min = x_k(i,:);   %Minimizer x*
-% plot(s,y,'*r'); hold on; grid on
-% T=(1:0.01:max(s)); yy = m_f(x_min,T);
-% plot(T,yy,'b'); xlabel('t values'); ylabel('y values')
-% title('Gauss-Newton for Minimization of Non-Linear Least-Squares')
-% % The model obtained seems like a good model even though it does not
-% % go through every point in the dataset (though, it doesn't need to).
-% ex = 1;
-% for k = 1:ex:numel(error)
-%     T1 = k;
-%     fprintf('Iteration Number\n %7d \n',T1)   
-%     T2 = x_k(k); 
-%     fprintf('Function Value \n %7.2f \n',T2)
-%     T3 = error(k);
-%     fprintf('Norm of Gradient \n %7.2f \n',T3)   
-%     
-%     fprintf('Met Stopping Criteria? \n')
-%     if T3 > tol
-%            fprintf('No\n')
-%     else
-%      fprintf('Yes, convergence by norm(r) >= tolerance\n') 
-%     end           
-% end
-% 
-% if maxi == i
-%        fprintf('Convergence Achieved by Iterations >= Max# Iterations\n')
-%        fprintf('With # of iterations: %7d \n',i)       
-% else
-%        fprintf('Convergence Achieved by norm(r) >= tolerance\n with ')
-%        fprintf('With # of iterations: %7d \n',i)
-% end
-% 
-% 
-% 
-% 
-% 
-% 
+%Backtracking parameters
+alpha(i) = 1; c = 10e-6; rho = 0.7;
+% Stopping Criteria, norm of gradient
+% which is J'*r
+error(i)=norm(g_r(x,s)*r_k(x_k(i,:),s,y)',2);
+% Stop Parameters
+tol=1e-7;  maxi = 1e3;
+while error(i) > tol && i < maxi
+     xx=x_k(i,:);
+     b=r_k(xx,s,y)*g_r(xx,s)';
+     [Q R]=qr(g_r(xx,s)*g_r(xx,s)');
+     p_k=-1*(R\Q'*b'); % Gaussian - Newton step
+     alpha(i)=BackTracking(xx,s,y,c,rho,p_k,r_k,g_r);
+     x_k(i+1,:)=x_k(i,:)+(alpha(i)*p_k)';
+     i=i+1; % Update Step;
+    %Update Error
+     error(i)=norm(g_r(x_k(i,:),s)*r_k(x_k(i,:),s,y)',2);
+end
+x_min = x_k(i,:);   %Minimizer x*
+plot(s,y,'*r'); hold on; grid on
+T=(1:0.01:max(s)); yy = m_f(x_min,T);
+plot(T,yy,'b'); xlabel('t values'); ylabel('y values')
+title('Gauss-Newton for Minimization of Non-Linear Least-Squares')
+% The model obtained seems like a good model even though it does not
+% go through every point in the dataset (though, it doesn't need to).
+ex = 1;
+for k = 1:ex:numel(error)
+    T1 = k;
+    fprintf('Iteration Number\n %7d \n',T1)   
+    T2 = x_k(k); 
+    fprintf('Function Value \n %7.2f \n',T2)
+    T3 = error(k);
+    fprintf('Norm of Gradient \n %7.2f \n',T3)   
+    
+    fprintf('Met Stopping Criteria? \n')
+    if T3 > tol
+           fprintf('No\n')
+    else
+     fprintf('Yes, convergence by norm(r) >= tolerance\n') 
+    end           
+end
+
+if maxi == i
+       fprintf('Convergence Achieved by Iterations >= Max# Iterations\n')
+       fprintf('With # of iterations: %7d \n',i)       
+else
+       fprintf('Convergence Achieved by norm(r) >= tolerance\n with ')
+       fprintf('With # of iterations: %7d \n',i)
+end
+
+
+
+
+
+
