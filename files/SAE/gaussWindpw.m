@@ -26,7 +26,7 @@ xlabel('Samples'); title('Gaussian Window, N = 64')
 end
 
 
-n = -(N-1)/2:(N-1)/2;
+%n = -(N-1)/2:(N-1)/2;
 n = -0.01:0.0001:0.01;
 N = numel(n);
 alpha = 0.1; % This makes the function thinner
