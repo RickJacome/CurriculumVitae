@@ -1,20 +1,14 @@
-% Homework 4 Problem 6, part 1
 clear all; clc; close all;
 %Model Fitting function, nonlinear
-%m_f =@(x,t) x(1).*exp(x(2).*t);
 m_f = @(x,s) ((x(5)./(x(2)-x(1))).*s - x(1).*x(5)./(x(2)-x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
      x(5).*(heaviside(s-x(2))-heaviside(s-x(3))) + ...
 ((x(5)./(x(4)-x(3))).*-s + ( (x(3).*x(5))./(x(4) - x(3)) + x(5))).*(heaviside(s-x(3)) - heaviside(s-x(4)));
-
 % Residual Function
-%r_k=@(x,t,y)(x(1).*exp(x(2).*t)-y);
 r_k = @(x,s,y) ((x(5)./(x(2)-x(1))).*s - x(1).*x(5)./(x(2)-x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
      x(5).*(heaviside(s-x(2))-heaviside(s-x(3))) + ...
 ((x(5)./(x(4)-x(3))).*-s + ( (x(3).*x(5))./(x(4) - x(3)) + x(5))).*(heaviside(s-x(3)) - heaviside(s-x(4)) - y);
 
 % Gradient of Residual
-%g_r=@(x,t) [exp(x(2).*t);...
-%            x(1)*t.*exp(x(2).*t)];
 
 g_r = @(x,s) [((heaviside(s - x(1))-heaviside(s - x(2))).*(x(5)./(x(1) - x(2))+(s.*x(5))./(x(1) - x(2)).^2-(x(1).*x(5))./(x(1)-x(2)).^2)+dirac(s - x(2)).*((s.*x(5))./(x(1)-x(2))-(x(1).*x(5))./(x(1) - x(2))));...
  (-((s.*x(5))./(x(1)-x(2)).^2-(x(1).*x(5))./(x(1) - x(2)).^2).*(heaviside(s - x(1))-heaviside(s - x(2)))-dirac(s - x(2)).*((s.*x(5))./(x(1) - x(2))-(x(1).*x(5))./(x(1)-x(2)))-x(5).*dirac(s - x(2)));...
@@ -42,12 +36,12 @@ cond(c)
 p_k=-1*(R\Q'*b'); % Gaussian - Newton step
 i = 1;
 %Backtracking parameters
-alpha(i) = 1; c = 10e-6; rho = 0.7;
+alpha(i) = 1; c = 10e-3; rho = 0.7;
 % Stopping Criteria, norm of gradient
 % which is J'*r
 error(i)=norm(g_r(x,s)*r_k(x_k(i,:),s,y)',2);
 % Stop Parameters
-tol=1e-7;  maxi = 1e3;
+tol=1e-7;  maxi = 1e1;
 while error(i) > tol && i < maxi
      xx=x_k(i,:);
      b=r_k(xx,s,y)*g_r(xx,s)';
@@ -68,13 +62,9 @@ title('Gauss-Newton for Minimization of Non-Linear Least-Squares')
 % go through every point in the dataset (though, it doesn't need to).
 ex = 1;
 for k = 1:ex:numel(error)
-    T1 = k;
-    fprintf('Iteration Number\n %7d \n',T1)   
-    T2 = x_k(k); 
-    fprintf('Function Value \n %7.2f \n',T2)
-    T3 = error(k);
-    fprintf('Norm of Gradient \n %7.2f \n',T3)   
-    
+    T1 = k; fprintf('Iteration Number\n %7d \n',T1)   
+    T2 = x_k(k);fprintf('Function Value \n %7.2f \n',T2)
+    T3 = error(k); fprintf('Norm of Gradient \n %7.2f \n',T3)   
     fprintf('Met Stopping Criteria? \n')
     if T3 > tol
            fprintf('No\n')
