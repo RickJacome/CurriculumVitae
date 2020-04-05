@@ -1,5 +1,5 @@
 % delete('vpathr2.xlsx')
-clear all; clc
+clear all; clc; close all
 %% Tranversing a curve with radius R, 90degrees not counting transitions
 % Curve and transitions are based on AASHTO guidelines
 minradius = xlsread('min_radius');
@@ -23,11 +23,9 @@ a = w_constant/Ltime; %rad/s^2  Assuming Constant Acceleration on everything
 sum_t = 2*Ltime + curve_t;  
 pathlength = round(sum_t/tstep)+100;   % + 100 is just extra lenght
 %% Road Path
-w = zeros(pathlength,1);
-theta = zeros(pathlength,1);
+w = zeros(pathlength,1); theta = zeros(pathlength,1);
 t = zeros(pathlength,1);
-x = zeros(pathlength,1);
-y = zeros(pathlength,1);
+x = zeros(pathlength,1);  y = zeros(pathlength,1);
 r = zeros(pathlength,1);
 r(1,1) = 61958;  % Interpolated Starting Point (to avoid Zero)
 for i = 2:round(Ltime/tstep)
@@ -86,9 +84,6 @@ for i = 2:pathlength
     ym(i,1) = y(i,1)*.3048;
 end
 %% Plotting
-figure(1);
-plot(x,y);
-figure(2);
-plot(t,r);
-figure(3);
-plot(t,wheel_angle);
+figure(1); plot(x,y);
+figure(2); plot(t,r);
+figure(3); plot(t,wheel_angle);
