@@ -1,0 +1,21 @@
+#RESET THE AMPL ENVIROMENT
+reset;
+
+#LOAD THE MODEL
+#model example3.mod;
+model examplemine.mod;
+
+#LOAD THE DATA
+data example3.dat;
+
+#DISPLAY THE PROBLEM FORMULATION
+expand z, Constraint1, Constraint2;
+
+#CHANGE THE SOLVER (optional)
+#option solver cplex;
+
+#SOLVE
+solve;
+
+#SHOW RESULTS
+display X, z;

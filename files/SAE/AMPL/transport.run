@@ -1,0 +1,21 @@
+#RESET THE AMPL ENVIROMENT
+reset;
+
+#LOAD THE MODEL
+model transport.mod;
+
+#LOAD THE DATA
+data transport.dat;
+#data transportmini.dat;
+
+#DISPLAY THE PROBLEM FORMULATION
+expand Total_Cost;
+
+#CHANGE THE SOLVER (optional)
+#option solver cplex;
+
+#SOLVE
+solve;
+
+#SHOW RESULTS
+display Trans;
