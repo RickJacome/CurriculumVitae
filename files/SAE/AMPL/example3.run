@@ -2,13 +2,14 @@
 reset;
 
 #LOAD THE MODEL
-model example3.mod;
+#model example3.mod;
+model examplemine.mod;
 
 #LOAD THE DATA
 data example3.dat;
 
 #DISPLAY THE PROBLEM FORMULATION
-expand z, Constraint;
+expand z, Constraint1, Constraint2;
 
 #CHANGE THE SOLVER (optional)
 #option solver cplex;
