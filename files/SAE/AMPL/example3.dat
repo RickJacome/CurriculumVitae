@@ -1,5 +1,6 @@
 param n := 4;
 param m := 4;
+param k := 2;
 
 param	C :=
 		1	50
