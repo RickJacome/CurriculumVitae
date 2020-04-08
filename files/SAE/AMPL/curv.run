@@ -1,0 +1,15 @@
+#RESET THE AMPL ENVIROMENT
+reset;
+
+#LOAD THE MODEL
+#model example3.mod;
+model curv.mod;
+
+#LOAD THE DATA
+data curv.dat;
+
+expand norm, C2, C3;
+
+solve;
+
+display norm, x[1], x[2], x[3];
