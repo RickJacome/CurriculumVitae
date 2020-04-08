@@ -9,7 +9,7 @@ model examplemine.mod;
 data example3.dat;
 
 #DISPLAY THE PROBLEM FORMULATION
-expand z, Constraint1, Constraint2;
+expand z, ConstraintI, ConstraintE;
 
 #CHANGE THE SOLVER (optional)
 #option solver cplex;
