@@ -4,16 +4,12 @@ clc; clear all; close all
 % a "drop" the function compensates and does not generate a drop
 % The only problem is that the function only behaves properly when the data
 % starts at 0 for y-axis
-s = 1:.01:30;
-%y = [0 2 4.8 5.2 5 5.6];
-n = numel(s)-1;
+s = 1:.01:30; n = numel(s)-1;
 y1 = (2.*s(1:n/2) - 3)*1e-3;
 y2 = 26*ones(1,n/2)*1e-3;
 y1o = awgn(y1,25,'measured');
 y2o = awgn(y2,25,'measured');
-
-y = [y1o y2o];
-x0 = [0.9 2.9 4.89 7.85 11.50];
+y = [y1o y2o]; 
 x0 = [1 2 3 4 5];
 % Find the "minimized error".
 fun1 = @(x,s) ((x(5)./(x(2)-x(1))).*s - x(1).*x(5)./(x(2)-x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
