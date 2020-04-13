@@ -12,7 +12,8 @@ x0 = [0.9 2.9 4.89 7.85 11.50];
 % Find the "minimized error".
 x = lsqcurvefit(fun1,x0,s,y)
 times = linspace(s(1),s(end));
-hold on; plot(s,y,'ko',times,fun1(x,times),'b-')
+hold on; plot(s(1:end),y,'bo')
+plot(times,fun1(x,times),'k-','linewidth',2)
 legend('Data','Fitted Response'); title('Data and Fitted Curve')
 %--------------------------------------------------------
 %Trapezoid  with factorization 
@@ -27,5 +28,7 @@ fun2 = @(x,s) ((x(5)./(x(2)-x(1))).*(s - x(1))).*(heaviside(s-x(1)) - heaviside(
  % Find the "minimized error".
 x = lsqcurvefit(fun2,x0,s,y)
 %x = lsqnonlin(fun,x0)
-figure; hold on; plot(s,y,'ko',times,fun2(x,times),'b-')
+figure
+hold on; plot(s(1:end),y,'bo')
+plot(times,fun2(x,times),'k-','linewidth',2)
 legend('Data','Fitted Response');title('Data and Fitted Curve')
