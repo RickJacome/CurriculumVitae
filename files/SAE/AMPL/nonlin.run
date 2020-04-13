@@ -18,4 +18,4 @@ expand Constraint1, Constraint2;
 solve;
 
 #SHOW RESULTS
-display a, b, c;
+display A, B, C;
