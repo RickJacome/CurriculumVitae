@@ -1,10 +1,10 @@
 data;
 param L := 2.5;
-param K := 0.001;
-param U := 4;
+param K := 0.0167;
+param U := 1.95;
 param g := 9.81;
-param e := 3;
-param mu := 0.3;
+param e := 6;
+param mu := 0.4;
 
 var x:=
         1   1
