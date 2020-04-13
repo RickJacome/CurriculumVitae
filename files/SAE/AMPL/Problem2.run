@@ -1,0 +1,16 @@
+#RESET THE AMPL ENVIROMENT
+reset;
+
+#LOAD THE MODEL
+#model example3.mod;
+model Problem2.mod;
+
+#LOAD THE DATA
+data Problem2.dat;
+
+#expand Z,C1,C2,C3,C4,C5;
+expand Z,C1;
+
+solve;
+
+display Z, x[1], x[2];
