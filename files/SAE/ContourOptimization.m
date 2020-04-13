@@ -8,7 +8,7 @@ Z = X1 - (53.7*L+U*X2.^2)*K;
 
 figure; meshc(X1,X2,Z); hold on
 
-Z2 = X2.^2*K/g - (mu + 0.01*e)/(1-0.01*mu*e);
+Z2 = - X2.^2*K/g + (mu + 0.01*e)/(1-0.01*mu*e);
 meshc(X1,X2,Z2); colorbar; 
 
 xlabel('x1'); ylabel('x2')
