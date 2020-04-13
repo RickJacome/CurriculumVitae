@@ -1,12 +1,12 @@
 param n >= 1; 			# number of measurements
-param xpts{1..n}; 		# measurement points (x_i)
-param D{1..n};		        # Data to fit y_i
-var a;
-var b;
-var c;
+param s{1..n}; 		# measurement points (x_i)
+param k{1..n};		        # Data to fit y_i
+var A;
+var B;
+var C;
 
-minimize z: sum{i in 1..n} ( a^2*xpts[i]^2 + b*xpts[i] + c - D[i])^2;
+minimize z: sum{i in 1..n} ( A*s[i]^2 + B*s[i] + C - k[i])^2;
 
-subject to Constraint1: a>=0;
+subject to Constraint1: A >=0;
 
-subject to Constraint2: b>=0;
+subject to Constraint2: B >=0;
