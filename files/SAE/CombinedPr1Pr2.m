@@ -47,8 +47,8 @@ K_temp = K_vector(i);
 % Objective Function Pr.2
 fun = @(x)  x(1) - (53.7*L + U*x(2)^2/g)*K_temp;    
 %C.1 (Bounds)
-lb = [-3,0]; % -3 < x1 < 3;
-ub = [3,60];  % 0 < x2 < 60;
+lb = [-3,10]; % -3 < x1 < 3;
+ub = [3,50];  % 0 < x2 < 60;
 % There are no linear constraints, so set those arguments to |[]|. 
 A = [];  b = []; % Linear In-equality Constraints
 Aeq = []; beq = [];  % Linear Equality Constraints
