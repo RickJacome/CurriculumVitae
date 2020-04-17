@@ -1,9 +1,7 @@
-% delete('vpathr2.xlsx')
 clear all; clc; close all
 %% Tranversing a curve with radius R, 90degrees not counting transitions
 % Curve and transitions are based on AASHTO guidelines
 minradius = xlsread('min_radius');
-%K  = xlsread('Understeer Gradient');
 e = 12; %percent
 v = 60; %mph
 c = 4; %ft/s^3
