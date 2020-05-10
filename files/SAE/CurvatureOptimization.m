@@ -1,19 +1,30 @@
-clc; clear all; close all
-% This code takes a curvature model (M#) and
-% implements both Pr. 1 and Pr. 2 together.
-% It creates a loop of optimization problems related to the Curvature
-% model provided with Pr. 2. Such that an optimal velocity is found for 
-% every curvature datapoint for any general [s] road. 
-%------------------------------
-% Road Curvature Decomposition Data
-s = 1:.01:25; n = numel(s)-1;
-y1 = (2.*s(1:n/2) - 3)*1e-3;
-y2 = 26*ones(1,n/2)*1e-3;
-% Added Gaussian noise, but not needed.
-y1o = awgn(y1,25,'measured'); y2o = awgn(y2,25,'measured');
-y = [y1o y2o];
+clear; close all; clc
+%Debugging, needs to find correct numbers. 
+%GPS DATA
+%load('CVF9LatX.mat'); load('CVF9LongY.mat');
+%Ideal AASHTO
+load('MichXm.mat'); load('MichYm.mat');
+%x2 = LatX'; y2 = LongY';   
+x2 = xm'; y2 = ym';
+x2 = unique(x2); y2 = unique(y2);
+x2 = x2(1:numel(y2));
+X = [x2',y2'];
+[L,R,K] = curvature(X);
+K(1,:) = []; K(end,:) = []; L(1,:) = []; L(end,:) = [];
+x2(1) = []; x2(end) = []; y2(1) = []; y2(end) = [];
+figure; plot(x2,y2);
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
+title('Raw Road Data')
+figure;
+h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
+title('Road with Curvature Vectors')
+hold on
+quiver(x2',y2',K(:,1),K(:,2)); hold off  
+y = sqrt(K(:,1).^2 + K(:,2).^2);
+s = L;
 % Initial Conditions, NEVER repeat them.
-x0 = [0.9 2.9 4.89 7.85 11.50];
+x0 = [100 200 300 400 500];
 % Curvature Model M.1
 M1 = @(x,s) ((x(5)./(x(2)-x(1))).*(s - x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
      x(5).*(heaviside(s-x(2))-heaviside(s-x(3))) + ...
@@ -21,11 +32,12 @@ M1 = @(x,s) ((x(5)./(x(2)-x(1))).*(s - x(1))).*(heaviside(s-x(1)) - heaviside(s-
 % Pr.1
 fprintf('Pr. 1, Least Squares Min. Has finalized');
 options = optimset('Display','off');
-x = lsqcurvefit(M1,x0,s(1:end-1),y,[],[],options)
-snew = linspace(s(1),s(end-1),100); % <--- This defines the 
+x = lsqcurvefit(M1,x0,s(1:end),y,[],[],options)
+snew = linspace(s(1),s(end),100); % <--- This defines the 
 % size of the "K_vector".
 figure; hold on; 
-plot(s(1:end-1),y,'bo');
+plot(s,y,'bo');
+xlabel('S-Segment (m)'); ylabel ('Curvature(m^{-1})');
 plot(snew,M1(x,snew),'k-','linewidth',2);
 xlim([snew(1), snew(end)+5]);
 legend('Data','Fitted Response','location','best'); 
@@ -35,9 +47,10 @@ title('Data and Fitted Curve'); grid on
 %Parameters 
 global K_temp e g mu U
 % Vehicle Only
-L = 2.5;  U = 1.95;
+L = 2.5;  %U = 1.95;
+U = 3;
 % Road Only
-e = 6; mu = 0.4;
+e = 6; mu = 0.3;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
@@ -47,8 +60,10 @@ K_temp = K_vector(i);
 % Objective Function Pr.2
 fun = @(x)  x(1) - (53.7*L + U*x(2)^2/g)*K_temp;    
 %C.1 (Bounds)
-lb = [-3,10]; % -3 < x1 < 3;
-ub = [3,50];  % 0 < x2 < 60;
+% lb = [-3,25]; 
+% ub = [3,60]; 
+lb = [-3,25]; % -3 < x1 < 3;
+ub = [3,35];  % 55 < x2 < 80; mph
 % There are no linear constraints, so set those arguments to |[]|. 
 A = [];  b = []; % Linear In-equality Constraints
 Aeq = []; beq = [];  % Linear Equality Constraints
@@ -60,10 +75,15 @@ options = optimoptions('fmincon','Display','off');
 Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,options);  
 end
 fprintf('Pr. 2 Has finalized \n');
-figure; plot(snew,Op(:,2))
+vOpt = Op(:,2);
+figure; plot(snew,vOpt,'linewidth',3)
+ylim([max(vOpt)-10 max(vOpt)+10])
 title('Segment Length vs Velocity Optimized'); grid on
-figure; plot(M1(x,snew),Op(:,2))
-title('Curvature vs Velocity Optimized'); grid on
+xlabel('S-Segment (m)'); ylabel ('Velocity (m/s)');
+figure; plot(M1(x,snew),vOpt)
+ylim([max(vOpt)-10 max(vOpt)+10])
+title('Curvature vs Velocity Optimized'); grid on;
+xlabel('S-Segment (m)'); ylabel ('Curvature(m^{-1})');
 
 % Nonlinear Constaints (Not bounds)
 function [c,ceq] = EqConstraint(x)
@@ -74,4 +94,5 @@ c = x(2)^2*K_temp/g - (mu + 0.01*e)/(1-0.01*mu*e);
 % Nonlinear Equality Constraints
 ceq = [];
 end
+
 
