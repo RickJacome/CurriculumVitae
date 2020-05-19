@@ -57,7 +57,7 @@ figure(1055)
 
 s = L2; k = KK; dt = 0.01;
 n = numel(s);
-[A1] = spliny(s,k,n,dt);
+[A1] = Spliny(s,k,n,dt);
 % This is the curvature, without being smoothed, and 
 % a spline interpolation has been performed to obtain all of its 
 % constituent coefficients. 
@@ -68,7 +68,7 @@ figure(1056)
 
 s = x; k = yy2; dt = 0.01;
 n = numel(s);
-[A2] = spliny(s,k,n,dt);
+[A2] = Spliny(s,k,n,dt);
 % This is the curvature, after being smoothed, and 
 % a spline interpolation has been performed to obtain all of its 
 % constituent coefficients. 
@@ -77,21 +77,4 @@ n = numel(s);
 
 
 
-% Optimization -----------------
 
-
-% Coefficients To be Optimized
-vars = {'A1','A2','A3','A4'};
-
-x = optimvar('x',vars,'LowerBound',0);
-
-obj = sum((x - k).^2); % Explicit sum of squares
-
-prob = optimproblem("Objective",obj);
-
-% Check to see the default solver
-opts = optimoptions(prob);
-% Solve Problem to obtain Minimized Coefficients
-[linsol,fval] = solve(prob);
-% Display Table Data
-tbl = table(vars',linsol.x')
