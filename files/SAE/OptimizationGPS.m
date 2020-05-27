@@ -45,9 +45,11 @@ title('Data and Fitted Curve'); grid on
 %Parameters 
 global K_temp e g mu U
 % Vehicle Only
-L = 2.5;  U = 1.95;
+L = 2.5;  %U = 1.95;
+U = 3;
 % Road Only
-e = 12; mu = 0.4;
+%e = 12; mu = 0.4;
+e = 6; mu = 0.3;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
@@ -58,7 +60,8 @@ K_temp = K_vector(i);
 fun = @(x)  x(1) - (53.7*L + U*x(2)^2/g)*K_temp;    
 %C.1 (Bounds)
 lb = [-3,25]; % -3 < x1 < 3;
-ub = [3,60];  % 60 < x2 < 80; mph
+%ub = [30,35];
+ub = [30,60];  % 60 < x2 < 80; mph
 % There are no linear constraints, so set those arguments to |[]|. 
 A = [];  b = []; % Linear In-equality Constraints
 Aeq = []; beq = [];  % Linear Equality Constraints
