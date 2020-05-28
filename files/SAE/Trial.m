@@ -1,24 +1,24 @@
 clear; close all; clc
-%Debugging, needs to find correct numbers. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In this example, the noise is added to the ideal mathematical road
+% The road data is smoothed and profile is somewhat good
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %GPS DATA
 %load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %Ideal AASHTO
 load('MichXm.mat'); load('MichYm.mat');
-%x2 = LatX'; y2 = LongY';   
+%x2 = LatX'; y2 = LongY';
 x2 = xm'; y2 = ym';
 x2 = unique(x2); y2 = unique(y2);
 x2 = x2(1:numel(y2));
 % Added White Noise, and now everything "kinda" works, but not really
-x2 = awgn(x2,25,'measured');
-y2 = awgn(y2,25,'measured');
-
-yy1 = smooth(x2,y2,0.15,'loess');
-scatter(x2,yy1);
+x2 = awgn(x2,35,'measured');
+y2 = awgn(y2,35,'measured');
+scatter(x2,y2);
+yy1 = smooth(x2,y2,0.2,'loess');
 x2 = unique(x2); yy1 = unique(yy1);
 x2 = x2(1:numel(yy1));
 y2 = yy1;
-figure
-plot(x2, y2);
 
 
 X = [x2',y2];
