@@ -1,5 +1,9 @@
 clear; close all; clc
-%Debugging, needs to find correct numbers. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In this example, the optimization is performed
+% with the Ideal AASHTO model, no noise added 
+% Performance is good
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %GPS DATA
 %load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %Ideal AASHTO
