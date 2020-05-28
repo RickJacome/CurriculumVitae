@@ -1,5 +1,9 @@
 clear; close all; clc
-%Debugging, needs to find correct numbers. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% In this example, the noise is added to the ideal mathematical road
+% However, no smoothing is performed, and the optimized velocity are
+% fine, but everything else looks bad
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %GPS DATA
 %load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %Ideal AASHTO
