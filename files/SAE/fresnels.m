@@ -1,5 +1,6 @@
 clear all; close all; clc;
 x = 3.75:0.01:4;
+x = 3:.01:10;
 C = ( - sin(pi.*abs(x).^2/2)./(pi*(abs(x) + 20*pi.*exp(-200*pi.*sqrt(abs(x))))) + ...
     (8/25).*(1-exp(-69./100*pi.*abs(x).^3)) + (2/25)*(1-exp(-9/2*pi*abs(x).^2)) + ...
     (1/10).*(1-exp(-1.55294068198794*pi*abs(x)))).*sign(x);
@@ -20,7 +21,12 @@ X = [x2',y2'];
 KK = sqrt(K2(:,2).^2+K2(:,1).^2);
 figure; scatter(L2,KK); grid on
 title('Curvature Numerics')
-% figure; syms x
-% fplot(fresnelc(x),[-10 10]); grid on
-% figure; syms x
-% fplot(fresnels(x),[-10 10]); grid on
+figure; syms x
+fplot(fresnelc(x),[-10 10]); grid on;
+xlabel('X-Coordinates'); ylabel('Y-Coordinates');
+figure; syms x
+fplot(fresnels(x),[-10 10]); grid on
+xlabel('X-Coordinates'); ylabel('Y-Coordinates');
+
+
+
