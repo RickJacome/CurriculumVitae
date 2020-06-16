@@ -36,7 +36,7 @@ x2(end) = [];
 y2(end)  = [];
 Nx=- y2p./sqrt(x2p.*x2p + y2p.*y2p);
 Ny=  x2p./sqrt(x2p.*x2p + y2p.*y2p);    
-xe=x2+Nx./KK;      
-ye=y2+Ny./KK;
-plot(xe(1:end),ye(1:end),'b')
+xe=x2 + Nx./KK';      
+ye=y2 + Ny./KK';
+scatter(xe(1:end),ye(1:end))
 
