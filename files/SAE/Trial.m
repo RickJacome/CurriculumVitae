@@ -4,11 +4,11 @@ clear; close all; clc
 % The road data is smoothed and profile is somewhat good
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %GPS DATA
-%load('CVF9LatX.mat'); load('CVF9LongY.mat');
+load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %Ideal AASHTO
-load('MichXm.mat'); load('MichYm.mat');
-%x2 = LatX'; y2 = LongY';
-x2 = xm'; y2 = ym';
+%load('MichXm.mat'); load('MichYm.mat');
+x2 = LatX'; y2 = LongY';
+%x2 = xm'; y2 = ym';
 x2 = unique(x2); y2 = unique(y2);
 x2 = x2(1:numel(y2));
 % Added White Noise, and now everything "kinda" works, but not really
@@ -57,6 +57,10 @@ plot(snew,M1(x,snew),'k-','linewidth',2);
 xlim([snew(1), snew(end)+5]);
 legend('Data','Fitted Response','location','best'); 
 title('Data and Fitted Curve'); grid on
+%Here, Integrate the results from the Fit
+%Then construct a second fit with flexible quintic polynomials. 
+
+
 
 % -------------------------
 %Parameters 
