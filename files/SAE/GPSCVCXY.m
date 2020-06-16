@@ -70,7 +70,7 @@ figure(22)
 figure(21); plot(L2,O1)
 xlabel('Segment S (m)'); ylabel('Angle from Inverse Tangent')
 title('Angle of Curvature Direction'); grid on;
-figure(22); scatter(L2,O2)
+figure(22); plot(L2,O2)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 title('Angle of Velocity Direction'); 
 grid on;
