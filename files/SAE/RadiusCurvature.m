@@ -29,14 +29,14 @@ for i = 1:numel(x2)-1
 x2p(i) = (x2(i+1) - x2(i))/(s(i+1) - s(i));
 y2p(i) = (y2(i+1) - y2(i))/(s(i+1) - s(i));
 end
-figure; plot(x2,y2); hold on
-quiver(x2',y2',1e20.*K(:,1),1e20.*K(:,2));
-KK(end)  = [];
-x2(end) = [];
-y2(end)  = [];
+ini = 100; 
+endi = 780;
+figure; plot(x2(ini:endi),y2(ini:endi),'Linewidth',2); hold on
+quiver(x2',y2',K(:,1),K(:,2));
+KK(end)  = []; x2(end) = []; y2(end)  = [];
 Nx=- y2p./sqrt(x2p.*x2p + y2p.*y2p);
-Ny=  x2p./sqrt(x2p.*x2p + y2p.*y2p);    
+Ny=  x2p./sqrt(x2p.*x2p + y2p.*y2p);
 xe=x2 + Nx./KK';      
 ye=y2 + Ny./KK';
-scatter(xe(1:end),ye(1:end))
+scatter(xe(ini:endi),ye(ini:endi))
 
