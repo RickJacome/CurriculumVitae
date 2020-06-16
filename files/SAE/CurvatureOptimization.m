@@ -46,7 +46,6 @@ plot(snew,M1(x,snew),'k-','linewidth',2);
 xlim([snew(1), snew(end)+5]);
 legend('Data','Fitted Response','location','best'); 
 title('Data and Fitted Curve'); grid on
-
 % -------------------------
 %Parameters 
 global K_temp e g mu U
