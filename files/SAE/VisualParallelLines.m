@@ -1,9 +1,13 @@
 clear; close all; clc
+%Google Earth Data
+load('GPS1Xft.mat'); load('GPS1Yft.mat');
+x2 = GPSX; y2 = GPSY;
+x2 = x2'*3.281; y2 = y2'*3.281;
 %GPS DATA
-load('CVF9LatX.mat'); load('CVF9LongY.mat');
+%load('CVF9LatX.mat'); load('CVF9LongY.mat');
+%x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');
-x2 = LatX'; y2 = LongY';   
+%load('MichXm.mat'); load('MichYm.mat');  
 %x2 = xm'; y2 = ym';
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
@@ -29,7 +33,7 @@ LessK2 = K(:,2);
 LessK2 = LessK2(1:20:end);
 figure;
 plot(Lessx2,Lessy2); hold on
-quiver(Lessx2',Lessy2',LessK1,LessK2); 
+quiver(Lessx2',Lessy2',LessK1,LessK2);  axis equal;
 xlabel('X Coordinate'); ylabel('Y Coordinate')
 % ------------
 y = sqrt(K(:,1).^2 + K(:,2).^2);
@@ -43,7 +47,7 @@ hold on; quiver(Lessx2',Lessy2',e1,e2); hold off
 %title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 %-------
-d=200;
+d=1000;
 make_plot=1;
 flag1=0;
 %[x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(x2, y2, d, make_plot, flag1);
