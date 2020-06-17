@@ -2,7 +2,7 @@ clear; close all; clc
 %GPS DATA
 load('CVF9LatX.mat'); load('CVF9LongY.mat');
 x2 = LatX'; y2 = LongY';   
-%x2 = unique(x2); y2 = unique(y2);
+%x2 = unique(x2); y2 = unique(y2); 
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
 [L,R,K] = curvature(X);
