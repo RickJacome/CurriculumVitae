@@ -3,8 +3,8 @@ load('CVF9LatX.mat')
 load('CVF9LongY.mat')
 x2 = LatX'; y2 = LongY';   
 %x2(1:2:end) = [];  y2(1:2:end) = [];
-x2 = unique(x2);
-y2 = unique(y2);
+x2 = unique(x2,'stable');
+y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));X = [x2',y2'];
 [L2,R2,K2] = curvature(X);
 figure(1); plot(L2,R2); grid on;
