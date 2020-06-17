@@ -1,6 +1,6 @@
 clear; close all; clc
 %GPS DATA
-%load('CVF9LatX.mat'); load('CVF9LongY.mat');
+load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %Ideal AASHTO
 load('MichXm.mat'); load('MichYm.mat');
 %x2 = LatX'; y2 = LongY';   
@@ -29,8 +29,8 @@ for i = 1:numel(x2)-1
 x2p(i) = (x2(i+1) - x2(i))/(s(i+1) - s(i));
 y2p(i) = (y2(i+1) - y2(i))/(s(i+1) - s(i));
 end
-ini = 100; 
-endi = 780;
+ini = 20; 
+endi = 180;
 figure; plot(x2(ini:endi),y2(ini:endi),'Linewidth',2); hold on
 quiver(x2',y2',K(:,1),K(:,2));
 KK(end)  = []; x2(end) = []; y2(end)  = [];
