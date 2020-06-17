@@ -20,8 +20,48 @@ xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Curvature Vectors')
 hold on
 quiver(x2',y2',K(:,1),K(:,2)); hold off  
+% Less accuracy
+Lessx2 = x2(1:20:end);
+Lessy2 = y2(1:20:end);
+LessK1 = K(:,1); 
+LessK1 = LessK1(1:20:end);
+LessK2 = K(:,2);
+LessK2 = LessK2(1:20:end);
+figure;
+plot(Lessx2,Lessy2); hold on
+quiver(Lessx2',Lessy2',LessK1,LessK2); 
+xlabel('X Coordinate'); ylabel('Y Coordinate')
+% ------------
 y = sqrt(K(:,1).^2 + K(:,2).^2);
 s = L;
+%----
+K = [LessK1 LessK2]; 
+[O1,O2] = direction(K);
+e1 = cosd(O2); e2 = sind(O2);
+figure(200); h1 = plot(Lessx2,Lessy2); grid on; axis equal; set(h1,'marker','.','Linewidth',3);
+hold on; quiver(Lessx2',Lessy2',e1,e2); hold off
+%title('Road with Velocity Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+%-------
+d=200;
+make_plot=1;
+flag1=0;
+%[x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(x2, y2, d, make_plot, flag1);
+%-------
+
+[x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(Lessx2, Lessy2, d, make_plot, flag1);
+Data_Inner = [x_inner y_inner];
+[~,~,K_Inner] = curvature(Data_Inner);
+
+[O1,O2] = direction(K_Inner);
+e1 = cosd(O2); e2 = sind(O2);
+figure(200);hold on; h1 = plot(x_inner,y_inner); grid on; axis equal; set(h1,'marker','.','Linewidth',3);
+quiver(x_inner,y_inner,-e1,-e2); hold off
+%title('Road with Velocity Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+
+
+%---------
 % Initial Conditions, NEVER repeat them.
 x0 = [100 200 300 400 500];
 % Curvature Model M.1
