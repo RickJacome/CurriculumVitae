@@ -134,23 +134,6 @@ function [x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parall
 % make_plot=1;
 % [x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(x, y, d, make_plot);
 %
-%
-%
-% % **********************************************************************
-% %
-% %
-% %
-% % List of Dependent Subprograms for
-% % parallel_curve
-% %
-% % FEX ID# is the File ID on the Matlab Central File Exchange
-% %
-% %
-% % Program Name   Author   FEX ID#
-% % 1) magn		Paolo de Leva		8782
-% %
-% %
-% %
 % % **********************************************************************
 % %
 % % References
