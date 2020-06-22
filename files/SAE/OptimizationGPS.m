@@ -46,6 +46,7 @@ xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
 
 %---------
+%From this point forward, I am doing the Optimization Dynamic Routine
 % Initial Conditions, NEVER repeat them.
 x0 = [100 200 300 400 500];
 % Curvature Model M.1
