@@ -1,3 +1,4 @@
+% This code calculates the evolute of a curve
 clear; close all; clc
 %GPS DATA
 load('CVF9LatX.mat'); load('CVF9LongY.mat');
