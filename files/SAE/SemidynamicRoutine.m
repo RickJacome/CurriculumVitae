@@ -1,11 +1,11 @@
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat');
-x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048;
+% load('GPS1Xft.mat'); load('GPS1Yft.mat');
+% x2 = GPSX; y2 = GPSY;
+% x2 = x2'*.3048; y2 = y2'*.3048;
 %GPS DATA
-%load('CVF9LatX.mat'); load('CVF9LongY.mat');
-%x2 = LatX'; y2 = LongY'; 
+load('CVF9LatX.mat'); load('CVF9LongY.mat');
+x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
 %load('MichXm.mat'); load('MichYm.mat');  
 %x2 = xm'; y2 = ym';
@@ -35,8 +35,8 @@ quiver(x2',y2',e1,e2); hold off
 %title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s,y)
-ni = 125;
-ne = 185;
+ni = 100;
+ne = 150;
 figure; plot(x2(ni:ne),y2(ni:ne));
 figure; plot(s(ni:ne),y(ni:ne))
 
@@ -47,6 +47,7 @@ figure; plot(sSmoo,ySmoo)
 %From this point forward, I am doing the Optimization Semi-Dynamic Routine
 % Initial Conditions, NEVER repeat them.
 x0 = [3200 3500 4000 4200 1e-3];
+%x0 = [.25*mean(sSmoo) 0.5*mean(sSmoo) 1.25*mean(sSmoo) 1.50*mean(sSmoo) max(sSmoo)];
 %[sSmoo(1) 0.75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)]
 %x0 = [1.25*sSmoo(1) mean(sSmoo) 1.25*mean(sSmoo) .75*sSmoo(end) max(ySmoo)]
 %Note: Every single time, the x0 need ot be modified to achieve the right
@@ -85,21 +86,21 @@ K_temp = K_vector(i);
 % Objective Function Pr.2
 fun = @(x) x(1)^2*K_temp/g - (mu + 0.01*e)/(1-0.01*mu*e) ;    
 %C.1 (Bounds)
-lb = -Inf; 
+lb = 30; 
 %ub = [30,35];
-ub = Inf;  % 60 < x2 < 80; mph
+ub = 38;  % 60 < x2 < 80; mph
 % There are no linear constraints, so set those arguments to |[]|. 
 A = [];  b = []; % Linear In-equality Constraints
 Aeq = []; beq = [];  % Linear Equality Constraints
 %Initial Conditions
-x0 = [1/4,1/2];  
+x0 = 1/4;  
 %Constraints as an annoynomous function
 Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub);  
 end
 fprintf('Pr. 2 Has finalized \n');
-figure; plot(snew,Op(:,2))
+figure; plot(snew,Op(:,1))
 title('Segment Length vs Velocity Optimized'); grid on
-figure; plot(M1(x,snew),Op(:,2))
+figure; plot(M1(x,snew),Op(:,1))
 title('Curvature vs Velocity Optimized'); grid on
 
 
