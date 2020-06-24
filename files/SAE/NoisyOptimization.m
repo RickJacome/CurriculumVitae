@@ -13,8 +13,8 @@ x2 = xm'; y2 = ym';
 x2 = unique(x2); y2 = unique(y2);
 x2 = x2(1:numel(y2));
 % Added White Noise, and now everything "kinda" works, but not really
-x2 = awgn(x2,25,'measured');
-y2 = awgn(y2,25,'measured');
+x2 = awgn(x2,200,'measured');
+y2 = awgn(y2,200,'measured');
 
 X = [x2',y2'];
 [L,R,K] = curvature(X);
