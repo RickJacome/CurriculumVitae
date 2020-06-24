@@ -7,8 +7,8 @@ clear; close all; clc
 load('CVF9LatX.mat'); load('CVF9LongY.mat');
 x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');  
-%x2 = xm'; y2 = ym';
+% load('MichXm.mat'); load('MichYm.mat');  
+% x2 = xm'; y2 = ym';
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
@@ -36,17 +36,20 @@ quiver(x2',y2',e1,e2); hold off
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s,y)
 ni = 100;
-ne = 150;
-figure; plot(x2(ni:ne),y2(ni:ne));
-figure; plot(s(ni:ne),y(ni:ne))
+ne = 210;
+figure; plot(x2(ni:ne),y2(ni:ne)); grid on;
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+figure; plot(s(ni:ne),y(ni:ne));
+grid on;xlabel('Segment Length s'); ylabel('Curvature \kappa')
 
 ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
 sSmoo = s(ni:ne);
-figure; plot(sSmoo,ySmoo)
+figure; plot(sSmoo,ySmoo); grid on;
+xlabel('Segment Length s'); ylabel('Curvature \kappa')
 %---------------------------------------------------------------
 %From this point forward, I am doing the Optimization Semi-Dynamic Routine
 % Initial Conditions, NEVER repeat them.
-x0 = [3200 3500 4000 4200 1e-3];
+x0 = [750 850 900 1000 max(ySmoo)];
 %x0 = [.25*mean(sSmoo) 0.5*mean(sSmoo) 1.25*mean(sSmoo) 1.50*mean(sSmoo) max(sSmoo)];
 %[sSmoo(1) 0.75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)]
 %x0 = [1.25*sSmoo(1) mean(sSmoo) 1.25*mean(sSmoo) .75*sSmoo(end) max(ySmoo)]
@@ -70,6 +73,7 @@ plot(snew,M1(x,snew),'k-','linewidth',2);
 xlim([snew(1), snew(end)+5]);
 legend('Data','Fitted Response','location','best'); 
 title('Data and Fitted Curve'); grid on
+xlabel('Segment Length s'); ylabel('Curvature \kappa')
 
 % -------------------------
 %Parameters 
@@ -99,6 +103,7 @@ Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub);
 end
 fprintf('Pr. 2 Has finalized \n');
 figure; plot(snew,Op(:,1))
+xlabel('Segment Length s'); ylabel('Optimized Velocity')
 title('Segment Length vs Velocity Optimized'); grid on
 figure; plot(M1(x,snew),Op(:,1))
 title('Curvature vs Velocity Optimized'); grid on
