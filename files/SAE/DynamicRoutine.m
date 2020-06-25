@@ -1,26 +1,36 @@
+%%%%---------------------------------------------
+% 6-25-2020
+% For this Dynamic Routine to work
+% (1) Select your Data i.e. GPS, Google Earth, AASHTO, etc.
+% (2) Select a range that occupies one "curve segment" i.e.
+% when does curvature change considerably. 
+% (3) Select appropiate Initial Conditions i.e. proportional to 
+% segment length.
+% External files used: curvature.m direction.m
+%%%_---------------------------------------------
 clear; close all; clc
 %Google Earth Data
-% load('GPS1Xft.mat'); load('GPS1Yft.mat');
-% x2 = GPSX; y2 = GPSY;
-% x2 = x2'*.3048; y2 = y2'*.3048;
+load('GPS1Xft.mat'); load('GPS1Yft.mat');
+x2 = GPSX; y2 = GPSY;
+x2 = x2'*.3048; y2 = y2'*.3048;
 %GPS DATA
-load('CVF9LatX.mat'); load('CVF9LongY.mat');
-x2 = LatX'; y2 = LongY'; 
+% load('CVF9LatX.mat'); load('CVF9LongY.mat');
+% x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');  
-%x2 = xm'; y2 = ym';
+% load('MichXm.mat'); load('MichYm.mat');  
+% x2 = xm'; y2 = ym';
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
 [L,R,K] = curvature(X);
 K(1,:) = []; K(end,:) = [];
 L(1,:) = []; L(end,:) = [];
-xlabel('Length of Road'); ylabel('Radius \rho')
+xlabel('Length of Road (m)'); ylabel('Radius \rho (m)')
 figure(1);
 x2(1) = []; x2(end) = [];
 y2(1) = []; y2(end) = [];
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
-xlabel('X Coordinate'); ylabel('Y Coordinate')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Curvature Vectors')
 hold on
 quiver(x2',y2',K(:,1),K(:,2)); hold off  
@@ -35,23 +45,26 @@ quiver(x2',y2',e1,e2); hold off
 %title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s,y); grid on;
-xlabel('Segment Length s'); ylabel('Curvature \kappa')
-ni = 100;
-ne = 210;
+xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
+ni = 1;
+ne = numel(x2);
 figure; plot(x2(ni:ne),y2(ni:ne)); grid on;
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s(ni:ne),y(ni:ne));
-grid on;xlabel('Segment Length s'); ylabel('Curvature \kappa')
+grid on;xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 
 ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
 sSmoo = s(ni:ne);
 figure; plot(sSmoo,ySmoo); grid on;
-xlabel('Segment Length s'); ylabel('Curvature \kappa')
+xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 %---------------------------------------------------------------
 %From this point forward, I am doing the Optimization Semi-Dynamic Routine
 % Initial Conditions, NEVER repeat them.
-%x0 = [3200 3500 4000 4200 max(ySmoo)];
-x0 = [750 850 900 1000 max(ySmoo)];
+%Ideal AASHTO IC.
+%x0 = [ 100 200 300 400 max(ySmoo)];
+%Google Earth IC.
+ x0 = [3200 3500 4000 4200 max(ySmoo)];
+%x0 = [750 850 900 1000 max(ySmoo)];
 %[sSmoo(1) 0.75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)]
 %x0 = [1.25*sSmoo(1) mean(sSmoo) 1.25*mean(sSmoo) .75*sSmoo(end) max(ySmoo)]
 %Note: Every single time, the x0 need ot be modified to achieve the right
@@ -72,7 +85,7 @@ figure; hold on;
 plot(sSmoo,ySmoo,'bo');
 plot(snew,M1(x,snew),'k-','linewidth',2);
 xlim([snew(1), snew(end)+5]);
-xlabel('Segment Length s'); ylabel('Curvature \kappa')
+xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 legend('Data','Fitted Response','location','best'); 
 title('Data and Fitted Curve'); grid on
 
@@ -111,7 +124,7 @@ fprintf('Pr. 2 Has finalized \n');
 figure; plot(snew,Op(:,2))
 %title('Segment Length vs Velocity Optimized');
 grid on
-xlabel('Segment Length s'); ylabel('Optimized Velocity (m/s)') 
+xlabel('Segment Length s (m)'); ylabel('Optimized Velocity (m/s)') 
 figure; plot(M1(x,snew),Op(:,2))
 title('Curvature vs Velocity Optimized'); grid on
 
