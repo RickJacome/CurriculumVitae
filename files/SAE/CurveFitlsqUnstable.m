@@ -7,9 +7,10 @@ y1o = awgn(y1,20,'measured'); y2o = awgn(y2,20,'measured');
 y = [y1o y2o];
 x0 = [0.9 2.9 6 max(y)];
 % Find the "minimized error".
-fun1 = @(x,s) ((x(4)./(x(2)-x(1))).*s - x(1).*x(4)./(x(2)-x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
-     x(4).*(heaviside(s-x(2))-heaviside(s-x(3)));
-
+% fun1 = @(x,s) ((x(4)./(x(2)-x(1))).*s - x(1).*x(4)./(x(2)-x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
+%      x(4).*(heaviside(s-x(2))-heaviside(s-x(3)));
+fun1 = @(x,s) ((x(4)./(x(2)-x(1))).*(s - x(1))).*(heaviside(s-x(1)) - heaviside(s-x(2))) +...
+     x(4).*(heaviside(s-x(2))-heaviside(s-x(3))); 
 x = lsqcurvefit(fun1,x0,s(1:end-1),y)
 times = linspace(s(1),s(end-1));
 hold on; plot(s(1:end-1),y,'bo')
