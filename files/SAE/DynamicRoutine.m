@@ -48,6 +48,8 @@ figure; plot(s,y); grid on;
 xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 ni = 1;
 ne = numel(x2);
+ni = 120;
+ne = 180;
 figure; plot(x2(ni:ne),y2(ni:ne)); grid on;
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s(ni:ne),y(ni:ne));
