@@ -63,9 +63,9 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 %From this point forward, I am doing the Optimization Semi-Dynamic Routine
 % Initial Conditions, NEVER repeat them.
 %Ideal AASHTO IC.
-x0 = [ 100 200 300 400 max(ySmoo)];
+%x0 = [ 100 200 300 400 max(ySmoo)];
 %Google Earth IC.
-%  x0 = [3200 3500 4000 4200 max(ySmoo)];
+  x0 = [3200 3500 4000 4200 max(ySmoo)];
 %------
 %x0 = [750 850 900 1000 max(ySmoo)];
 %x0 = [.25*mean(sSmoo) 0.5*mean(sSmoo) 1.25*mean(sSmoo) 1.50*mean(sSmoo) max(sSmoo)];
