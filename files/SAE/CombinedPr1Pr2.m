@@ -57,7 +57,8 @@ x0 = [1/4,1/4];
 %Constraints as an annoynomous function
 nonlcon = @EqConstraint;
 options = optimoptions('fmincon','Display','off');
-Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,options);  
+Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,options); 
+%Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon); 
 end
 fprintf('Pr. 2 Has finalized \n');
 figure; plot(snew,Op(:,2))
