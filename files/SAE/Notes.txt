@@ -1,0 +1,6 @@
+Even if the Curvature is Noisy
+The obtained Heading Angle direction is somewhat smooth
+The Heading Angle can be easily smoothed, and obtain a continous 
+Heading Angle Profile
+This HAP can be used to calculate back the curvature? 
+Can it be proved that heading angle is sufficient?
