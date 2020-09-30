@@ -1,11 +1,11 @@
 clear; close all; clc
 %Google Earth Data
- load('GPS1Xft.mat'); load('GPS1Yft.mat');
- x2 = GPSX; y2 = GPSY;
- x2 = x2'*.3048; y2 = y2'*.3048;
+%load('GPS1Xft.mat'); load('GPS1Yft.mat');
+%x2 = GPSX; y2 = GPSY;
+%x2 = x2'*.3048; y2 = y2'*.3048;
 %GPS DATA
-% load('CVF9LatX.mat'); load('CVF9LongY.mat');
-% x2 = LatX'; y2 = LongY'; 
+load('CVF9LatX.mat'); load('CVF9LongY.mat');
+x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
 % load('MichXm.mat'); load('MichYm.mat');  
 % x2 = xm'; y2 = ym';
@@ -22,7 +22,7 @@ figure(2);
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
 xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Curvature Vectors')
-hold on
+hold on   
 quiver(x2',y2',K2(:,1),K2(:,2)); hold off
 % figure(3); hold on;
 % plot(x2,sqrt(K2(:,2).^2+K2(:,1).^2))
