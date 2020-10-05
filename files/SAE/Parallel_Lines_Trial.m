@@ -1,3 +1,4 @@
+%HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
 load('GPS1Xft.mat'); load('GPS1Yft.mat');
