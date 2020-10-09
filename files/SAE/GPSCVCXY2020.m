@@ -1,11 +1,11 @@
 clear; close all; clc
 %Google Earth Data
- load('GPS1Xft.mat'); load('GPS1Yft.mat');
- x2 = GPSX; y2 = GPSY;
- x2 = x2'*.3048; y2 = y2'*.3048;
+% load('GPS1Xft.mat'); load('GPS1Yft.mat');
+% x2 = GPSX; y2 = GPSY;
+% x2 = x2'*.3048; y2 = y2'*.3048;
 %GPS DATA
-% load('CVF9LatX.mat'); load('CVF9LongY.mat');
-% x2 = LatX'; y2 = LongY'; 
+ load('CVF9LatX.mat'); load('CVF9LongY.mat');
+ x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
 % load('MichXm.mat'); load('MichYm.mat');  
 % x2 = xm'; y2 = ym';
@@ -20,7 +20,7 @@ title('Curvature radius \rho vs. Cumulative curve length')
 xlabel('Length of Road'); ylabel('Radius \rho')
 figure(2);
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
-xlabel('X Coordinate'); ylabel('Y Coordinate')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Curvature Vectors')
 hold on
 quiver(x2',y2',K2(:,1),K2(:,2)); hold off
@@ -41,8 +41,10 @@ title('Curvature \kappa vs. Cumulative curve length')
 %  Smoothing Technique on Curvature----------------
 figure(1050)
 x = L2; y = KK;
-yy1 = smoothdata(y,'loess',5);  %Span of 15%
-yy2 = smoothdata(y,'rloess',5);
+%yy1 = smoothdata(y,'loess',15);  %Span of 15%
+%yy2 = smoothdata(y,'rloess',15);
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
 
 %subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-'); ylim([0,.3]); grid on
@@ -83,9 +85,10 @@ grid on;
 %  Smoothing Technique on Angles----------------
 figure(1000)
 x = L2; y = O2;
-yy1 = smoothdata(y,'loess',5);  %Span of 15%
-yy2 = smoothdata(y,'rloess',5);
-
+% yy1 = smoothdata(y,'loess',5);  %Span of 15%
+% yy2 = smoothdata(y,'rloess',5);
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
 %subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-')
 legend('Original data','Smoothed data using ''loess''',...
