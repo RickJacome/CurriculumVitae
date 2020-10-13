@@ -67,20 +67,21 @@ plot(x_inner,y_inner,'Linewidth',3);
 plot(x_outer,y_outer,'Linewidth',3);
 title('Inner and Outer Lanes')
 
+
 Data_Inner = [x_inner y_inner];
 [L2,~,K_Inner] = curvature(Data_Inner);
 [~,O2] = direction(K_Inner);
-figure; plot(L2,O2)
+figure; subplot(2,1,1); plot(L2,O2)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
-title('Inner Angle of Velocity Direction');
+title('Clean Inner Angle of Velocity Direction');
 %e1 = cosd(O2); e2 = sind(O2);
 
 Data_Outer = [x_outer y_outer];
 [L2,~,K_Outer] = curvature(Data_Outer);
 [~,O2] = direction(K_Outer);
-figure; plot(L2,O2)
+subplot(2,1,2); plot(L2,O2)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
-title('Outer Angle of Velocity Direction');
+title('Clean Outer Angle of Velocity Direction');
 %e1 = cosd(O2); e2 = sind(O2);
 
 %%
@@ -91,19 +92,104 @@ plot(x_inner,y_inner_noisy,'Linewidth',3);
 y_outer_noisy = awgn(y_outer,120,'measured');
 plot(x_outer,y_outer_noisy,'Linewidth',3);
 
+% Inner Noisy Angle --------------------------------------------
+
 Data_Inner_noisy = [x_inner y_inner_noisy];
 [L2,~,K_Inner_noisy] = curvature(Data_Inner_noisy);
 [~,O2_noisy] = direction(K_Inner_noisy);
 figure; plot(L2,O2_noisy)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
-title('Inner Angle of Velocity Direction');
+title('Noisy Inner Angle of Velocity Direction');
+
+%  Smoothing Technique on Inner Angles----------------
+figure
+x = L2; y = O2_noisy;
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
+subplot(2,1,1)
+plot(x,y,'b.',x,yy1,'r-')
+legend('Original data','Smoothed data using ''loess''',...
+       'Location','NW')
+title('Noisy Outer Angle of Velocity Direction');
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+subplot(2,1,2)
+plot(x,y,'b.',x,yy2,'r-'); grid on
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+legend('Original data','Smoothed Data',...
+       'Location','NW')
+%-----------------      
+e1 = cosd(yy2); e2 = sind(yy2);
+figure
+h1 = plot(x_inner,y_inner_noisy); grid on; axis equal; set(h1,'marker','.');
+hold on; quiver(x_inner,y_inner_noisy,e1,e2); hold off
+%title('Road with Velocity Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+
+Y2 = diff(yy2);
+N = numel(Y2);
+k_num = zeros(1,N);
+for i = 1:N
+k_num(i) = Y2(i) /(L2(i) - L2(i+1));
+end
+figure;
+plot(L2(2:end), k_num); title('Derivatives Inner')
+hold on;
+K_Inner_noisy_mag = sqrt( K_Inner_noisy(:,1).^2 + K_Inner_noisy(:,2).^2 );
+plot(L2,K_Inner_noisy_mag)
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+
+% Outer Noisy Angle -----------------------------------------------
 
 Data_Outer_noisy = [x_outer y_outer_noisy];
 [L2,~,K_Outer_noisy] = curvature(Data_Outer_noisy);
 [~,O2_noisy] = direction(K_Outer_noisy);
 figure; plot(L2,O2_noisy)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
-title('Outer Angle of Velocity Direction');
+title('Noisy Outer Angle of Velocity Direction');
+
+
+%  Smoothing Technique on Outer Angles----------------
+figure
+x = L2; y = O2_noisy;
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
+subplot(2,1,1)
+plot(x,y,'b.',x,yy1,'r-')
+legend('Original data','Smoothed data using ''loess''',...
+       'Location','NW')
+title('Noisy Outer Angle of Velocity Direction');
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+subplot(2,1,2)
+plot(x,y,'b.',x,yy2,'r-'); grid on
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+legend('Original data','Smoothed Data',...
+       'Location','NW')
+%-----------------   
+e1 = cosd(yy2); e2 = sind(yy2);
+figure
+h1 = plot(x_outer,y_outer_noisy); grid on; axis equal; set(h1,'marker','.');
+hold on; quiver(x_outer,y_outer_noisy,e1,e2); hold off
+%title('Road with Velocity Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)'); 
+ 
+Y2 = diff(yy2);
+N = numel(Y2);
+k_num = zeros(1,N);
+for i = 1:N
+k_num(i) = Y2(i) /(L2(i) - L2(i+1));
+end
+figure;
+plot(L2(2:end), k_num); title('Derivatives Outer')
+hold on;
+K_Outer_noisy_mag = sqrt( K_Outer_noisy(:,1).^2 + K_Outer_noisy(:,2).^2 );
+plot(L2,K_Outer_noisy_mag)
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+
+
+
+
+
+
 %%
 
 
