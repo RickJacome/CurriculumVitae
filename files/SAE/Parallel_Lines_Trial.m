@@ -125,18 +125,20 @@ hold on; quiver(x_inner,y_inner_noisy,e1,e2); hold off
 %title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
-Y2 = diff(yy2);
-N = numel(Y2);
-k_num = zeros(1,N);
-for i = 1:N
-k_num(i) = Y2(i) /(L2(i) - L2(i+1));
-end
+
+k_num = diff(yy2)./diff(L2);
+fd_s = L2(1:length(L2)-1);
+bd_s = L2(2:length(L2));
 figure;
-plot(L2(2:end), k_num); title('Derivatives Inner')
+plot(fd_s, k_num); hold on;
+plot(bd_s, k_num);
+title('Derivatives Inner');
 hold on;
 K_Inner_noisy_mag = sqrt( K_Inner_noisy(:,1).^2 + K_Inner_noisy(:,2).^2 );
 plot(L2,K_Inner_noisy_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+legend('Forward Difference','Backward Difference','Raw')
+
 
 % Outer Noisy Angle -----------------------------------------------
 
@@ -172,19 +174,18 @@ hold on; quiver(x_outer,y_outer_noisy,e1,e2); hold off
 %title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)'); 
  
-Y2 = diff(yy2);
-N = numel(Y2);
-k_num = zeros(1,N);
-for i = 1:N
-k_num(i) = Y2(i) /(L2(i) - L2(i+1));
-end
+k_num = diff(yy2)./diff(L2);
+fd_s = L2(1:length(L2)-1);
+bd_s = L2(2:length(L2));
 figure;
-plot(L2(2:end), k_num); title('Derivatives Outer')
+plot(fd_s, k_num); hold on;
+plot(bd_s, k_num);
+title('Derivatives Outer');
 hold on;
 K_Outer_noisy_mag = sqrt( K_Outer_noisy(:,1).^2 + K_Outer_noisy(:,2).^2 );
 plot(L2,K_Outer_noisy_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-
+legend('Forward Difference','Backward Difference','Raw')
 
 
 
