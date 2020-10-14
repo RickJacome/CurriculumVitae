@@ -1,8 +1,8 @@
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat');
+load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data in Feet
 x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048;
+x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 %GPS DATA
 %load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %x2 = LatX'; y2 = LongY'; 
@@ -34,7 +34,7 @@ quiver(x2',y2',K2(:,1),K2(:,2)); hold off
 % title('Curvature \kappa vs Y Coordinate')
 
 KK = sqrt(K2(:,2).^2+K2(:,1).^2);
-figure(5); scatter(L2,KK); grid on
+figure(5); plot(L2,KK); grid on
 xlabel('Lenght of Road'); ylabel('Curvature \kappa')
 title('Curvature \kappa vs. Cumulative curve length')
 
