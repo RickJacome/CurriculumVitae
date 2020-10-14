@@ -19,7 +19,7 @@ title('Acceleration Profile Coiflet + Moving Average Filter')
 
 % Detect When the Average Changes Drastically
 n = numel(Signal);  o = zeros(n,1);
-threshold = Thrs;
+threshold = Thrs; % Braking Threshold 
 Sig1 = zeros(n,1);
 Sig2 = zeros(n,1);
 for i = 1:n-1
