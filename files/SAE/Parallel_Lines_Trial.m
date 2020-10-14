@@ -1,9 +1,9 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat');
+load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
 x2 = GPSX; y2 = GPSY;
-x2 = x2'*3.281; y2 = y2'*3.281;
+x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 %GPS DATA
 %load('CVF9LatX.mat'); load('CVF9LongY.mat');
 %x2 = LatX'; y2 = LongY'; 
@@ -14,10 +14,8 @@ x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
 [L,R,K] = curvature(X);
-K(1,:) = []; K(end,:) = []; L(1,:) = []; L(end,:) = [];
 xlabel('Length of Road'); ylabel('Radius \rho')
 figure(1);
-x2(1) = []; x2(end) = []; y2(1) = []; y2(end) = [];
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
 xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Curvature Vectors')
@@ -30,8 +28,59 @@ title('Road with Heading Vectors no parallism yet')
 e1 = cosd(O2); e2 = sind(O2);
 hold on; quiver(x2',y2',e1,e2); hold off
 
+
+%  Smoothing Technique on Center Lane Angles----------------
+figure
+x = L; y = O2;
+yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
+yy2 = smooth(x,y,0.15,'rloess');
+subplot(2,1,1)
+plot(x,y,'b.',x,yy1,'r-')
+legend('Original data','Smoothed data using ''loess''',...
+       'Location','NW')
+title('Central Angle of Velocity Direction');
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+subplot(2,1,2)
+plot(x,y,'b.',x,yy2,'r-'); grid on
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+legend('Original data','Smoothed Data',...
+       'Location','NW')
+
+e1 = cosd(yy2); e2 = sind(yy2);
+figure
+subplot(1,2,1)
+h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
+hold on; quiver(x2',y2',e1,e2); hold off
+title('Road with Velocity Vectors')
+subplot(1,2,2)
+h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
+hold on;
+quiver(x2',y2',K(:,1),K(:,2));
+hold off; 
+title('Road with Curvature Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');   
+   
+   
+   
+k_num = diff(yy2)./diff(L);
+fd_s = L(1:length(L)-1);
+bd_s = L(2:length(L));
+figure;
+plot(fd_s, k_num); hold on;
+plot(bd_s, k_num);
+title('Derivatives Central');
+hold on;
+K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
+plot(L,K_mag)
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+legend('Forward Difference','Backward Difference','Raw')
+
+
+%---------------------------------------------------
+
+
 % Plot all lanes together
-d=1000;
+d=10;
 make_plot=1;
 flag1=0;
 [x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(x2, y2, d, make_plot, flag1);
@@ -41,7 +90,7 @@ Data_Inner = [x_inner y_inner];
 [~,~,K_Inner] = curvature(Data_Inner);
 [O1,O2] = direction(K_Inner);
 e1 = cosd(O2); e2 = sind(O2);
-figure(4);
+figure;
 hold on; h1 = plot(x_inner,y_inner); grid on; axis equal; set(h1,'marker','.','Linewidth',3);
 quiver(x_inner,y_inner,e1,e2); hold off
 title('Inner Lane')
@@ -51,13 +100,13 @@ Data_Outer = [x_outer y_outer];
 [~,~,K_Outer] = curvature(Data_Outer);
 [O1,O2] = direction(K_Outer);
 e1 = cosd(O2); e2 = sind(O2);
-figure(4);
+figure;
 hold on; h1 = plot(x_outer,y_outer); grid on; axis equal; set(h1,'marker','.','Linewidth',3);
 quiver(x_outer,y_outer,e1,e2); hold off
 title('Outer Lane')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
-close all
+%close all
 %% %Here I am investigating how both Inner and Outer lanes behave
 % so that I can smooth them both and create a single centerline from both
 % This should be representative of what could happen after obtaining 
@@ -120,9 +169,16 @@ legend('Original data','Smoothed Data',...
 %-----------------      
 e1 = cosd(yy2); e2 = sind(yy2);
 figure
+subplot(1,2,1)
 h1 = plot(x_inner,y_inner_noisy); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x_inner,y_inner_noisy,e1,e2); hold off
-%title('Road with Velocity Vectors')
+title('Road with Velocity Vectors')
+subplot(1,2,2)
+h1 = plot(x_inner,y_inner_noisy); grid on; axis equal; set(h1,'marker','.');
+hold on;
+quiver(x_inner,y_inner_noisy,K_Inner_noisy(:,1),K_Inner_noisy(:,2));
+hold off; 
+title('Road with Curvature Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
 
@@ -166,26 +222,44 @@ plot(x,y,'b.',x,yy2,'r-'); grid on
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 legend('Original data','Smoothed Data',...
        'Location','NW')
-%-----------------   
+%----------------- --------------------------  
 e1 = cosd(yy2); e2 = sind(yy2);
 figure
+subplot(1,2,1)
 h1 = plot(x_outer,y_outer_noisy); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x_outer,y_outer_noisy,e1,e2); hold off
-%title('Road with Velocity Vectors')
-xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)'); 
- 
+title('Road with Velocity Vectors')
+subplot(1,2,2)
+h1 = plot(x_outer,y_outer_noisy); grid on; axis equal; set(h1,'marker','.');
+hold on;
+quiver(x_outer,y_outer_noisy,K_Outer_noisy(:,1),K_Outer_noisy(:,2));
+hold off; 
+title('Road with Curvature Vectors')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
+
+
+
+% Numerical Differentiation
+% MATLABs approach
 k_num = diff(yy2)./diff(L2);
-fd_s = L2(1:length(L2)-1);
-bd_s = L2(2:length(L2));
+fd_s = L2(1:length(L2)-1);  %Forward Difference
+bd_s = L2(2:length(L2));   %Backward Difference
+
+N = numel(yy2);
+k_num_C = zeros(1,N);
+for i = 2:N-1
+k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L2(i+1) - L2(i-1));   
+end
 figure;
 plot(fd_s, k_num); hold on;
 plot(bd_s, k_num);
+plot(L2,k_num_C); 
 title('Derivatives Outer');
 hold on;
 K_Outer_noisy_mag = sqrt( K_Outer_noisy(:,1).^2 + K_Outer_noisy(:,2).^2 );
 plot(L2,K_Outer_noisy_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-legend('Forward Difference','Backward Difference','Raw')
+legend('Forward Difference','Backward Difference','Central Difference','Raw')
 
 
 
