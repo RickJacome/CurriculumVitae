@@ -14,13 +14,13 @@ x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
 [L,R,K] = curvature(X);
-xlabel('Length of Road'); ylabel('Radius \rho')
-figure(1);
+
+figure;
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
 xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Curvature Vectors')
 hold on; quiver(x2',y2',K(:,1),K(:,2)); hold off  
-figure(2);
+figure;
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.','Linewidth',3);
 xlabel('X Coordinate'); ylabel('Y Coordinate')
 title('Road with Heading Vectors no parallism yet')
@@ -61,26 +61,39 @@ title('Road with Curvature Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');   
    
    
-   
+
+% Numerical Differentiation
+% MATLABs approach
 k_num = diff(yy2)./diff(L);
-fd_s = L(1:length(L)-1);
-bd_s = L(2:length(L));
+fd_s = L(1:length(L)-1); %Forward Difference
+bd_s = L(2:length(L));   %Backward Difference
+
+%Central Difference Method
+N = numel(yy2);
+k_num_C = zeros(1,N);
+for i = 2:N-1
+k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L(i+1) - L(i-1));   
+end
+
 figure;
 plot(fd_s, k_num); hold on;
 plot(bd_s, k_num);
+plot(L,k_num_C);
 title('Derivatives Central');
 hold on;
 K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
 plot(L,K_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-legend('Forward Difference','Backward Difference','Raw')
+legend('Forward Difference','Backward Difference','Central Difference','Raw')
+
+
 
 
 %---------------------------------------------------
 
 
 % Plot all lanes together
-d=10;
+d=5;
 make_plot=1;
 flag1=0;
 [x_inner, y_inner, x_outer, y_outer, R, unv, concavity, overlap]=parallel_curve(x2, y2, d, make_plot, flag1);
@@ -150,6 +163,7 @@ figure; plot(L2,O2_noisy)
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 title('Noisy Inner Angle of Velocity Direction');
 
+
 %  Smoothing Technique on Inner Angles----------------
 figure
 x = L2; y = O2_noisy;
@@ -159,7 +173,7 @@ subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-')
 legend('Original data','Smoothed data using ''loess''',...
        'Location','NW')
-title('Noisy Outer Angle of Velocity Direction');
+title('Noisy Inner Angle of Velocity Direction');
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
 subplot(2,1,2)
 plot(x,y,'b.',x,yy2,'r-'); grid on
@@ -181,19 +195,29 @@ hold off;
 title('Road with Curvature Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 
-
+%Numerical Differentiation 
+%MATLABs Approach
 k_num = diff(yy2)./diff(L2);
-fd_s = L2(1:length(L2)-1);
-bd_s = L2(2:length(L2));
+fd_s = L2(1:length(L2)-1);  %Forward Difference
+bd_s = L2(2:length(L2));   %Backward Difference
+
+%Central Difference Method
+N = numel(yy2);
+k_num_C = zeros(1,N);
+for i = 2:N-1
+    k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L2(i+1) - L2(i-1));
+end
 figure;
 plot(fd_s, k_num); hold on;
 plot(bd_s, k_num);
+plot(L2,k_num_C);
 title('Derivatives Inner');
 hold on;
+
 K_Inner_noisy_mag = sqrt( K_Inner_noisy(:,1).^2 + K_Inner_noisy(:,2).^2 );
 plot(L2,K_Inner_noisy_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-legend('Forward Difference','Backward Difference','Raw')
+legend('Forward Difference','Backward Difference','Central Difference','Raw')
 
 
 % Outer Noisy Angle -----------------------------------------------
@@ -245,6 +269,7 @@ k_num = diff(yy2)./diff(L2);
 fd_s = L2(1:length(L2)-1);  %Forward Difference
 bd_s = L2(2:length(L2));   %Backward Difference
 
+%Central Difference Method
 N = numel(yy2);
 k_num_C = zeros(1,N);
 for i = 2:N-1
@@ -256,6 +281,7 @@ plot(bd_s, k_num);
 plot(L2,k_num_C); 
 title('Derivatives Outer');
 hold on;
+
 K_Outer_noisy_mag = sqrt( K_Outer_noisy(:,1).^2 + K_Outer_noisy(:,2).^2 );
 plot(L2,K_Outer_noisy_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
