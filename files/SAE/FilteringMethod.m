@@ -17,12 +17,12 @@ X = [x2',y2'];
 
 figure;
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
-xlabel('X Coordinate'); ylabel('Y Coordinate')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Curvature Vectors')
 hold on; quiver(x2',y2',K(:,1),K(:,2)); hold off  
 figure;
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.','Linewidth',3);
-xlabel('X Coordinate'); ylabel('Y Coordinate')
+xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Heading Vectors no parallism yet')
 [O1,O2] = direction(K);
 e1 = cosd(O2); e2 = sind(O2);
@@ -37,14 +37,14 @@ x = L; y = O2;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
 yy2 = smooth(x,y,0.15,'rloess');
 subplot(2,1,1)
-plot(x,y,'b.',x,yy1,'r-')
+plot(x,y,'b.',x,yy1,'r-'); grid on
 legend('Original data','Smoothed data using ''loess''',...
        'Location','NW')
 title('Central Angle of Velocity Direction');
-xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 subplot(2,1,2)
 plot(x,y,'b.',x,yy2,'r-'); grid on
-xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 legend('Original data','Smoothed Data',...
        'Location','NW')
 
@@ -98,16 +98,15 @@ kp2 = k_num_C'.*k2;
 hold on; quiver(x2',y2',kp1,kp2); hold off
 
 %---------------------------------------------------
-close all
+
 figure;
 plot(L,O2); hold on
-ylabel('Heading Angle')
-
+ylabel('Heading Angle (degrees)')
+xlabel('Segment Length (m)')
 yyaxis right
 plot(L,k_num_C,'color','k');
 hold on;
 plot(L,zeros(1,N));
-ylabel('Curvature m^{-1}')
+ylabel('Curvature (m^{-1})')
 grid on
-
-
+legend('Heading Angle','Curvature','location','NW')
