@@ -29,6 +29,7 @@ e1 = cosd(O2); e2 = sind(O2);
 hold on; quiver(x2',y2',e1,e2); hold off
 figure
 plot(L,O1);
+title('Central Angle of Curvature Direction');
 
 %  Smoothing Technique on Center Lane Angles----------------
 figure
@@ -97,4 +98,16 @@ kp2 = k_num_C'.*k2;
 hold on; quiver(x2',y2',kp1,kp2); hold off
 
 %---------------------------------------------------
+close all
+figure;
+plot(L,O2); hold on
+ylabel('Heading Angle')
+
+yyaxis right
+plot(L,k_num_C,'color','k');
+hold on;
+plot(L,zeros(1,N));
+ylabel('Curvature m^{-1}')
+grid on
+
 
