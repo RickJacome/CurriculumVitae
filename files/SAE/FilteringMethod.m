@@ -12,6 +12,7 @@ x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 %x2 = xm'; y2 = ym';
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
+
 X = [x2',y2'];
 [L,R,K] = curvature(X);
 
@@ -38,6 +39,9 @@ yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
 yy2 = smooth(x,y,0.15,'rloess');
 subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-'); grid on
+% Comment for anything not MATLAB 2020 after Use
+yyaxis left
+%
 legend('Original data','Smoothed data using ''loess''',...
        'Location','NW')
 title('Central Angle of Velocity Direction');
@@ -45,6 +49,9 @@ xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 subplot(2,1,2)
 plot(x,y,'b.',x,yy2,'r-'); grid on
 xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
+% Comment for anything not MATLAB 2020 after Use
+yyaxis left
+%
 legend('Original data','Smoothed Data',...
        'Location','NW')
 
@@ -86,6 +93,9 @@ hold on;
 K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
 plot(L,K_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+% Comment for anything not MATLAB 2020 after Use
+yyaxis left
+%
 legend('Forward Difference','Backward Difference','Central Difference','Raw')
 
 % Unit Vectors
