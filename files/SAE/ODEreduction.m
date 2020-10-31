@@ -17,17 +17,20 @@ for n=1:2
     ICs = [IC1; IC2; IC3; IC4];
     [s,x] = ode45(@(s,x) r1ODE(s,x,k0,C0),s_span,ICs);
     figure(1)
-    plot(s,x(:,1),'-o','Color',c); hold on
+    r = x(:,1);
+    A{:,i} = r;
+    plot(s,r,'-o','Color',c); hold on
     end
-
+    
 end
-
 title('Solution of 4th Order SF ODE \forall \kappa (s)\in C^1(s)');
 xlabel('Segment Lenght s'); ylabel('Solution r'); grid on;
 legend('r_1 e_t','r_1 e_n','r_1 e_b','location','best')
+
+
+quiver3([],[],[],[],[],[])
 %-------------------------------------
 
-clear all; clc
 k0 = .2;
 C0 = .1;
 k1 = .3;
@@ -57,12 +60,10 @@ legend('r_1 e_t','r_1 e_n','r_1 e_b','location','best')
 
 
 function dydt = r1ODE(s,x,k0,C0)
-
-dydt = [x(2); x(3); x(4); -k0.^2.*x(3)-k0.*(k0.*s+C0).^2.*x(1)];
+    dydt = [x(2); x(3); x(4); -k0.^2.*x(3)-k0.*(k0.*s+C0).^2.*x(1)];
 end
 
 function dydt = r2ODE(s,x,k0,k1,C0)
-
 dydt = [x(2); x(3); x(4); ...
     -(k0*s+k1).^2.*x(3)-((k0*s+k1)).*(3*k0+(C0/(k0*s+k1).^2).^2  ).*x(1)];
 end
