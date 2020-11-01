@@ -21,14 +21,22 @@ for n=1:2
     A{:,i} = r;
     plot(s,r,'-o','Color',c); hold on
     end
-    
+    B{n} = A;
 end
 title('Solution of 4th Order SF ODE \forall \kappa (s)\in C^1(s)');
 xlabel('Segment Lenght s'); ylabel('Solution r'); grid on;
 legend('r_1 e_t','r_1 e_n','r_1 e_b','location','best')
 
-
-quiver3([],[],[],[],[],[])
+r11 = B{1,2}{1,1};
+r22 = B{1,2}{1,2};
+r33 = B{1,2}{1,3};
+s = linspace(0,5,numel(r11));
+xx = 0:.1:5;
+yr11 = spline(s,r11,xx);
+s = linspace(0,5,numel(r22));
+xx = 0:.1:5;
+yr22 = spline(s,r22,xx);
+quiver(xx,0,yr11,yr22)
 %-------------------------------------
 
 k0 = .2;
