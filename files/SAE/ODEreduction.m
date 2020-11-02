@@ -1,7 +1,8 @@
 close all; clear all; clc
-k0 = .2;
-C0 = .1;
-s_span = [0 5];
+k0 = 1e-3;
+C0 = 0;
+% C0 = Tau0 - k0*S0; %Zero Initial Torsion
+s_span = [0 1000];
 for n=1:2
     c = rand(1,3);
     for i = 1:3
@@ -30,19 +31,28 @@ legend('r_1 e_t','r_1 e_n','r_1 e_b','location','best')
 r11 = B{1,2}{1,1};
 r22 = B{1,2}{1,2};
 r33 = B{1,2}{1,3};
-s = linspace(0,5,numel(r11));
-xx = 0:.1:5;
+s = linspace(0,s_span(end),numel(r11));
+xx = 0:.1:s_span(end);
 yr11 = spline(s,r11,xx);
-s = linspace(0,5,numel(r22));
-xx = 0:.1:5;
+s = linspace(0,s_span(end),numel(r22));
+xx = 0:.1:s_span(end);
 yr22 = spline(s,r22,xx);
-quiver(xx,0,yr11,yr22)
+s = linspace(0,s_span(end),numel(r33));
+xx = 0:.1:s_span(end);
+yr33 = spline(s,r33,xx);
+figure(2)
+plot3(yr11,yr22,yr33,'o')
+
+
+
 %-------------------------------------
 
 k0 = .2;
-C0 = .1;
-k1 = .3;
-s_span = [0 5];
+C0 = 0;
+k1 = 0.1;
+% C0 = Tau0*(k0*S0 + k1).^2; %Zero Initial Torsion
+
+s_span = [0 1000];
 for n = 1:2
       c = rand(1,3);
     for i = 1:3
@@ -57,14 +67,34 @@ for n = 1:2
     IC4 = .1*rand;
     ICs = [IC1; IC2; IC3; IC4];
     [s,x] = ode45(@(s,x) r2ODE(s,x,k0,k1,C0),s_span,ICs);
-    figure(2)
-    plot(s,x(:,1),'-o','Color',c); hold on
+    figure(3)
+    r = x(:,1);
+    M{:,i} = r;
+    plot(s,r,'-o','Color',c); hold on
     end
-
+    N{n} = M;
 end
 title('Solution of 4th Order SF ODE \forall \kappa (s)\in C^2(s)');
 xlabel('Segment Lenght s'); ylabel('Solution r'); grid on;
 legend('r_1 e_t','r_1 e_n','r_1 e_b','location','best')
+
+
+r11 = N{1,2}{1,1};
+r22 = N{1,2}{1,2};
+r33 = N{1,2}{1,3};
+s = linspace(0,s_span(end),numel(r11));
+xx = 0:.1:s_span(end);
+yr11 = spline(s,r11,xx);
+s = linspace(0,s_span(end),numel(r22));
+xx = 0:.1:s_span(end);
+yr22 = spline(s,r22,xx);
+s = linspace(0,s_span(end),numel(r33));
+xx = 0:.1:s_span(end);
+yr33 = spline(s,r33,xx);
+figure(4)
+plot3(yr11,yr22,yr33,'o')
+
+
 
 
 function dydt = r1ODE(s,x,k0,C0)
