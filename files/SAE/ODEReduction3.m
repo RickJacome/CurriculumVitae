@@ -6,11 +6,11 @@ s_span = [0 1];
 for n=1:2
     c = rand(1,3);
     for i = 1:3
-     % Index i changes the unit vector
-     % The Number of ICs comes from the 4th order Equation
-     % The 4th Order Equation has three independent components,
-     % Thus, 12 ICs are needed. 
-     %Random ICs
+    % Index i changes the unit vector
+    % The Number of ICs comes from the 4th order Equation
+    % The 4th Order Equation has three independent components,
+    % Thus, 12 ICs are needed. 
+    %Random ICs
     IC1 = 0;
     IC2 = .5*rand;
     IC3 = .7*rand;
