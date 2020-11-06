@@ -1,39 +1,38 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
-x2 = GPSX; y2 = GPSY;
+% load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
+% x2 = GPSX; y2 = GPSY;
+% x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+%Google Earth Data (Shorter Road)
+load('xGEfeet.mat'); load('yGEfeet.mat');
+x2 = xGEfeet; y2 = yGEfeet;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
-%GPS DATA
-%load('CVF9LatX.mat'); load('CVF9LongY.mat');
-%x2 = LatX'; y2 = LongY'; 
-%Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');  
-%x2 = xm'; y2 = ym';
+
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 
 X = [x2',y2'];
 [L,R,K] = curvature(X);
 
-figure;
+figure(1);
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.');
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Curvature Vectors')
 hold on; quiver(x2',y2',K(:,1),K(:,2)); hold off  
-figure;
+figure(2);
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.','Linewidth',3);
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
-title('Road with Heading Vectors no parallism yet')
+title('Road with Heading Vectors')
 [O1,O2] = direction(K);
 e1 = cosd(O2); e2 = sind(O2);
 hold on; quiver(x2',y2',e1,e2); hold off
-figure
+figure(3)
 plot(L,O1);
-title('Central Angle of Curvature Direction');
-
+title('Angle of Curvature Direction');
+close all
 %  Smoothing Technique on Center Lane Angles----------------
-figure
+figure(4)
 x = L; y = O2;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
 yy2 = smooth(x,y,0.15,'rloess');
@@ -56,7 +55,7 @@ legend('Original data','Smoothed Data',...
        'Location','NW')
 
 e1 = cosd(yy2); e2 = sind(yy2);
-figure
+figure(5)
 subplot(1,2,1)
 h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
 hold on; quiver(x2',y2',e1,e2); hold off
@@ -84,7 +83,7 @@ for i = 2:N-1
 k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L(i+1) - L(i-1));   
 end
 
-figure;
+figure(6);
 plot(fd_s, k_num); hold on;
 plot(bd_s, k_num);
 plot(L,k_num_C);
@@ -98,18 +97,22 @@ yyaxis left
 %
 legend('Forward Difference','Backward Difference','Central Difference','Raw')
 
-% Unit Vectors
+
+% Unit Vectors in the direction of Curvature (original)
 k1 = K(:,1)./K_mag;
 k2 = K(:,2)./K_mag;
-figure
+figure(7)
 h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
-kp1 = k_num_C'.*k1;
+% Align the differentiated magnitudes
+% with the direction of the original curvature
+kp1 = k_num_C'.*k1; 
 kp2 = k_num_C'.*k2;
 hold on; quiver(x2',y2',kp1,kp2); hold off
+title('Curvature Vectors with Filtered Data')
 
 %---------------------------------------------------
 
-figure;
+figure(8);
 plot(L,O2); hold on
 ylabel('Heading Angle (degrees)')
 xlabel('Segment Length (m)')
@@ -125,7 +128,7 @@ legend('Heading Angle','Curvature','location','NW')
 
 xs = min(L):.01:max(L);
 ys = spline(L,k_num_C,xs);
-figure; plot(L,k_num_C,'o',xs,ys); 
+figure(9); plot(L,k_num_C,'o',xs,ys); 
 
 
 
