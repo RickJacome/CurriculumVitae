@@ -4,10 +4,12 @@ clear; close all; clc
 load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
 x2 = GPSX; y2 = GPSY;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
-%Google Earth Data (Shorter Road)
+%%%%Google Earth Data (Shorter Road)
 % load('xGEfeet.mat'); load('yGEfeet.mat');
 % x2 = xGEfeet; y2 = yGEfeet;
 % x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+
+%%%
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 nu = numel(y2); x2 = x2(1:nu);
 X = [x2',y2']; Li = zeros(nu,1);
@@ -17,7 +19,6 @@ end
 FinerSeg = min(Li):1:max(Li);
 x2 = spline(Li,x2,FinerSeg); y2 = spline(Li,y2,FinerSeg); 
 X = [x2',y2'];
-
 [L,R,K] = curvature(X);
 
 figure(1);
@@ -131,9 +132,38 @@ legend('Heading Angle','Curvature','location','NW')
 
 % %---------------------------------------------------
 % 
-% xs = min(L):.01:max(L);
-% ys = spline(L,k_num_C,xs);
-% figure(9); plot(L,k_num_C,'o',xs,ys); 
+figure(9);
+
+% Unit Vectors in the direction of Curvature (original)
+k1 = K(:,1)./K_mag;
+k2 = K(:,2)./K_mag;
+
+h1 = plot(x2,y2); grid on; axis equal; set(h1,'marker','.');
+% Align the differentiated magnitudes
+% with the direction of the original curvature
+ksign1 = -sign(k_num_C)'.*K(:,1).*k1; 
+ksign2 = sign(k_num_C)'.*K(:,2).*k2;
+hold on; quiver(x2',y2',ksign1,ksign2); hold off
+title('Curvature Vectors with Filtered Data')
+
+figure(10)
+
+K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
+Ksigned = K_mag.*sign(k_num_C)';
+plot(L,Ksigned)
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+
+%yyaxis right 
+hold on;
+plot(L,k_num_C,'color','k');
+hold on;
+plot(L,zeros(1,N));
+ylabel('Curvature (m^{-1})')
+grid on
+legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
+
+
+
 % 
 % 
 % 
