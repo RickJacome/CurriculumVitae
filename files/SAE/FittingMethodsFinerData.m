@@ -117,7 +117,7 @@ hold on; quiver(x2',y2',kp1,kp2); hold off
 title('Curvature Vectors with Filtered Data')
 
 %---------------------------------------------------
-
+close all
 figure(8);
 plot(L,O2); hold on
 ylabel('Heading Angle (degrees)')
@@ -153,11 +153,8 @@ Ksigned = K_mag.*sign(k_num_C)';
 plot(L,Ksigned)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
 
-%yyaxis right 
 hold on;
 plot(L,k_num_C,'color','k');
-hold on;
-plot(L,zeros(1,N));
 ylabel('Curvature (m^{-1})')
 grid on
 legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
