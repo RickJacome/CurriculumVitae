@@ -1,4 +1,5 @@
 close all; clear all; clc
+%  Curvature as a Constant function 
 k0 = 1e-3;
 Tau0 = 0; %Zero Initial Torsion
 s_span = [0 10];
@@ -42,15 +43,15 @@ yr33 = spline(s,r33,xx);
 figure(2)
 plot3(yr11,yr22,yr33,'-o'); grid on;
 xlabel('X');ylabel('Y'); zlabel('Z'); 
-%view(0,90)
-%view(90,0)
-%view(0,0)
+%view(0,90) %X-Y
+%view(90,0) %Y-Z
+%view(0,0) %X-Z
 
 %-------------------------------------
-
-k0 = .2;
+%  Curvature as a Linear function 
+k0 = 1e-3;
 C0 = 0;
-k1 = 0.1;
+k1 = 1e-6;
 % C0 = Tau0*(k0*S0 + k1).^2; %Zero Initial Torsion
 
 s_span = [0 10];
