@@ -210,17 +210,6 @@ a = L_Filter(1:OptRange(2));
 b = K_Filter(1:OptRange(2));
 figure
 plot(a,b)
-% a(isnan(a))=0;
-% b(isnan(b))=0;
-% global K_temp e g mu U
-% U = 3;
-% % Road Only
-% %e = 12; mu = 0.4;
-% e = 6; mu = 0.3;
-% % Both
-% g = 9.81; K_temp = 1;
-% DynamicOptimization(a,b)
-
 
 % 
 % 
