@@ -8,9 +8,11 @@ x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 % load('xGEfeet.mat'); load('yGEfeet.mat');
 % x2 = xGEfeet; y2 = yGEfeet;
 % x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
-
+%x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 %%%
-x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
+% For Google Earth GPS1Xft.mat... This captures the constant radius curve
+x2 = x2(110:180); y2 = y2(110:180);
+%%%%
 nu = numel(y2); x2 = x2(1:nu);
 X = [x2',y2']; Li = zeros(nu,1);
 for i = 2:nu
@@ -73,8 +75,6 @@ quiver(x2',y2',K(:,1),K(:,2));
 hold off; 
 title('Road with Curvature Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');   
-   
-   
 
 % Numerical Differentiation
 % MATLABs approach
@@ -118,8 +118,9 @@ title('Curvature Vectors with Filtered Data')
 
 %---------------------------------------------------
 close all
+
 figure(8);
-plot(L,O2); hold on
+plot(L,yy2); hold on
 ylabel('Heading Angle (degrees)')
 xlabel('Segment Length (m)')
 yyaxis right
@@ -128,11 +129,39 @@ hold on;
 plot(L,zeros(1,N));
 ylabel('Curvature (m^{-1})')
 grid on
-legend('Heading Angle','Curvature','location','NW')
+legend('Smoothed Heading Angle','Curvature d\theta/ds','location','NW')
 
 % %---------------------------------------------------
 % 
-figure(9);
+
+% Detect When the Average Changes Drastically
+Signal = yy2;
+n = numel(Signal);  o = zeros(n,1);
+threshold = 0.01; % Maximum Rate of change in heading
+Sig1 = zeros(n,1);
+Sig2 = zeros(n,1);
+for i = 1:n-2
+        if  abs(diff([Signal(i),Signal(i+1),Signal(i+2)])) < threshold  
+          o(i) = 0;
+          Sig1(i) = Signal(i);
+        else  
+          o(i) = 120;  
+          Sig2(i) = Signal(i);
+        end      
+end
+figure(9)
+plot(L,Signal); hold on;
+plot(L,o);
+% for i = 1:n-1
+%     if o(i) = 120
+%         idx = o(i)
+    
+
+
+
+% %---------------------------------------------------
+% 
+figure(10);
 
 % Unit Vectors in the direction of Curvature (original)
 k1 = K(:,1)./K_mag;
@@ -146,7 +175,7 @@ ksign2 = sign(k_num_C)'.*K(:,2).*k2;
 hold on; quiver(x2',y2',ksign1,ksign2); hold off
 title('Curvature Vectors with Filtered Data')
 
-figure(10)
+figure(11)
 
 K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
 Ksigned = K_mag.*sign(k_num_C)';
@@ -158,6 +187,14 @@ plot(L,k_num_C,'color','k');
 ylabel('Curvature (m^{-1})')
 grid on
 legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
+
+% hold on;
+yyaxis right
+plot(L,Sig1,L,Sig2)
+
+
+
+
 
 
 
