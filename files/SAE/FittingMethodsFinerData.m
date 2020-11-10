@@ -212,16 +212,15 @@ figure
 plot(a,b)
 a(isnan(a))=0;
 b(isnan(b))=0;
+global K_temp e g mu U
+U = 3;
+% Road Only
+%e = 12; mu = 0.4;
+e = 6; mu = 0.3;
+% Both
+g = 9.81; K_temp = 1;
 DynamicOptimization(a,b)
 
-function [c,ceq] = EqConstraint(x)
-        global K_temp e g mu 
-        %Pr.2
-        % Nonlinear Inequality Constraints
-        c = x(2)^2*K_temp/g - (mu + 0.01*e)/(1-0.01*mu*e);
-        % Nonlinear Equality Constraints
-        ceq = [];
-end
 
 % 
 % 
