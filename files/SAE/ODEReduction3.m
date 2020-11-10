@@ -39,11 +39,12 @@ xx = 0:.1:s_span(end);
 yr22 = spline(s,r22,xx);
 s = linspace(0,s_span(end),numel(r33));
 xx = 0:.1:s_span(end);
-yr33 = spline(s,r33,xx);
+%yr33 = spline(s,r33,xx);
+yr33 = zeros(1,numel(xx));
 figure(2)
 plot3(yr11,yr22,yr33,'-o'); grid on;
 xlabel('X');ylabel('Y'); zlabel('Z'); 
-%view(0,90) %X-Y
+view(0,90) %X-Y
 %view(90,0) %Y-Z
 %view(0,0) %X-Z
 
@@ -91,13 +92,14 @@ xx = 0:.1:s_span(end);
 yr22 = spline(s,r22,xx);
 s = linspace(0,s_span(end),numel(r33));
 xx = 0:.1:s_span(end);
-yr33 = spline(s,r33,xx);
+%yr33 = spline(s,r33,xx);
+yr33 = zeros(1,numel(xx));
 figure(4)
 plot3(yr11,yr22,yr33,'-o'); grid on;
 xlabel('X');ylabel('Y'); zlabel('Z'); 
-%view(0,90)
-%view(90,0)
-%view(0,0)
+view(0,90) %X-Y
+%view(90,0) %Y-Z
+%view(0,0) %X-Z
  
 
 function dydt = r1ODE(s,x,k0,Tau0)
