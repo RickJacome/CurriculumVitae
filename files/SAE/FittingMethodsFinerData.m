@@ -1,13 +1,13 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
-x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+%load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
+%x2 = GPSX; y2 = GPSY;
+%x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 %%%%Google Earth Data (Shorter Road)
-% load('xGEfeet.mat'); load('yGEfeet.mat');
-% x2 = xGEfeet; y2 = yGEfeet;
-% x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+ load('xGEfeet.mat'); load('yGEfeet.mat');
+ x2 = xGEfeet; y2 = yGEfeet;
+ x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 
 %%%%
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
@@ -184,7 +184,7 @@ grid on
 legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
 yyaxis right
 plot(L,Sig1,L,Sig2)
-close all
+
 %%%%%%%-------------------------------------------------------------
 figure(12)
 plot(L,Sig2)
@@ -210,16 +210,16 @@ a = L_Filter(1:OptRange(2));
 b = K_Filter(1:OptRange(2));
 figure
 plot(a,b)
-a(isnan(a))=0;
-b(isnan(b))=0;
-global K_temp e g mu U
-U = 3;
-% Road Only
-%e = 12; mu = 0.4;
-e = 6; mu = 0.3;
-% Both
-g = 9.81; K_temp = 1;
-DynamicOptimization(a,b)
+% a(isnan(a))=0;
+% b(isnan(b))=0;
+% global K_temp e g mu U
+% U = 3;
+% % Road Only
+% %e = 12; mu = 0.4;
+% e = 6; mu = 0.3;
+% % Both
+% g = 9.81; K_temp = 1;
+% DynamicOptimization(a,b)
 
 
 % 
