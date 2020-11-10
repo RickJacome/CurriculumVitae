@@ -8,10 +8,12 @@ x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 % load('xGEfeet.mat'); load('yGEfeet.mat');
 % x2 = xGEfeet; y2 = yGEfeet;
 % x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
-%x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
+
+%%%%
+x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 %%%
 % For Google Earth GPS1Xft.mat... This captures the constant radius curve
-x2 = x2(110:180); y2 = y2(110:180);
+%x2 = x2(110:180); y2 = y2(110:180); %110-180
 %%%%
 nu = numel(y2); x2 = x2(1:nu);
 X = [x2',y2']; Li = zeros(nu,1);
@@ -117,7 +119,6 @@ hold on; quiver(x2',y2',kp1,kp2); hold off
 title('Curvature Vectors with Filtered Data')
 
 %---------------------------------------------------
-close all
 
 figure(8);
 plot(L,yy2); hold on
@@ -152,15 +153,9 @@ end
 figure(9)
 plot(L,Signal); hold on;
 plot(L,o);
-% for i = 1:n-1
-%     if o(i) = 120
-%         idx = o(i)
-    
 
-
-
+   
 % %---------------------------------------------------
-% 
 figure(10);
 
 % Unit Vectors in the direction of Curvature (original)
@@ -187,19 +182,55 @@ plot(L,k_num_C,'color','k');
 ylabel('Curvature (m^{-1})')
 grid on
 legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
-
-% hold on;
 yyaxis right
 plot(L,Sig1,L,Sig2)
+close all
+%%%%%%%-------------------------------------------------------------
+figure(12)
+plot(L,Sig2)
+K_Filter = Ksigned(Sig2~=0);
+L_Filter = L(Sig2~=0);
+hold on; 
+yyaxis right
+plot(L_Filter,K_Filter,'o','linewidth',1.5)
+plot(L,zeros(1,N));
+plot(L,Ksigned,'-','color','b')
+legend
+%%%%%%%-------------------------------------------------------------
+n = numel(K_Filter);
+OptRange=zeros(1,1);
+p = 1;
+for i = 1:n-2
+        if sign((K_Filter(i)).*sign(K_Filter(i+1))) ~= 1   
+          OptRange(p,:)=i;
+          p = p+1;
+        end      
+end
+a = L_Filter(1:OptRange(2));
+b = K_Filter(1:OptRange(2));
+figure
+plot(a,b)
+a(isnan(a))=0;
+b(isnan(b))=0;
+DynamicOptimization(a,b)
 
-
-
-
-
-
+function [c,ceq] = EqConstraint(x)
+        global K_temp e g mu 
+        %Pr.2
+        % Nonlinear Inequality Constraints
+        c = x(2)^2*K_temp/g - (mu + 0.01*e)/(1-0.01*mu*e);
+        % Nonlinear Equality Constraints
+        ceq = [];
+end
 
 % 
 % 
 % 
 % 
-% 
+%%%%%%%-------------------------------------------------------------
+
+
+
+
+
+
