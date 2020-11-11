@@ -1,13 +1,15 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
-%load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
-%x2 = GPSX; y2 = GPSY;
-%x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
+x2 = GPSX; y2 = GPSY;
+x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+% xlim([725000 728000])
+% ylim([4543000 4549000])
 %%%%Google Earth Data (Shorter Road)
- load('xGEfeet.mat'); load('yGEfeet.mat');
- x2 = xGEfeet; y2 = yGEfeet;
- x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+%  load('xGEfeet.mat'); load('yGEfeet.mat');
+%  x2 = xGEfeet; y2 = yGEfeet;
+%  x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 
 %%%%
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
@@ -40,6 +42,7 @@ hold on; quiver(x2',y2',e1,e2); hold off
 figure(3)
 plot(L,O1);
 title('Angle of Curvature Direction');
+xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 
 %  Smoothing Technique on Center Lane Angles----------------
 figure(4)
@@ -47,19 +50,16 @@ x = L; y = O2;
 yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
 yy2 = smooth(x,y,0.15,'rloess');
 subplot(2,1,1)
-plot(x,y,'b.',x,yy1,'r-'); grid on
-% Comment for anything not MATLAB 2020 after Use
-yyaxis left
+plot(x,y,'b.',x,yy1,'r-','linewidth',1.5); grid on
 %
 legend('Original data','Smoothed data using ''loess''',...
        'Location','NW')
 title('Central Angle of Velocity Direction');
-xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
+xlabel('Segment Length (m)'); ylabel('Tangent Vector Direction (degrees)')
 subplot(2,1,2)
-plot(x,y,'b.',x,yy2,'r-'); grid on
-xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
-% Comment for anything not MATLAB 2020 after Use
-yyaxis left
+plot(x,y,'b.',x,yy2,'r-','linewidth',1.5); grid on
+xlabel('Segment Length (m)'); ylabel('Tangent Vector Direction (degrees)')
+
 %
 legend('Original data','Smoothed Data',...
        'Location','NW')
@@ -92,19 +92,23 @@ k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L(i+1) - L(i-1));
 end
 
 figure(6);
-plot(fd_s, k_num); hold on;
+plot(fd_s, k_num,'b--','linewidth',1.5); hold on;
 plot(bd_s, k_num);
-plot(L,k_num_C);
-title('Derivatives Central');
+plot(L,k_num_C,'r--','linewidth',1.5); hold on;
+%title('Derivatives Central');
 hold on;
 K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
 plot(L,K_mag)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-% Comment for anything not MATLAB 2020 after Use
-yyaxis left
 %
-legend('Forward Difference','Backward Difference','Central Difference','Raw')
+%legend('Forward Difference','Backward Difference','Central Difference','Raw')
+legend('Forward Difference','Central Difference','MDC Raw')
 
+figure(77)
+plot(L,K_mag)
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+
+%%%%%----------------------------------------------------
 
 % Unit Vectors in the direction of Curvature (original)
 k1 = K(:,1)./K_mag;
@@ -118,19 +122,21 @@ kp2 = k_num_C'.*k2;
 hold on; quiver(x2',y2',kp1,kp2); hold off
 title('Curvature Vectors with Filtered Data')
 
+
+
 %---------------------------------------------------
 
 figure(8);
 plot(L,yy2); hold on
-ylabel('Heading Angle (degrees)')
+ylabel('Tangent Vector Angle (degrees)')
 xlabel('Segment Length (m)')
 yyaxis right
-plot(L,k_num_C,'color','k');
+plot(L(1:end-1),k_num_C(1:end-1),'color','k');
 hold on;
 plot(L,zeros(1,N));
 ylabel('Curvature (m^{-1})')
 grid on
-legend('Smoothed Heading Angle','Curvature d\theta/ds','location','NW')
+legend('Smoothed Angle','Curvature d\theta/ds','location','NW')
 
 % %---------------------------------------------------
 % 
@@ -153,8 +159,9 @@ end
 figure(9)
 plot(L,Signal); hold on;
 plot(L,o);
-
-   
+ylabel('Tangent Vector Angle (degrees)')
+xlabel('Segment Length (m)')
+legend('Data','Switch')
 % %---------------------------------------------------
 figure(10);
 
@@ -181,21 +188,26 @@ hold on;
 plot(L,k_num_C,'color','k');
 ylabel('Curvature (m^{-1})')
 grid on
-legend('Curvature MDC','Curvature d\theta/ds  ','location','NW')
+legend('Curvature MDC','Curvature d\theta/ds',...
+    'Straight Segment','Curved Segment','location','NW')
 yyaxis right
 plot(L,Sig1,L,Sig2)
-
+ylabel('Tangent Vector Angle (degrees)')
 %%%%%%%-------------------------------------------------------------
 figure(12)
-plot(L,Sig2)
 K_Filter = Ksigned(Sig2~=0);
 L_Filter = L(Sig2~=0);
-hold on; 
-yyaxis right
-plot(L_Filter,K_Filter,'o','linewidth',1.5)
-plot(L,zeros(1,N));
+plot(L_Filter,K_Filter,'o','color','r','linewidth',1.5); hold on; 
+grid on;
 plot(L,Ksigned,'-','color','b')
-legend
+xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
+LLL = zeros(1,numel(L_Filter));
+% plot(L_Filter,LLL)
+yyaxis right
+
+plot(L,Sig2)
+ylabel('Tangent Vector Angle (degrees)')
+legend('Segmented MDC Curvature','Signed MDC Curvature','Curved Segment','location','best')
 %%%%%%%-------------------------------------------------------------
 n = numel(K_Filter);
 OptRange=zeros(1,1);
