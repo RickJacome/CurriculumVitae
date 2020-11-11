@@ -181,18 +181,18 @@ figure(11)
 
 K_mag = sqrt( K(:,2).^2 + K(:,1).^2 );
 Ksigned = K_mag.*sign(k_num_C)';
-plot(L,Ksigned)
+plot(L,Ksigned,'linewidth',1.5)
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
 
 hold on;
 plot(L,k_num_C,'color','k');
 ylabel('Curvature (m^{-1})')
 grid on
-legend('Curvature MDC','Curvature d\theta/ds',...
-    'Straight Segment','Curved Segment','location','NW')
 yyaxis right
 plot(L,Sig1,L,Sig2)
 ylabel('Tangent Vector Angle (degrees)')
+legend('MDC Raw','Curvature d\theta/ds',...
+    'Straight Segment','Curved Segment','location','NW')
 %%%%%%%-------------------------------------------------------------
 figure(12)
 K_Filter = Ksigned(Sig2~=0);
@@ -207,7 +207,7 @@ yyaxis right
 
 plot(L,Sig2)
 ylabel('Tangent Vector Angle (degrees)')
-legend('Segmented MDC Curvature','Signed MDC Curvature','Curved Segment','location','best')
+legend('Segmented MDC','Signed MDC','Curved Segment','location','best')
 %%%%%%%-------------------------------------------------------------
 n = numel(K_Filter);
 OptRange=zeros(1,1);
