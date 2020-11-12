@@ -1,24 +1,9 @@
 %%%%---------------------------------------------
-% 6-25-2020
-% For this Dynamic Routine to work
-% (1) Select your Data i.e. GPS, Google Earth, AASHTO, etc.
-% (2) Select a range that occupies one "curve segment" i.e.
-% when does curvature change considerably. 
-% (3) Select appropiate Initial Conditions i.e. proportional to 
-% segment length.
+% 11-10-2020
+
 % External files used: curvature.m direction.m
 %%%_---------------------------------------------
 clear; close all; clc
-%Google Earth Data
-% load('GPS1Xft.mat'); load('GPS1Yft.mat');
-% x2 = GPSX; y2 = GPSY;
-% x2 = x2'*.3048; y2 = y2'*.3048;
-%GPS DATA
-% load('CVF9LatX.mat'); load('CVF9LongY.mat');
-% x2 = LatX'; y2 = LongY'; 
-%Ideal AASHTO
-% load('MichXm.mat'); load('MichYm.mat');  
-% x2 = xm'; y2 = ym';
 load('OptimK.mat'); load('OptimS.mat')
 
 % ------------
