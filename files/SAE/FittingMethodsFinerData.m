@@ -1,15 +1,15 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
-x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+%load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
+%x2 = GPSX; y2 = GPSY;
+%x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 % xlim([725000 728000])
 % ylim([4543000 4549000])
 %%%%Google Earth Data (Shorter Road)
-%  load('xGEfeet.mat'); load('yGEfeet.mat');
-%  x2 = xGEfeet; y2 = yGEfeet;
-%  x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+load('xGEfeet.mat'); load('yGEfeet.mat');
+x2 = xGEfeet; y2 = yGEfeet;
+x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 
 %%%%
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
@@ -93,7 +93,7 @@ end
 
 figure(6);
 plot(fd_s, k_num,'b--','linewidth',1.5); hold on;
-plot(bd_s, k_num);
+%plot(bd_s, k_num);
 plot(L,k_num_C,'r--','linewidth',1.5); hold on;
 %title('Derivatives Central');
 hold on;
@@ -205,23 +205,23 @@ LLL = zeros(1,numel(L_Filter));
 % plot(L_Filter,LLL)
 yyaxis right
 
-plot(L,Sig2)
+plot(L,Sig2,'k')
 ylabel('Tangent Vector Angle (degrees)')
 legend('Segmented MDC','Signed MDC','Curved Segment','location','best')
 %%%%%%%-------------------------------------------------------------
-n = numel(K_Filter);
-OptRange=zeros(1,1);
-p = 1;
-for i = 1:n-2
-        if sign((K_Filter(i)).*sign(K_Filter(i+1))) ~= 1   
-          OptRange(p,:)=i;
-          p = p+1;
-        end      
-end
-a = L_Filter(1:OptRange(2));
-b = K_Filter(1:OptRange(2));
-figure
-plot(a,b)
+% n = numel(K_Filter);
+% OptRange=zeros(1,1);
+% p = 1;
+% for i = 1:n-2
+%         if sign((K_Filter(i)).*sign(K_Filter(i+1))) ~= 1   
+%           OptRange(p,:)=i;
+%           p = p+1;
+%         end      
+% end
+% a = L_Filter(1:OptRange(2));
+% b = K_Filter(1:OptRange(2));
+% figure
+% plot(a,b)
 
 % 
 % 
