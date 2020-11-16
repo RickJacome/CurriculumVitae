@@ -1,14 +1,19 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
-%Google Earth Data
+%Google Earth Data (General Highway Curve)
 %load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
 %x2 = GPSX; y2 = GPSY;
 %x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 % xlim([725000 728000])
 % ylim([4543000 4549000])
-%%%%Google Earth Data (Shorter Road)
-load('xGEfeet.mat'); load('yGEfeet.mat');
-x2 = xGEfeet; y2 = yGEfeet;
+%%%%Google Earth Data (Constant Radius )
+% load('xGEfeet.mat'); load('yGEfeet.mat');
+% x2 = xGEfeet; y2 = yGEfeet;
+% x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+%%%%%%
+%%%%Google Earth Data (Interchange Road)
+load('xInterChngft.mat'); load('yInterChngft.mat');
+x2 = xInterChngft; y2 = yInterChngft;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 
 %%%%
@@ -47,12 +52,14 @@ xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 %  Smoothing Technique on Center Lane Angles----------------
 figure(4)
 x = L; y = O2;
-yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
-yy2 = smooth(x,y,0.15,'rloess');
+yy1 = smooth(x,y,0.15,'rloess');  %Span of 15%
+
+yy2 = smooth(x,y,0.15,'loess');
+
 subplot(2,1,1)
 plot(x,y,'b.',x,yy1,'r-','linewidth',1.5); grid on
 %
-legend('Original data','Smoothed data using ''loess''',...
+legend('Original data','Smoothed data using ''rloess''',...
        'Location','NW')
 title('Central Angle of Velocity Direction');
 xlabel('Segment Length (m)'); ylabel('Tangent Vector Direction (degrees)')
@@ -144,7 +151,7 @@ legend('Smoothed Angle','Curvature d\theta/ds','location','NW')
 % Detect When the Average Changes Drastically
 Signal = yy2;
 n = numel(Signal);  o = zeros(n,1);
-threshold = 0.01; % Maximum Rate of change in heading
+threshold = 0.1; % Maximum Rate of change in heading [.01 -1]
 Sig1 = zeros(n,1);
 Sig2 = zeros(n,1);
 for i = 1:n-2
