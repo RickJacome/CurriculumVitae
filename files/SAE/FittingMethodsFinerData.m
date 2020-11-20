@@ -1,9 +1,9 @@
 %HERE I am trying to create the Filter of the Centerlines 
 clear; close all; clc
 %Google Earth Data (General Highway Curve)
-%load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
-%x2 = GPSX; y2 = GPSY;
-%x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+load('GPS1Xft.mat'); load('GPS1Yft.mat'); %Data is in Feet
+x2 = GPSX; y2 = GPSY;
+x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 % xlim([725000 728000])
 % ylim([4543000 4549000])
 %%%%Google Earth Data (Constant Radius )
@@ -12,9 +12,9 @@ clear; close all; clc
 % x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 %%%%%%
 %%%%Google Earth Data (Interchange Road)
-load('xInterChngft.mat'); load('yInterChngft.mat');
-x2 = xInterChngft; y2 = yInterChngft;
-x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
+% load('xInterChngft.mat'); load('yInterChngft.mat');
+% x2 = xInterChngft; y2 = yInterChngft;
+% x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 
 %%%%
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
@@ -41,7 +41,10 @@ figure(2);
 h = plot(x2,y2); grid on; axis equal; set(h,'marker','.','Linewidth',3);
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)')
 title('Road with Heading Vectors')
+%%%%%%-------------------------------------------------------------
+% CHANGE if traveling northbound or southbound
 [O1,O2] = direction(K);
+%%%%%%-------------------------------------------------------------
 e1 = cosd(O2); e2 = sind(O2);
 hold on; quiver(x2',y2',e1,e2); hold off
 figure(3)
@@ -53,7 +56,6 @@ xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector (degrees)')
 figure(4)
 x = L; y = O2;
 yy1 = smooth(x,y,0.15,'rloess');  %Span of 15%
-
 yy2 = smooth(x,y,0.15,'loess');
 
 subplot(2,1,1)
@@ -97,7 +99,7 @@ k_num_C = zeros(1,N);
 for i = 2:N-1
 k_num_C(i) = (yy2(i+1) - yy2(i-1))/(L(i+1) - L(i-1));   
 end
-
+close all
 figure(6);
 plot(fd_s, k_num,'b--','linewidth',1.5); hold on;
 %plot(bd_s, k_num);
@@ -151,7 +153,8 @@ legend('Smoothed Angle','Curvature d\theta/ds','location','NW')
 % Detect When the Average Changes Drastically
 Signal = yy2;
 n = numel(Signal);  o = zeros(n,1);
-threshold = 0.1; % Maximum Rate of change in heading [.01 -1]
+% Maximum Rate of change in heading [.01,1]
+threshold = .01; 
 Sig1 = zeros(n,1);
 Sig2 = zeros(n,1);
 for i = 1:n-2
@@ -208,7 +211,7 @@ plot(L_Filter,K_Filter,'o','color','r','linewidth',1.5); hold on;
 grid on;
 plot(L,Ksigned,'-','color','b')
 xlabel('Segment Length (m)'); ylabel('Curvature (m^{-1})')
-LLL = zeros(1,numel(L_Filter));
+% LLL = zeros(1,numel(L_Filter));
 % plot(L_Filter,LLL)
 yyaxis right
 
