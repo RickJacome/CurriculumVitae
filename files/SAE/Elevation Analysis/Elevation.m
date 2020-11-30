@@ -22,3 +22,4 @@ Th = atand( abs( (z4 - z3)) /abs( (y4 - y3)*1000) );
 e1 = 100*sind(Fi)
 e2 = 100*sind(Se)
 e3 = 100*sind(Th)
+
