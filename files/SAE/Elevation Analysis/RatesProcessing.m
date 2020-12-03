@@ -1,9 +1,9 @@
 clc; clear all; close all
-load('Gyro3.mat');
-tm = Gyro3.time;
-xr = Gyro3.wxrads;
-yr = Gyro3.wyrads;
-zr = Gyro3.wzrads;
+load('Gyro4.mat');
+tm = Gyro4.time;
+xr = Gyro4.wxrads;
+yr = Gyro4.wyrads;
+zr = Gyro4.wzrads;
 tm = tm'; xr = xr'; yr = yr'; zr = zr';
 plot(tm,xr,tm,yr,tm,zr,'linewidth',1.5)
 xlabel('Time(sec)'); ylabel('Angular Rate (rad/sec)');
@@ -26,19 +26,32 @@ figure; plot(tm,rad2deg(xd),tm,rad2deg(yd),tm,rad2deg(zd),'linewidth',1.5)
 xlabel('Time(sec)'); ylabel('Angular Displacement (deg)');
 
 c = asin(1./sqrt( (cos(xd)).^2 + (cos(yd)).^2 +(cos(zd)).^2 ));
-cdeg = rad2deg(c);
-figure; plot( tm,cdeg ); % Good elevation, on average it is almost flat
-title('c-method elevation profile');
-xlabel('Time(sec)'); ylabel('Elevation (deg)');
+% cdeg = rad2deg(c);
+% cdeg = cdeg - cdeg(1);
+% figure; plot( tm,cdeg ); % Good elevation, on average it is almost flat
+% title('c-method elevation profile');
+% xlabel('Time(sec)'); ylabel('Elevation (deg)');
+% 
+% % vector of 1-D look-up table "x" points
+% XI = linspace(min(tm),max(tm),20);
+% % obtain vector of 1-D look-up table "y" points
+% YI = lsq_lut_piecewise( tm', cdeg', XI );
+% figure; plot(tm,cdeg,'.',XI,YI,'+-'); grid on;
+% legend('experimental data','LUT points','location','best')
+% title('Piecewise 1-D look-up table least square estimation')
 
-% vector of 1-D look-up table "x" points
-XI = linspace(min(tm),max(tm),20);
-% obtain vector of 1-D look-up table "y" points
-YI = lsq_lut_piecewise( tm', cdeg', XI );
-figure; plot(tm,cdeg,'.',XI,YI,'+-'); grid on;
-legend('experimental data','LUT points','location','best')
-title('Piecewise 1-D look-up table least square estimation')
 
+% yy1 = smooth(tm,cdeg,0.1,'loess');
+% yy2 = smooth(tm,cdeg,0.1,'rloess');
+% subplot(2,1,1)
+% plot(tm,cdeg,'b.',tm,yy1,'r-')
+% legend('Original data','Smoothed data using ''loess''',...
+%        'Location','NW')
+%    
+% subplot(2,1,2)
+% plot(tm,cdeg,'b.',tm,yy2,'r-')
+% legend('Original data','Smoothed data using ''rloess''',...
+%        'Location','NW')
 
 
 % % Linear Least Square - Regression Approach
