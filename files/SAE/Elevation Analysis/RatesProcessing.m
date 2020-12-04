@@ -102,7 +102,7 @@ title('Yaw'); grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 %------------------------------------
-cab(7)
+
 
 
 %c = asin(1./sqrt( (cos(xd)).^2 + (cos(yd)).^2 +(cos(zd)).^2 ));
