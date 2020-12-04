@@ -74,7 +74,7 @@ yyaxis right
 scatter(X_new,Theta,'*')
 %Superelevation as a percentage
 e1 = 100*sind(Theta);
-text(X_new,Theta,string(e1))
+% text(X_new,Theta,string(e1))
 figure; plot(Dist,Zero_xd); hold on;
 plot(X_new,Theta); grid on;
 xlabel('Distance (km)');ylabel('Angular Displacement (deg)');
