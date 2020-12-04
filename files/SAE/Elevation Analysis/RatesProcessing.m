@@ -21,7 +21,6 @@ for i = 1:n-1
     xd(i+1) = (tm(i+1)-tm(i)).*((xr(i+1)+xr(i))/2) + xd(i);
     yd(i+1) = (tm(i+1)-tm(i)).*((yr(i+1)+yr(i))/2) + yd(i);
     zd(i+1) = (tm(i+1)-tm(i)).*((zr(i+1)+zr(i))/2) + zd(i);
-
 end
 figure; plot(tm,xd,tm,yd,tm,zd,'linewidth',1.5); grid on
 xlabel('Time(sec)'); ylabel('Angular Displacement (rad)');
@@ -103,8 +102,7 @@ title('Yaw'); grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 %------------------------------------
-
-
+cab(7)
 
 
 %c = asin(1./sqrt( (cos(xd)).^2 + (cos(yd)).^2 +(cos(zd)).^2 ));
