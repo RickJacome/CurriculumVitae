@@ -1,0 +1,48 @@
+clc; clear all; close all
+load('ElantraTrial1.mat')
+v = ElantraTrial1.Speedms;
+tm = ElantraTrial1.time;
+xr = ElantraTrial1.wx;
+yr = ElantraTrial1.wy;
+zr = ElantraTrial1.wz;
+xr(isnan(xr)) = []; yr(isnan(yr)) = [];
+zr(isnan(zr)) = []; tm(isnan(tm)) = []; v(isnan(v)) = [];
+tm = tm'; xr = xr'; yr = yr'; zr = zr';
+figure; plot(tm,xr,tm,yr,tm,zr,'linewidth',1.5)
+xlabel('Time(sec)'); ylabel('Angular Rate (rad/sec)');
+legend('Pitch Rate','Roll Rate','Yaw Rate','location','best')
+figure; plot(tm,v); xlabel('Time(sec)'); ylabel('Speed (m/s)');
+n = numel(tm);
+xd = zeros(1,n); yd = zeros(1,n); zd = zeros(1,n); 
+for i = 1:n-1
+    %Numerical Quadrature, Trapezoidal Approach
+    xd(i+1) = (tm(i+1)-tm(i)).*((xr(i+1)+xr(i))/2) + xd(i);
+    yd(i+1) = (tm(i+1)-tm(i)).*((yr(i+1)+yr(i))/2) + yd(i);
+    zd(i+1) = (tm(i+1)-tm(i)).*((zr(i+1)+zr(i))/2) + zd(i);
+end
+figure; plot(tm,rad2deg(xd),tm,rad2deg(yd),tm,rad2deg(zd),'linewidth',1.5)
+grid on;
+xlabel('Time(sec)'); ylabel('Angular Displacement (deg)');
+legend('Pitch','Roll','Yaw','location','best')
+%------------------------------------
+% Pitch
+m_xr = mean(xr)*ones(1,n);
+figure;
+plot(tm,xr,tm,m_xr); 
+m_xr_int = zeros(1,n); 
+for i = 1:n-1
+    m_xr_int(i+1) = (tm(i+1)-tm(i)).*((m_xr(i+1)+m_xr(i))/2) + m_xr_int(i);
+end
+figure; plot(tm,rad2deg(xd))
+hold on; plot(tm,rad2deg(m_xr_int))
+Zero_xd = rad2deg(xd-m_xr_int);
+plot(tm,Zero_xd,'linewidth',1.5);
+title('Pitch'); grid on;
+legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
+xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
+%------------------------------------
+%Transforming the data from Disp vs Time to Disp vs X
+Dist = mean(v(2:end)).*tm;
+figure; plot(Dist,Zero_xd); grid on
+xlabel('Distance (sm)'); ylabel ('Angular Displacement (deg)');
+cab(6)
