@@ -2,9 +2,8 @@ clc; clear all; close all
 load('ElantraTrial1.mat')
 v = ElantraTrial1.Speedms;
 tm = ElantraTrial1.time;
-xr = ElantraTrial1.wx;
-yr = ElantraTrial1.wy;
-zr = ElantraTrial1.wz;
+xr = ElantraTrial1.wx; yr = ElantraTrial1.wy; zr = ElantraTrial1.wz;
+Lat = ElantraTrial1.Latitude; Long = ElantraTrial1.Longitude;
 xr(isnan(xr)) = []; yr(isnan(yr)) = [];
 zr(isnan(zr)) = []; tm(isnan(tm)) = []; v(isnan(v)) = [];
 tm = tm'; xr = xr'; yr = yr'; zr = zr';
@@ -42,7 +41,40 @@ legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 %------------------------------------
 %Transforming the data from Disp vs Time to Disp vs X
-Dist = mean(v(2:end)).*tm;
+Dist = mean(v(2:end)).*tm/1000;
 figure; plot(Dist,Zero_xd); grid on
-xlabel('Distance (sm)'); ylabel ('Angular Displacement (deg)');
-cab(6)
+xlabel('Distance (km)'); ylabel ('Angular Displacement (deg)');
+
+load('ElevationProfile.mat');
+x = ElevationProfile.HorDist; y = ElevationProfile.VertDist;
+x=x(2:end); y = y(2:end);
+%Elevation Profile
+yyaxis right
+hold on; plot(x,y); ylabel('Vertical Elevation (m)')
+yyaxis left
+%Multi-Linear LLS Approximation
+%vector of 1-D look-up table "x" points
+XI = linspace(min(x),max(x),20);
+% obtain vector of 1-D look-up table "y" points
+YI = lsq_lut_piecewise( x, y, XI );
+figure; plot(x,y,'.',XI,YI,'+-'); grid on;
+legend('experimental data','LUT points','location','best')
+title('Piecewise 1-D look-up table least square estimation')
+% Superelevation Angle
+n = numel(YI);
+Theta = zeros(1,n);
+X_new = zeros(1,n);
+for i = 1:1:n-1
+Theta(i+1) = atand( ( (YI(i+1) - YI(i))) /( (XI(i+1) - XI(i))*1000) ); 
+X_new(i+1) = XI(i+1);
+end
+hold on;
+yyaxis right
+scatter(X_new,Theta,'*')
+%Superelevation as a percentage
+e1 = 100*sind(Theta);
+text(X_new,Theta,string(e1))
+figure; plot(Dist,Zero_xd); hold on;
+plot(X_new,Theta); grid on;
+xlabel('Distance (km)');ylabel('Angular Displacement (deg)');
+
