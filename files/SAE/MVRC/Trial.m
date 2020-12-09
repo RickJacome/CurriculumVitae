@@ -5,8 +5,8 @@ x2 = Road.XEx; y2 = Road.YEx;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
-x2 = x2(1:20:end);
-y2 = y2(1:20:end);
+%x2 = x2(1:20:end);
+%y2 = y2(1:20:end);
 X = [x2',y2'];
 [L2,R2,K2] = curvature(X);
 figure; plot(L2,R2); grid on;
@@ -52,8 +52,8 @@ yy1 = smooth(x,y,0.15,'loess');  %Span of 15%
 %yy1 = smooth(x,y,0.15,'rloess');
 figure
 plot(x,y,'b.',x,yy1,'r-'); grid on
-xlabel('Segment S (m)'); ylabel('Angle of Velocity Vector')
-legend('Original data','Smoothed Data',...
+xlabel('Segment Length (m)'); ylabel('Road Tangent Angle (deg)')
+legend('Angle Data','Smoothed Data',...
        'Location','best')
 %%%%%-----------------------------------------
 Thk1d = rad2deg(Thk1);
