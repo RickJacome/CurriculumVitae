@@ -5,8 +5,8 @@ x2 = Road.XEx; y2 = Road.YEx;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
-%x2 = x2(1:20:end);
-%y2 = y2(1:20:end);
+x2 = x2(1:20:end);
+y2 = y2(1:20:end);
 X = [x2',y2'];
 [L2,R2,K2] = curvature(X);
 figure; plot(L2,R2); grid on;
