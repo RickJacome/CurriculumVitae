@@ -61,7 +61,7 @@ YI = lsq_lut_piecewise( x, y, XI );
 figure; plot(x,y,'.',XI,YI,'+-'); grid on;
 legend('experimental data','LUT points','location','best')
 title('Piecewise 1-D look-up table least square estimation')
-% Superelevation Angle
+% Superelevation Angle 
 n = numel(YI);
 Theta = zeros(1,n);
 X_new = zeros(1,n);
