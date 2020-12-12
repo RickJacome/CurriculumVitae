@@ -5,8 +5,8 @@ x2 = Road.XEx; y2 = Road.YEx;
 x2 = x2'*.3048; y2 = y2'*.3048; %Conversion to Meters
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
-x2 = x2(1:20:end);
-y2 = y2(1:20:end);
+%x2 = x2(1:20:end);
+%y2 = y2(1:20:end);
 X = [x2',y2'];
 [L2,R2,K2] = curvature(X);
 figure; plot(L2,R2); grid on;
@@ -62,13 +62,32 @@ e1 = Thk1d; e2 = Thk2d;
 e1 = transpose(cosd(yy1)); e2 = transpose(sind(yy1));
 figure
 h1 = plot(x2,y2); grid on; set(h1,'marker','.');
-hold on; quiver(x2(1:20:end),y2(1:20:end),e1(1:20:end),e2(1:20:end)); hold off
-%title('Road with Velocity Vectors')
+hold on; 
+%quiver(x2(1:end),y2(1:end),e1(1:end),e2(1:end)); 
+quiver(x2(1:20:end),y2(1:20:end),e1(1:20:end),e2(1:20:end)); 
+hold off
+title('Road with Velocity Vectors')
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 %%%%%-----------------------------------------
 
+%Central Difference Method
+N = numel(yy1);
+k_num_C = zeros(1,N);
+for i = 2:N-1
+k_num_C(i) = (yy1(i+1) - yy1(i-1))/(L2(i+1) - L2(i-1));   
+end
+figure;plot(L2,k_num_C)
+
+a=x2(1:20:end);
+b=y2(1:20:end);
+c=e1(1:20:end);
+d=e2(1:20:end); 
+e=transpose(L2(1:20:end));
+f=k_num_C(1:20:end);
+H = table(a',b',c',d',e',f');
 
 
+%%%%%---------------------------------------------
 function [Th,n] = DiscInteg2(K,L2)
 %Discrete Integration Function
 S = L2;
