@@ -36,13 +36,12 @@ figure; plot(L2,Thk); title(' Angle of K'); grid on
 AddedThK = transpose(Thk + 90);
 figure; plot(L2,AddedThK); title(' Adding 90 deg to Angle of K'); grid on
 %----------------------
-%Integrating Components- This fails because it provides a different 
-%Angle 
+%Integrating Components each- This fails  
 [Thk1,n] = DiscInteg2(K2(:,1),L2);
 [Thk2,n] = DiscInteg2(K2(:,2),L2);
 ThkTotal = sqrt(Thk1.^2 + Thk2.^2);
 Ang = rad2deg(ThkTotal);
-Ang = Ang + 40.6;
+Ang = Ang + Ang(1);  % Need an initial angle, that cannot be provided from this data,.....
 figure; plot(L2,Ang); title('Angle of Integrating Components of K'); grid on
 %%%%%-----------------------------------------
 O2 = AddedThK;
