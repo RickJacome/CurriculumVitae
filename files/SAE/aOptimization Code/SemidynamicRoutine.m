@@ -48,8 +48,8 @@ figure; plot(s,y)
 %%% Road Section-----
 ni = 1;
 ne = numel(x2);
-% ni = 120;
-% ne = 180;
+ ni = 120;
+ ne = 180;
 figure; plot(x2(ni:ne),y2(ni:ne)); grid on;
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s(ni:ne),y(ni:ne));
@@ -123,8 +123,7 @@ fprintf('Pr. 2 Has finalized \n');
 figure; plot(snew,Op(:,1))
 xlabel('Segment Length s (m)'); ylabel('Optimized Velocity (m/s)')
 title('Segment Length vs Velocity Optimized'); grid on
-figure; plot(M1(x,snew),Op(:,1))
-title('Curvature vs Velocity Optimized'); grid on
+
 
 
 
