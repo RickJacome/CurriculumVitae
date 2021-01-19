@@ -95,11 +95,11 @@ title('Data and Fitted Curve'); grid on
 %Parameters 
 global K_temp e g mu U
 % Vehicle Only
-L = 2.5;  %U = 1.95;
-U = 3;
+L = 2.5;  U = 1.95;
+%U = 3;
 % Road Only
 %e = 12; mu = 0.4;
-e = 6; mu = 0.3;
+e = 6; mu = 0.4;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
@@ -127,8 +127,6 @@ figure; plot(snew,Op(:,2))
 %title('Segment Length vs Velocity Optimized');
 grid on
 xlabel('Segment Length s (m)'); ylabel('Optimized Velocity (m/s)') 
-figure; plot(M1(x,snew),Op(:,2))
-title('Curvature vs Velocity Optimized'); grid on
 
 % Nonlinear Constaints (Not bounds)
 function [c,ceq] = EqConstraint(x)
