@@ -22,6 +22,7 @@ for i = 1:n-1
     xd(i+1) = (tm(i+1)-tm(i)).*((xr(i+1)+xr(i))/2) + xd(i);
     yd(i+1) = (tm(i+1)-tm(i)).*((yr(i+1)+yr(i))/2) + yd(i);
     zd(i+1) = (tm(i+1)-tm(i)).*((zr(i+1)+zr(i))/2) + zd(i);
+
 end
 figure; plot(tm,xd,tm,yd,tm,zd,'linewidth',1.5); grid on
 xlabel('Time(sec)'); ylabel('Angular Displacement (rad)');
@@ -35,6 +36,7 @@ legend('Pitch','Roll','Yaw','location','best')
 m_xr = mean(xr)*ones(1,n);
 figure;
 plot(tm,xr,tm,m_xr); 
+title('Pitch Rate')
 m_xr_int = zeros(1,n); 
 for i = 1:n-1
     m_xr_int(i+1) = (tm(i+1)-tm(i)).*((m_xr(i+1)+m_xr(i))/2) + m_xr_int(i);
@@ -43,9 +45,9 @@ figure; plot(tm,xd)
 hold on; plot(tm,m_xr_int)
 Zero_xd = (xd-m_xr_int);
 plot(tm,Zero_xd,'linewidth',1.5);
-title('Pitch')
+title('Pitch');  grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
-xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
+xlabel('Time (sec)'); ylabel ('Angular Displacement (rad)');
 
 figure; plot(tm,rad2deg(xd))
 hold on; plot(tm,rad2deg(m_xr_int))
@@ -59,6 +61,7 @@ xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 m_yr = mean(yr)*ones(1,n);
 figure;
 plot(tm,yr,tm,m_yr); 
+title('Roll Rate')
 m_yr_int = zeros(1,n); 
 for i = 1:n-1
     m_yr_int(i+1) = (tm(i+1)-tm(i)).*((m_yr(i+1)+m_yr(i))/2) + m_yr_int(i);
@@ -67,7 +70,7 @@ figure; plot(tm,yd)
 hold on; plot(tm,m_yr_int)
 Zero_yd = (yd-m_yr_int);
 plot(tm,Zero_yd,'linewidth',1.5);
-title('Roll')
+title('Roll');  grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (rad)');
 
@@ -82,7 +85,8 @@ xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 % Yaw
 m_zr = mean(zr)*ones(1,n);
 figure;
-plot(tm,zr,tm,m_zr); 
+plot(tm,zr,tm,m_zr);
+title('Yaw Rate')
 m_zr_int = zeros(1,n); 
 for i = 1:n-1
     m_zr_int(i+1) = (tm(i+1)-tm(i)).*((m_zr(i+1)+m_zr(i))/2) + m_zr_int(i);
@@ -91,7 +95,7 @@ figure; plot(tm,zd)
 hold on; plot(tm,m_zr_int)
 Zero_zd = (zd-m_zr_int);
 plot(tm,Zero_zd,'linewidth',1.5);
-title('Yaw')
+title('Yaw');  grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (rad)');
 
@@ -103,4 +107,4 @@ title('Yaw'); grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
 %------------------------------------
-cab(7)
+%cab(7)
