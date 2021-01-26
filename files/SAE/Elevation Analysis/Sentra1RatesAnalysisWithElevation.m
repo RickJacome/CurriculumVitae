@@ -10,6 +10,7 @@ zr(isnan(zr)) = []; tm(isnan(tm)) = []; v(isnan(v)) = [];
 tm = tm'; xr = xr'; yr = yr'; zr = zr';
 figure; plot(tm,xr,tm,yr,tm,zr,'linewidth',1.5)
 xlabel('Time(sec)'); ylabel('Angular Rate (rad/sec)');
+xlim([0 50])
 legend('Pitch Rate','Roll Rate','Yaw Rate','location','best')
 figure; plot(tm,v); xlabel('Time(sec)'); ylabel('Speed (m/s)');
 n = numel(tm);
@@ -23,6 +24,7 @@ end
 figure; plot(tm,rad2deg(xd),tm,rad2deg(yd),tm,rad2deg(zd),'linewidth',1.5)
 grid on;
 xlabel('Time(sec)'); ylabel('Angular Displacement (deg)');
+xlim([0 50])
 legend('Pitch','Roll','Yaw','location','best')
 %------------------------------------
 % Pitch
@@ -40,6 +42,7 @@ plot(tm,Zero_xd,'linewidth',1.5);
 title('Pitch'); grid on;
 legend('Integrated','Drift-Integrated','Drift Subtracted','location','best')
 xlabel('Time (sec)'); ylabel ('Angular Displacement (deg)');
+xlim([0 50])
 %------------------------------------
 %Transforming the data from Disp vs Time to Disp vs X
 Dist = mean(v(2:end)).*tm/1000;
@@ -93,14 +96,14 @@ plot(X_new,Theta,'linewidth',2); grid on;
 yySmoo = smooth(Distsp,Theta,.15,'rloess');
 plot(X_new,yySmoo,'linewidth',2)
 title ('Pitch Results');
-legend('Vehicle Empirical Data','Vehicle Cubic Fit',...
+legend('Vehicle Empirical Data','Vehicle Quintic Fit',...
     'Vehicle Spline Interpolation','Estimated Road','Smoothed Road','location','best')
 xlabel('Distance (km)');ylabel('Angular Displacement (deg)');
 xlim([0.4 1])
 
 errordiff = abs(SpliResp'-yySmoo);
+m = mean(errordiff)
 figure
 bar(X_new,errordiff)
-title('Error Difference')
-xlim([0.4,1]); ylim([0 1.3])
- 
+xlim([0.4,1]); ylim([0 1.4])
+xlabel('Distance (km)'); ylabel('Error Difference (deg)')
