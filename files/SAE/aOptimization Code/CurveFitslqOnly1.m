@@ -11,7 +11,7 @@ n = numel(s)-1;
 y1 = 2.*s(1:n/2) - 1;
 y2 = 23*ones(1,n/2);
 
-for k = 1:9
+for k = 1:5:50
 
 y1o = awgn(y1,k,'measured');
 y2o = awgn(y2,k,'measured');
