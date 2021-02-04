@@ -31,16 +31,20 @@ stdTable = [S1 S2 S3 S4 S5 S6];
 xdd = sum(sum(M))
 xij = sum(sum(M.^2))
 SST = xij - (1/(I*J))*xdd^2
-
-
-M =[0.56  1.12 0.90 1.07 0.94;...
-    0.72  0.69 0.87 0.78 0.91;...
-    0.62  1.08 1.07 0.99 0.93];
-M = transpose(M);
-[J, I] = size(M);
-xdd = sum(sum(M))
-xij = sum(sum(M.^2))
-SST = xij - (1/(I*J))*xdd^2
 xid = sum(sum(M).^2)
 SSTr = (1/J)*xid - (1/(I*J))*xdd^2
 SSE = SST-SSTr
+
+[p,tbl,stats] = anova1(M)
+% clc
+% M =[0.56  1.12 0.90 1.07 0.94;...
+%     0.72  0.69 0.87 0.78 0.91;...
+%     0.62  1.08 1.07 0.99 0.93];
+% M = transpose(M);
+% [J, I] = size(M);
+% xdd = sum(sum(M))
+% xij = sum(sum(M.^2))
+% SST = xij - (1/(I*J))*xdd^2
+% xid = sum(sum(M).^2)
+% SSTr = (1/J)*xid - (1/(I*J))*xdd^2
+% SSE = SST-SSTr
