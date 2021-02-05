@@ -106,16 +106,16 @@ plot(X_new,Theta,'linewidth',2); grid on; hold on;
 yySmoo = smooth(Distsp,Theta,.15,'rloess');
 plot(X_new,yySmoo,'linewidth',2)
 title('GE Results')
-legend('Estimated Road','Smooth rloess = .15','location','best')
+legend('Estimated Road','Smoothed with span = .15','location','best')
 xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
 xlim([0.4 1])
 %---
 figure;
 plot(X_new,SpliResp,'linewidth',2); hold on;
 plot(X_new,yySmoo,'linewidth',2); grid on; 
-title ('Vehicle and GE Results'); xlim([0.4 1])
+title ('Sentra-1 Results'); xlim([0.4 1])
 xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
-legend('Vehicle data (spline)','GE Data(smoothed)')
+legend('Vehicle data','GE Data')
 
 errordiff = abs(SpliResp'-yySmoo);
 m = mean(errordiff)
