@@ -88,22 +88,31 @@ yyaxis right
 scatter(X_new,Theta,'*')
 %Superelevation as a percentage
 e1 = 100*sind(Theta);
+%---
 figure; 
 plot(Dist,Zero_xd,'linewidth',2); hold on;
 plot(Dist,FittedResp,'linewidth',2);
 plot(Distsp,SpliResp,'linewidth',2); 
-plot(X_new,Theta,'linewidth',2); grid on;
+title ('Vehicle Pitch Results');
+legend('Empirical Data','Quintic LLS Fit',...
+    'Spline n = 100','location','best')
+xlim([0.4 1]); grid on;
+xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
+%---
+figure;
+plot(X_new,Theta,'linewidth',2); grid on; hold on;
 yySmoo = smooth(Distsp,Theta,.15,'rloess');
 plot(X_new,yySmoo,'linewidth',2)
-title ('Pitch Results');
-legend('Vehicle Empirical Data','Vehicle Cubic Fit',...
-    'Vehicle Spline Interpolation','Estimated Road','Smoothed Road','location','best')
-xlabel('Distance (km)');ylabel('Angular Displacement (deg)');
+title('GE Results')
+legend('Estimated Road','Smoothed Road','location','best')
+xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
 xlim([0.4 1])
+%---
+figure;
+plot(X_new,SpliResp,'linewidth',2); hold on;
+plot(X_new,yySmoo,'linewidth',2); grid on; 
+title ('Vehicle and GE Results'); xlim([0.4 1])
+xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
 
 errordiff = abs(SpliResp'-yySmoo);
 m = mean(errordiff)
-figure
-bar(X_new,errordiff)
-xlim([0.4,1]); ylim([0 1.4])
-xlabel('Distance (km)'); ylabel('Error Difference (deg)')
