@@ -12,21 +12,21 @@ clear; close all; clc
 %%%---------------------------------------------
 %(1)
 %Google Earth Data
-%  load('GPS1Xft.mat'); load('GPS1Yft.mat');
-%  x2 = GPSX; y2 = GPSY;
-% x2 = x2'*.3048; y2 = y2'*.3048;
-% % Normalization (if needed)-----
-% x2 = x2-min(x2);
-% y2 = y2-min(y2);
-% x2 = x2(120:180);
-% y2 = y2(120:180);
+ load('GPS1Xft.mat'); load('GPS1Yft.mat');
+ x2 = GPSX; y2 = GPSY;
+x2 = x2'*.3048; y2 = y2'*.3048;
+% Normalization (if needed)-----
+x2 = x2-min(x2);
+y2 = y2-min(y2);
+x2 = x2(120:180);
+y2 = y2(120:180);
 % --------------------------
 %GPS DATA
 % load('CVF9LatX.mat'); load('CVF9LongY.mat');
 % x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-load('MichXm.mat'); load('MichYm.mat');  
-x2 = xm'; y2 = ym';
+%load('MichXm.mat'); load('MichYm.mat');  
+%x2 = xm'; y2 = ym';
 %%%---------------------------------------------
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
@@ -73,9 +73,9 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 % Initial Conditions, NEVER repeat them.
 %Ideal AASHTO IC.
 %x0 = [ 100 200 300 400 max(ySmoo)];
-x0 = [sSmoo(1) .90*mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
+%x0 = [sSmoo(1) .90*mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
 %Google Earth IC.
-%x0 = [sSmoo(1) .75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)];
+x0 = [sSmoo(1) .75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)];
 % Recommended values for non-normalized data
 % x0 = [3200 3500 4000 4200 max(ySmoo)];
 %------
@@ -112,7 +112,7 @@ L = 2.5;  U = 1.95;
 %U = 3;
 % Road Only
 %e = 12; mu = 0.4;
-e = 6; mu = 0.4;
+e = 6; mu = 0.3;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
@@ -122,7 +122,7 @@ K_temp = K_vector(i);
 % Objective Function Pr.2
 fun = @(x)  x(1) - (53.7*L + U*x(2)^2/g)*K_temp;    
 %C.1 (Bounds)
-lb = [-5,30]; % -3 < x1 < 3;
+lb = [-5,25]; % -3 < x1 < 3;
 %ub = [30,35];
 ub = [5,36];  % 60 < x2 < 80; mph
 % There are no linear constraints, so set those arguments to |[]|. 
@@ -136,11 +136,11 @@ options = optimoptions('fmincon','Display','off');
 Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,nonlcon,options);  
 end
 fprintf('Pr. 2 Has finalized \n');
-figure; plot(snew,Op(:,2))
+figure; plot(snew,Op(:,2),'linewidth',2); ylim([26 38])
 %title('Segment Length vs Velocity Optimized');
 grid on
 xlabel('Segment Length s (m)'); ylabel('Optimized Velocity (m/s)') 
-figure; plot(snew, Op(:,1));
+
 % Nonlinear Constaints (Not bounds)
 function [c,ceq] = EqConstraint(x)
 global K_temp e g mu 
