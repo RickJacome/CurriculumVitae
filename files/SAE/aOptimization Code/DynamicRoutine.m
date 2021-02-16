@@ -10,15 +10,15 @@
 %%%_---------------------------------------------
 clear; close all; clc
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat');
-x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048;
+%load('GPS1Xft.mat'); load('GPS1Yft.mat');
+%x2 = GPSX; y2 = GPSY;
+%x2 = x2'*.3048; y2 = y2'*.3048;
 %GPS DATA
 % load('CVF9LatX.mat'); load('CVF9LongY.mat');
 % x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-% load('MichXm.mat'); load('MichYm.mat');  
-% x2 = xm'; y2 = ym';
+ load('MichXm.mat'); load('MichYm.mat');  
+ x2 = xm'; y2 = ym';
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
 X = [x2',y2'];
@@ -48,8 +48,8 @@ figure; plot(s,y); grid on;
 xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 ni = 1;
 ne = numel(x2);
-ni = 120;
-ne = 180;
+%ni = 120;
+%ne = 180;
 figure; plot(x2(ni:ne),y2(ni:ne)); grid on;
 xlabel('X Coordinate (m)'); ylabel('Y Coordinate (m)');
 figure; plot(s(ni:ne),y(ni:ne));
@@ -63,9 +63,9 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 %From this point forward, I am doing the Optimization Semi-Dynamic Routine
 % Initial Conditions, NEVER repeat them.
 %Ideal AASHTO IC.
-%x0 = [ 100 200 300 400 max(ySmoo)];
+x0 = [ 100 200 300 400 max(ySmoo)];
 %Google Earth IC.
- x0 = [3200 3500 4000 4200 max(ySmoo)];
+% x0 = [3200 3500 4000 4200 max(ySmoo)];
 %x0 = [750 850 900 1000 max(ySmoo)];
 %[sSmoo(1) 0.75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)]
 %x0 = [1.25*sSmoo(1) mean(sSmoo) 1.25*mean(sSmoo) .75*sSmoo(end) max(ySmoo)]
