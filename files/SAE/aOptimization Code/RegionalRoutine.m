@@ -68,7 +68,8 @@ title('A')
 figure; plot(s(ni:ne),y(ni:ne));
 grid on;xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 title('B')
-ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
+%ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
+ySmoo = y(ni:ne);
 sSmoo = s(ni:ne);
 figure; plot(sSmoo,ySmoo); grid on;
 xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
@@ -115,7 +116,7 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 global K_temp e g mu
 % Road Only
 %e = 12; mu = 0.4;
-e = 6; mu = 0.3;
+e = 4; mu = 0.1;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
