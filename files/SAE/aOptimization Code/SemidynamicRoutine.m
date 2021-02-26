@@ -99,6 +99,7 @@ global K_temp e g mu
 % Road Only
 %e = 12; mu = 0.4;
 e = 6; mu = 0.3;
+%e = 6; mu = 0.8;
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
