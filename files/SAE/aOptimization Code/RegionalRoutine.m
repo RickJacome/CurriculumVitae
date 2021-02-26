@@ -11,22 +11,22 @@
 clear; close all; clc
 %%%---------------------------------------------
 %(1)
-%Google Earth Data
- load('GPS1Xft.mat'); load('GPS1Yft.mat');
- x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048;
-% Normalization (if needed)-----
-x2 = x2-min(x2);
-y2 = y2-min(y2);
-x2 = x2(120:180);
-y2 = y2(120:180);
+% % Google Earth Data
+% %  load('GPS1Xft.mat'); load('GPS1Yft.mat');
+% %  x2 = GPSX; y2 = GPSY;
+% % x2 = x2'*.3048; y2 = y2'*.3048;
+% % Normalization (if needed)-----
+% % x2 = x2-min(x2);
+% % y2 = y2-min(y2);
+% % x2 = x2(120:180);
+% % y2 = y2(120:180);
 % --------------------------
 %GPS DATA
 % load('CVF9LatX.mat'); load('CVF9LongY.mat');
 % x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');  
-%x2 = xm'; y2 = ym';
+load('MichXm.mat'); load('MichYm.mat');  
+x2 = xm'; y2 = ym';
 %%%---------------------------------------------
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
@@ -68,8 +68,8 @@ title('A')
 figure; plot(s(ni:ne),y(ni:ne));
 grid on;xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 title('B')
-%ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
-ySmoo = y(ni:ne);
+ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
+%ySmoo = y(ni:ne);
 sSmoo = s(ni:ne);
 figure; plot(sSmoo,ySmoo); grid on;
 xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
@@ -79,9 +79,9 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 % Initial Conditions, NEVER repeat them.
 %Ideal AASHTO IC.
 %x0 = [ 100 200 300 400 max(ySmoo)];
-%x0 = [sSmoo(1) .90*mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
+x0 = [sSmoo(1) .90*mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
 %Google Earth IC.
-x0 = [sSmoo(1) .75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)];
+%x0 = [sSmoo(1) .75*mean(sSmoo) 1.25*mean(sSmoo) sSmoo(end) max(ySmoo)];
 % Recommended values for non-normalized data
 % x0 = [3200 3500 4000 4200 max(ySmoo)];
 %------
@@ -116,7 +116,12 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 global K_temp e g mu
 % Road Only
 %e = 12; mu = 0.4;
-e = 4; mu = 0.1;
+%e = 4; mu = 0.1;
+%e = 4; mu = 0.3;
+%e = 4; mu = 0.4;
+%e = 4; mu = 0.5;
+e = 4; mu = 0.8;
+
 % Both
 g = 9.81; K_vector = M1(x,snew);
 % -------------------------
@@ -124,7 +129,8 @@ g = 9.81; K_vector = M1(x,snew);
 for i = 1:length(K_vector)
 K_temp = K_vector(i);  
 % Objective Function Pr.2
-fun = @(x) x(1)^2*K_temp/g - (mu + 0.01*e)/(1-0.01*mu*e);    
+fun = @(x) x(1).^2*K_temp/g - (mu + 0.01*e)./(1-0.01.*mu.*e);  
+
 %C.1 (Bounds)
 lb = 30; 
 %ub = [30,35];
@@ -133,7 +139,7 @@ ub = 38;  % 60 < x2 < 80; mph
 A = [];  b = []; % Linear In-equality Constraints
 Aeq = []; beq = [];  % Linear Equality Constraints
 %Initial Conditions
-x0 = 1/4;  
+x0 = 30;  
 %Constraints as an annoynomous function
 Op(i,:) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub);  
 end
