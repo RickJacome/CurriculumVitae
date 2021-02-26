@@ -89,7 +89,7 @@ global K_temp e g mu
 % Road Only
 %e = 12; mu = 0.4;
 %e = 4; mu = 0.9;
-e = 4; mu = 0.6;
+e = 4; mu = 0.1;
 %e = 4; mu = 0.4;
 %e = 4; mu = 0.5;
 %e = 4; mu = 0.8;
