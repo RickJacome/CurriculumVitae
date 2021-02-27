@@ -12,21 +12,21 @@ clear; close all; clc
 %%%---------------------------------------------
 %(1)
 %Google Earth Data
-load('GPS1Xft.mat'); load('GPS1Yft.mat');
-x2 = GPSX; y2 = GPSY;
-x2 = x2'*.3048; y2 = y2'*.3048;
-% Normalization (if needed)-----
-x2 = x2-min(x2);
-y2 = y2-min(y2);
-x2 = x2(120:180);
-y2 = y2(120:180);
+% load('GPS1Xft.mat'); load('GPS1Yft.mat');
+% x2 = GPSX; y2 = GPSY;
+% x2 = x2'*.3048; y2 = y2'*.3048;
+% % Normalization (if needed)-----
+% x2 = x2-min(x2);
+% y2 = y2-min(y2);
+% x2 = x2(100:180);
+% y2 = y2(100:180);
 % --------------------------
 %GPS DATA
 % load('CVF9LatX.mat'); load('CVF9LongY.mat');
 % x2 = LatX'; y2 = LongY'; 
 %Ideal AASHTO
-%load('MichXm.mat'); load('MichYm.mat');  
-%x2 = xm'; y2 = ym';
+load('MichXm.mat'); load('MichYm.mat');  
+x2 = xm'; y2 = ym';
 %%%---------------------------------------------
 x2 = unique(x2,'stable'); y2 = unique(y2,'stable');
 x2 = x2(1:numel(y2));
@@ -68,7 +68,8 @@ grid on;xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 title('B')
 ySmoo = smooth(s(ni:ne),y(ni:ne),0.15,'loess');
 %ySmoo = y(ni:ne);
-sSmoo = s(ni:ne);
+ySmoo = ySmoo(ni:10:ne);
+sSmoo = s(ni:10:ne);
 figure; plot(sSmoo,ySmoo); grid on;
 xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 %---------------------------------------------------------------
@@ -77,11 +78,10 @@ xlabel('Segment Length s (m)'); ylabel('Curvature \kappa (m^{-1})')
 % Initial Conditions, NEVER repeat them.
 %Ideal AASHTO IC.
 %x0 = [ 100 200 300 400 max(ySmoo)];
-%x0 = [sSmoo(1) .90*mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
+x0 = [sSmoo(1) mean(sSmoo) 1.10*mean(sSmoo) sSmoo(end) max(ySmoo)];
 %Google Earth IC.
 %Constant Velocity
-
-x0 = [sSmoo(1) .50*mean(sSmoo) 1.25*mean(sSmoo) 1.05*sSmoo(end) max(ySmoo)];
+%x0 = [sSmoo(1) .70*mean(sSmoo) 1.25*mean(sSmoo) .90*sSmoo(end) max(ySmoo)];
 % Recommended values for non-normalized data
 % x0 = [3200 3500 4000 4200 max(ySmoo)];
 % Curvature Model M.1
@@ -110,7 +110,7 @@ global K_temp e g mu
 % Road Only
 %e = 12; mu = 0.4;
 %e = 4; mu = 0.9;
-e = 4; mu = 0.3;
+e = 4; mu = 0.1;
 %e = 4; mu = 0.4;
 %e = 4; mu = 0.5;
 %e = 4; mu = 0.8;
@@ -141,9 +141,9 @@ end
 fprintf('Pr. 2 Has finalized \n');
 figure; plot(snew,Op(:,1),'linewidth',2)
 
-xlabel('Segment Length s (m)'); ylabel('Optimized Velocity (m/s)')
+xlabel('Segment Length s (m)'); ylabel('Optimized Speed (m/s)')
 title('Segment Length vs Velocity Optimized'); grid on
-clc;
+%clc;
 %cab(7)
 
 % Nonlinear Constaints (Not bounds)
