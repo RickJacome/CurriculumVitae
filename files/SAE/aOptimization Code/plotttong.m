@@ -1,3 +1,6 @@
+% AASHTO Data Plots
+
+
 clc; clear all; close all
 load('OpMu8E4.mat'); OpMu8E4 = Op;
 load('OpMu6E4.mat'); OpMu6E4 = Op;
@@ -10,8 +13,8 @@ plot(s, OpMu3E4,'linewidth',2);
 plot(s, OpMu6E4,'linewidth',2); 
 plot(s, OpMu8E4,'--','linewidth',2);
 
-legend('\mu = 0.1','\mu = 0.3',...
-    '\mu = 0.6','\mu = 0.8','location','bestoutside')
+legend('\mu_1 = 0.1','\mu_2 = 0.3',...
+    '\mu_3 = 0.6','\mu_4 = 0.8','location','bestoutside')
 xlim([0 550]);
 ylim([25 40]); grid on;
 
@@ -30,10 +33,10 @@ plot(s, OpVeDMu3E4,'linewidth',2);
 plot(s, OpVeDMu6E4,'linewidth',2); 
 plot(s, OpVeDMu8E4,'--','linewidth',2);
 
-legend('\mu = 0.1','\mu = 0.3',...
-    '\mu = 0.6','\mu = 0.8','location','bestoutside')
+legend('\mu_1 = 0.1','\mu_2 = 0.3',...
+    '\mu_3 = 0.6','\mu_4 = 0.8','location','bestoutside')
 xlim([0 550]);
-ylim([25 40]); grid on;
+ylim([23 40]); grid on;
 
 xlabel('Segment Length (m)');
 ylabel('Optimized Speed (m/s)');
