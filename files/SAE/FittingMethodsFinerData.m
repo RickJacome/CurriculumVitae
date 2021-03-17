@@ -207,6 +207,7 @@ legend('MDC Raw','Curvature d\theta/ds',...
 figure(12)
 K_Filter = Ksigned(Sig2~=0);
 L_Filter = L(Sig2~=0);
+
 plot(L_Filter,K_Filter,'o','color','r','linewidth',1.5); hold on; 
 grid on;
 plot(L,Ksigned,'-','color','b')
@@ -218,6 +219,7 @@ yyaxis right
 plot(L,Sig2,'k')
 ylabel('Tangent Vector Angle (degrees)')
 legend('Segmented MDC','Signed MDC','Curved Segment','location','best')
+
 %%%%%%%-------------------------------------------------------------
 % n = numel(K_Filter);
 % OptRange=zeros(1,1);
