@@ -115,7 +115,7 @@ plot(X_new,SpliResp,'linewidth',2); hold on;
 plot(X_new,yySmoo,'linewidth',2); grid on; 
 title ('Sentra-1 Results'); xlim([0.4 1])
 xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
-legend('Vehicle data','GE Data')
+legend('Vehicle data','Geodetic Data')
 
 errordiff = abs(SpliResp'-yySmoo);
 m = mean(errordiff)

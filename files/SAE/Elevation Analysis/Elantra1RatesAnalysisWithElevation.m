@@ -53,7 +53,7 @@ Dist = Dist';
 A = [ones(numel(Dist),1) Dist, Dist.^2, Dist.^3, Dist.^4, Dist.^5];
 b = Zero_xd';
 P = transpose(A\b)
-p = polyfit(Dist,Zero_xd,5)
+p = polyfit(Dist,Zero_xd',5)
 FittedResp = polyval(p,Dist);
 Distsp = linspace(Dist(1),Dist(end),100);
 SpliResp = spline(Dist,Zero_xd,Distsp);
@@ -115,7 +115,7 @@ plot(X_new,SpliResp,'linewidth',2); hold on;
 plot(X_new,yySmoo,'linewidth',2); grid on; 
 title ('Elantra-1 Results'); xlim([0.4 1])
 xlabel('Distance (km)');ylabel('Pitch Angle (deg)');
-legend('Vehicle data','GE Data')
+legend('Vehicle data','Geodetic Data')
 
 errordiff = abs(SpliResp'-yySmoo);
 m = mean(errordiff)
