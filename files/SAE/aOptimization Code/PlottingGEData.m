@@ -1,5 +1,8 @@
 % Google Earth Data Plots
 
+% AASHTO Data Plots
+% These plots only pertain to the Empirical plots, one is for the 
+% regional (non-dynamic), and the second one is for the vehicle-specific
 clc; clear all; close all
 load('GEOpMu8E4.mat'); GEOpMu8E4 = Op;
 load('GEOpMu6E4.mat'); GEOpMu6E4 = Op;
