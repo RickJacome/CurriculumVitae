@@ -1,5 +1,6 @@
 % AASHTO Data Plots
-
+% These plots only pertain to the AASHTO plots, one is for the 
+% regional (non-dynamic), and the second one is for the vehicle-specific
 
 clc; clear all; close all
 load('OpMu8E4.mat'); OpMu8E4 = Op;
@@ -7,6 +8,7 @@ load('OpMu6E4.mat'); OpMu6E4 = Op;
 load('OpMu3E4.mat'); OpMu3E4 = Op;
 load('OpMu1E4.mat'); OpMu1E4 = Op;
 
+%Optimal Velocity  Friction of 0.8
 s = linspace(0,632,numel(OpMu8E4));
 plot(s, OpMu1E4,'linewidth',2);  hold on;
 plot(s, OpMu3E4,'linewidth',2);
@@ -21,7 +23,7 @@ ylim([25 40]); grid on;
 xlabel('Segment Length (m)');
 ylabel('Optimized Speed (m/s)');
 
-
+%Optimal Velocity Dynamic Friction of 0.8
 load('OpVeDMu8E4.mat'); OpVeDMu8E4 = Op(:,2);
 load('OpVeDMu6E4.mat'); OpVeDMu6E4 = Op(:,2);
 load('OpVeDMu3E4.mat'); OpVeDMu3E4 = Op(:,2);
