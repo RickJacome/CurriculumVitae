@@ -20,33 +20,26 @@
 
 		<!-- Project -->
 			<article id="pendulum" class="wrapper style1">
-				<div class="container">
-					<div class="row">
-					
-				 		<div class="col-4 col-4-large col-12-medium">   
-							<span class="image fit"><img src="images/pendulum01.jpg" alt="" /></span>
-						</div>
-						
-						<div class="col-9 col-10-large col-15-medium">
-							<header>
-								<h1>Inverted Pendulum Project.</h1>
-							</header>
-							<h3>Here will be my project.</h3>
-							<p> Here will be my project hopefully.
-							You can also download the professional version of this project <a href="files/2018-12-5-Pendulum-Jacome.pdf">here</a> as well. 
-							</p>					
-							<video width="320" height="240" controls>
-  							<source src="videos/video1.mp4" type="video/mp4">
-							</video>
-							<video width="320" height="240" controls>
-  							<source src="videos/video2.mp4" type="video/mp4">
-							</video>
-							<video width="320" height="240"controls>
-  							<source src="videos/video3.mp4" type="video/mp4">
-							</video>
-						</div>
-					</div>
-				</div>
+			    <py-config src="./pyscript.toml"></py-config>
+
+			    <div id="input" style="margin: 20px;">
+			      Select your number of K: <br/>
+			      <input py-click="classify_and_plot()" type="radio" id="three" name="neighbors" value="3">
+			      <label for="three"> 3</label>
+			      <input py-click="classify_and_plot()" type="radio" id="five" name="neighbors" value="5">
+			      <label for="five"> 5</label>
+			      <input py-click="classify_and_plot()" type="radio" id="seven" name="neighbors" value="7">
+			      <label for="seven"> 7</label>
+			      <input py-click="classify_and_plot()" type="radio" id="fifteen" name="neighbors" value="15">
+			      <label for="fifteen"> 15</label>
+			    </div>
+
+			    <p id="K"></p>
+			    <p id="accuracy"></p>
+			    
+			    <py-script src="./main.py"></py-script>
+			    
+			    <div id="graph-area"></div>
 			</article>
 
 		
