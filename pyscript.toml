@@ -1,0 +1,1 @@
+packages = ["pandas","numpy", "matplotlib", "scikit-learn", "seaborn","plotly"]
