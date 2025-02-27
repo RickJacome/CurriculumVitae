@@ -25,7 +25,7 @@ y = iris.target
 
 
 def classify_and_plot():
-    k_neighbors = js.document.getElementsByName("neighbors")
+    k_neighbors = js.document.getElementsByName("years") #This allows us to find "neighbors" on HTML
     for element in k_neighbors:
         if element.checked:
             k = int(element.value)
