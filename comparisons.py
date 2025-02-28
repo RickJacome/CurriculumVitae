@@ -28,7 +28,7 @@ def classify_and_plot():
     k_neighbors = js.document.getElementsByName("years") #This allows us to find "neighbors" on HTML
     for element in k_neighbors:
         if element.checked:
-            k = int(element.value)
+            k = int(element.value)  # obtain elemnt in neighbors and use element.value
             break
     
     paragraph = Element("K")
@@ -43,33 +43,16 @@ def classify_and_plot():
     
     acc = accuracy_score(y_test, y_pred)
     
-    paragraph = Element("accuracy")
-    paragraph.write(f"Accuracy: {acc}")
+    paragraph = Element("accuracy")   #here we are creating an Element which is called in HTML with id = "accuracy"
+    paragraph.write(f"Accuracy: {acc}") #here we are writing to id = "accuracy" something to display.
+    #Note how the paragraph gets re-written. 
     
     fig, ax = plt.subplots()
-    DecisionBoundaryDisplay.from_estimator(
-        clf,
-        X,
-        cmap=cmap_light,
-        ax=ax,
-        response_method="predict",
-        plot_method="pcolormesh",
-        xlabel=iris.feature_names[0],
-        ylabel=iris.feature_names[1],
-        shading="auto",
-    )
+    DecisionBoundaryDisplay.from_estimator(clf, X, cmap=cmap_light, ax=ax, response_method="predict",
+        plot_method="pcolormesh", xlabel=iris.feature_names[0], ylabel=iris.feature_names[1], shading="auto",)
 
     # Plot also the training points
-    sns.scatterplot(
-        x=X[:, 0],
-        y=X[:, 1],
-        hue=iris.target_names[y],
-        palette=cmap_bold,
-        alpha=1.0,
-        edgecolor="black",
-    )
-    plt.title(
-        "3-Class classification (k = %i)" % (k)
-    )
+    sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=iris.target_names[y], palette=cmap_bold, alpha=1.0, edgecolor="black",)
+    plt.title("3-Class classification (k = %i)" % (k))
     
     display(fig, target="graph-area", append=False)
